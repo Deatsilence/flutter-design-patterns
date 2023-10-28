@@ -1,6 +1,6 @@
 import 'package:design_patterns/enums/employee_type_enum.dart';
 import 'package:design_patterns/patterns/factory/dart_factory_method.dart';
-import 'package:design_patterns/view/factory_view.dart';
+import 'package:design_patterns/view/abstract_factory_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Design Patterns',
-      home: FactoryView(),
+      home: AbstractFactoryView(),
     );
   }
 }

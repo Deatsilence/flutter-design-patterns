@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:design_patterns/patterns/factory/platform_button.dart';
+import 'package:design_patterns/patterns/abstract_factory/abstract_factory.dart';
 import 'package:flutter/material.dart';
 
-class FactoryView extends StatelessWidget {
-  const FactoryView({super.key});
+class AbstractFactoryView extends StatelessWidget {
+  const AbstractFactoryView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,11 @@ class FactoryView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PlatformButton().build(
+            AbstractFactoryImpl.buildButton(
               onPressed: () => log("IOS Button Pressed"),
               child: const Text("IOS Button"),
             ),
+            AbstractFactoryImpl.buildIndicator(),
           ],
         ),
       ),

@@ -16,7 +16,7 @@ abstract class PlatformButton {
   }
 }
 
-class IOSButton implements PlatformButton {
+final class IOSButton implements PlatformButton {
   @override
   Widget build({required VoidCallback onPressed, required Widget child}) => CupertinoButton(
         onPressed: onPressed,
@@ -24,7 +24,7 @@ class IOSButton implements PlatformButton {
       );
 }
 
-class AndroidButton implements PlatformButton {
+final class AndroidButton implements PlatformButton {
   @override
   Widget build({required VoidCallback onPressed, required Widget child}) => ElevatedButton(
         onPressed: onPressed,

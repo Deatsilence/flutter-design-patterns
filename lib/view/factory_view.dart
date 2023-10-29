@@ -1,10 +1,14 @@
 import 'dart:developer';
 
+import 'package:design_patterns/enums/employee_type_enum.dart';
+import 'package:design_patterns/patterns/factory/dart_factory_method.dart';
 import 'package:design_patterns/patterns/factory/platform_button.dart';
 import 'package:flutter/material.dart';
 
 class FactoryView extends StatelessWidget {
-  const FactoryView({super.key});
+  FactoryView({super.key});
+
+  final employee = EmployeeFactory.getEmployee(EmployeeType.boss).work();
 
   @override
   Widget build(BuildContext context) {

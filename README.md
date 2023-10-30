@@ -146,8 +146,8 @@ Soyut fabrika tasarım deseni, birden çok aileden nesne oluşturmak için bir f
 
 Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. İlk bakışta **Factory Method** ile karıştırılması doğal olsa da aralarında ufak bir farklılık var. Bu fark **Factory Method** aynı aile içerisinde bulunması gereken nesneleri soyutlaştırarak üretirken. Örneğin _IOS Button, Android Button, Linux Button, vb._ gibi buton ailesisini kapsayabilir. **Abstract Factory** ise farklı ailelerin nesnelerini soyutlaştırarak üretir. Örneğin _Button, Indicator, vb._ gibi farklı ailele sınıflarını kendi bünyesinde üretebilir. **Factory Method** için yaptığımız platforma özgü butona ek olarak platforma özgü indicator ekledikten sonra bu iki farklı aileye ait componentleri **Abstract Factory** ile üretelim. Bunun için 2 farklı teknik göstereceğim. 1. Teknikte **Singleton + Abstract Factory** design patterns beraber kullanılmaktadır. 2. Teknikte bir class içinde static methodlar kullanılmaktadır.
 
-** 1. Teknik (Singleton + Abstract Factory):
-Öncelikle **abstract** bir sınıf olarak **AbstractFactory** sınıfımızı oluşturuyoruz. İçinde **buildButton() ve buildIndicator()** ismine sahip 2 tane **abstract method\*\* oluşturuyoruz.
+**1. Teknik (Singleton + Abstract Factory):**
+Öncelikle **abstract** bir sınıf olarak **AbstractFactory** sınıfımızı oluşturuyoruz. İçinde **buildButton() ve buildIndicator()** ismine sahip 2 tane \*\*abstract method\*\* oluşturuyoruz.
 
 ```dart
 abstract class AbstractFactory {
@@ -214,7 +214,7 @@ class AbstractFactoryView extends StatelessWidget {
 
 ```
 
-\*\* 2. Teknik (Abstract Factory):
+**2. Teknik (Abstract Factory):**
 
 ```dart
 final class AbstractFactoryImpl {

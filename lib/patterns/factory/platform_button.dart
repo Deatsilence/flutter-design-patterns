@@ -11,7 +11,7 @@ abstract class PlatformButton {
     } else if (Platform.isIOS) {
       return IOSButton();
     } else {
-      throw AndroidButton();
+      return AndroidButton();
     }
   }
 }

@@ -12,7 +12,7 @@ abstract class PlatformIndicator {
     } else if (Platform.isIOS) {
       return IOSIndicator();
     } else {
-      throw AndroidIndicator();
+      return AndroidIndicator();
     }
   }
 }

@@ -1,6 +1,6 @@
 <h1 align="center">Design Patterns with Flutter</h1>
 
-- <h2 align="left">Factory</h2>
+- <h2 align="left">Factory Method</h2>
   Factory design pattern(Fabrika tasarım deseni) bir nesnenin nasıl oluşturulacağını soyutlaştırmaya yardımcı olan bir yaratımsal tasarım modelidir. Bu, kodunuzun daha esnek ve genişletilebilir olmasını sağlar.
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.

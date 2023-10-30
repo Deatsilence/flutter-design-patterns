@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:design_patterns/patterns/prototype/prototype.dart';
-import 'package:design_patterns/view/singleton_view.dart';
+import 'package:design_patterns/view/adapter_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Design Patterns',
-      home: SingletonView(),
+      home: AdapterView(),
     );
   }
 }

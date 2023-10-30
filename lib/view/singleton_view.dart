@@ -1,6 +1,7 @@
-import 'package:design_patterns/patterns/singleton/model/place_model.dart';
+import 'dart:developer';
+
+import 'package:design_patterns/patterns/abstract_factory/abstract_factory.dart';
 import 'package:design_patterns/patterns/singleton/singleton.dart';
-import 'package:design_patterns/patterns/singleton/singleton_network_manager.dart';
 import 'package:flutter/material.dart';
 
 class SingletonView extends StatefulWidget {
@@ -19,10 +20,11 @@ class _SingletonViewState extends State<SingletonView> {
   final s5 = SingletonWithFactory();
   final s6 = SingletonWithFactory();
 
-  late final response;
+  // late final response;
   @override
   void initState() {
-    PredictionsNetworkManager.instance.dioGet<Place>("Ankara", Place()).then((value) => response = value);
+    //! This is a dummy example logic at below. So it doesn't work
+    // PredictionsNetworkManager.instance.dioGet<Place>("Ankara", Place()).then((value) => response = value);
     super.initState();
   }
 
@@ -34,15 +36,21 @@ class _SingletonViewState extends State<SingletonView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ListView.builder(
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                if (response is Place) {
-                  return Text("${(response as Place).name}");
-                }
-                return null;
-              },
+            AbstractFactoryImpl2.instance.buildButton(
+              onPressed: () => log("Pressed onto Platform Button"),
+              child: const Text("Platform Button"),
             ),
+            AbstractFactoryImpl2.instance.buildIndicator(),
+            //! This is a dummy example logic at below. So it doesn't work
+            // ListView.builder(
+            //   itemCount: 1,
+            //   itemBuilder: (BuildContext context, int index) {
+            //     if (response is Place) {
+            //       return Text("${(response as Place).name}");
+            //     }
+            //     return null;
+            //   },
+            // ),
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class PostAPI1 {
   String getYoutubePosts() {
     return '''
@@ -38,17 +40,18 @@ abstract class IPostAPI {
   List<Post> getPosts();
 }
 
+@immutable
 final class Post {
   final String title;
   final String bio;
 
-  Post({
+  const Post({
     required this.title,
     required this.bio,
   });
 }
 
-class PostAPI1Adapter implements IPostAPI {
+final class PostAPI1Adapter implements IPostAPI {
   final _api = PostAPI1();
 
   @override
@@ -66,7 +69,7 @@ class PostAPI1Adapter implements IPostAPI {
   }
 }
 
-class PostAPI2Adapter implements IPostAPI {
+final class PostAPI2Adapter implements IPostAPI {
   final _api = PostAPI2();
 
   @override
@@ -84,7 +87,7 @@ class PostAPI2Adapter implements IPostAPI {
   }
 }
 
-class PostAPI implements IPostAPI {
+final class PostAPI implements IPostAPI {
   final firstAPI = PostAPI1Adapter();
   final secondAPI = PostAPI2Adapter();
   @override

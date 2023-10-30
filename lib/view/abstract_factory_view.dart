@@ -13,11 +13,11 @@ class AbstractFactoryView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AbstractFactoryImpl.buildButton(
-              onPressed: () => log("IOS Button Pressed"),
-              child: const Text("IOS Button"),
+            AbstractFactoryImpl2.instance.buildButton(
+              onPressed: () => log("Platform Button Pressed"),
+              child: const Text("Platform Button"),
             ),
-            AbstractFactoryImpl.buildIndicator(),
+            AbstractFactoryImpl2.instance.buildIndicator(),
           ],
         ),
       ),

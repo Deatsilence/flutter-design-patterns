@@ -1,12 +1,16 @@
-import 'dart:developer';
-
-import 'package:design_patterns/patterns/abstract_factory/abstract_factory.dart';
+import 'package:design_patterns/patterns/singleton/model/place_model.dart';
 import 'package:design_patterns/patterns/singleton/singleton.dart';
+import 'package:design_patterns/patterns/singleton/singleton_network_manager.dart';
 import 'package:flutter/material.dart';
 
-class SingletonView extends StatelessWidget {
-  SingletonView({super.key});
+class SingletonView extends StatefulWidget {
+  const SingletonView({super.key});
 
+  @override
+  State<SingletonView> createState() => _SingletonViewState();
+}
+
+class _SingletonViewState extends State<SingletonView> {
   final s1 = Singleton.instance;
   final s2 = Singleton.instance;
   final s3 = Singleton.instance;
@@ -14,6 +18,13 @@ class SingletonView extends StatelessWidget {
   final s4 = SingletonWithFactory();
   final s5 = SingletonWithFactory();
   final s6 = SingletonWithFactory();
+
+  late final response;
+  @override
+  void initState() {
+    PredictionsNetworkManager.instance.dioGet<Place>("Ankara", Place()).then((value) => response = value);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +34,15 @@ class SingletonView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AbstractFactoryImpl.buildButton(
-              onPressed: () => log("IOS Button1 Pressed"),
-              child: const Icon(Icons.apple_outlined),
+            ListView.builder(
+              itemCount: 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (response is Place) {
+                  return Text("${(response as Place).name}");
+                }
+                return null;
+              },
             ),
-            AbstractFactoryImpl.buildIndicator(),
-            AbstractFactoryImpl2.instance.buildButton(
-              onPressed: () => log("IOS Button2 Pressed"),
-              child: const Text("IOS Button"),
-            ),
-            AbstractFactoryImpl2.instance.buildIndicator(),
           ],
         ),
       ),

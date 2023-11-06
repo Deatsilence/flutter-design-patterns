@@ -1,5 +1,4 @@
 import 'package:design_patterns/view/builder_view.dart';
-import 'package:design_patterns/view/prototype_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

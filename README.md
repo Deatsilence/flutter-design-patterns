@@ -654,3 +654,121 @@ class AdapterView extends StatelessWidget {
 }
 
 ```
+
+- <h2 align="left">Builder (Creational Patterns)</h2>
+  Builder deseni, karmaşık bir nesnenin inşasını iki sınıfa ayıran bir yapısal tasarım modelidir.
+
+<h4 align="left">Builder tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Builder sınıfı:** Bu sınıf, nesnenin inşasını gerçekleştirir.
+- **Nesne sınıfı:** Bu sınıf, inşa edilen nesnenin temsilini sağlar.
+
+Builder sınıfı, nesnenin inşası için bir dizi yöntem sağlar. Bu yöntemler, nesnenin özelliklerini ayarlamak için kullanılır. Nesne inşa edildiğinde, Builder sınıfı build() yöntemini çağırır. Bu yöntem, nesnenin inşasını tamamlar ve nesneyi döndürür.
+
+<h5 align="left">Builder tasarım deseninin avantajları:</h5>
+
+- Karmaşık nesneleri adım adım oluşturmayı kolaylaştırır.
+- Aynı nesnenin farklı temsillerinin, inşa sürecini değiştirmeden oluşturulmasına olanak tanır.
+- Karmaşık nesnelerin inşa sürecini test etmeyi kolaylaştırır.
+- Okunabilirlik ve Bakım Kolaylığı: Builder tasarım deseni, nesne oluşturma işlemini daha okunaklı ve bakımı daha kolay hale getirir. Her bir adım açıkça tanımlanır ve değiştirilmesi gerektiğinde sadece ilgili Builder sınıfı değiştirilir.
+
+<h5 align="left">Builder tasarım deseninin dezavantajları:</h5>
+- Basit nesneler için Builder kullanmak gereksiz bir karmaşıklık yaratabilir. Bu tasarım deseni, yalnızca karmaşık nesneleri oluşturmak gerektiğinde mantıklıdır.
+
+- **Performans:** Builder deseninin performansı, nesnelerin inşasında kullanılan yöntemlerin sayısına bağlı olarak etkilenebilir. Çok sayıda yöntem kullanılıyorsa, bu performansı olumsuz yönde etkileyebilir.
+
+<h5 align="left">Builder deseni, aşağıdaki durumlarda kullanılabilir:</h5>
+
+- Nesnenin farklı temsillerinin oluşturulması gerekiyorsa.
+- Nesnenin inşa sürecinin test edilmesi gerekiyorsa.
+
+<h5 align="left">Builder desenini kullanmak için aşağıdaki adımları takip edebilirsiniz:</h5>
+
+- Builder sınıfını oluşturun. Bu sınıf, nesnenin inşası için gerekli tüm yöntemleri içermelidir.
+- Nesne sınıfını oluşturun. Bu sınıf, inşa edilen nesnenin temsilini sağlamalıdır.
+- Builder sınıfını kullanarak nesneyi inşa edin.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Bir senaryo gereği çektiğimiz fotoğrafı bir butona 3 defa bastıktan sonra silmek istiyoruz ve fotoğrafın silinme tarihini doldurmak istiyoruz. Bunu yapmadan önce adım adım nesnemizi doldurmak istiyoruz. 3 defa butona bastığımızda fotoğrafın silme tarihinin dolduğunu göreceğiz. Bu işlemi builder tasarım desenini kullanarak yapmamız bize daha fazla **esneklik**, **okunabilirlik** kazandırmış oldu.
+
+Senaryomuz gereği \_InformationsOfPhoto widget sınıfına ilgili fotoğrafı ileteceğimiz için sealed bir class oluşturuyorum. Normal şartlarda bir adet yaratılacak sınıf ve bir adet builder sınıfı yapmanız yeterli olacaktır.
+
+```dart
+sealed class Photo {
+  String? name;
+  Size? size;
+  DateTime? createdDate;
+  DateTime? deletedDate;
+}
+```
+
+Ardından NotPhotoPhotoBuilder isimli bir sınıf oluşturuyoruz. Bu sınıf builder methodundan oluşturacağımız bir sınıftır. Üyelerimizi almak için Photo sınıfını implement ediyoruz.
+
+```dart
+final class PhotoBuilder implements Photo {
+  @override
+  String? name;
+  @override
+  Size? size;
+  @override
+  DateTime? createdDate;
+  @override
+  DateTime? deletedDate;
+
+  PhotoBuilder({
+    this.name,
+    this.size,
+    this.createdDate,
+    this.deletedDate,
+  });
+```
+
+Sonrasında bir adet PhotoBuilder sınıfı oluşturuyoruz ve her üye için setter methodları oluşturuyoruz. Son olarak bir adet build methodu oluşturuyoruz. Bu bize nesnemizi geri döndürecek.
+
+```dart
+final class PhotoBuilder implements Photo {
+  @override
+  String? name;
+  @override
+  Size? size;
+  @override
+  DateTime? createdDate;
+  @override
+  DateTime? deletedDate;
+
+  PhotoBuilder({
+    this.name,
+    this.size,
+    this.createdDate,
+    this.deletedDate,
+  });
+
+  PhotoBuilder setName({required String name}) {
+    this.name = name;
+    return this;
+  }
+
+  PhotoBuilder setSize({required Size size}) {
+    this.size = size;
+    return this;
+  }
+
+  PhotoBuilder setCreatedDate({required DateTime createdDate}) {
+    this.createdDate = createdDate;
+    return this;
+  }
+
+  PhotoBuilder setDeletedDate({required DateTime deletedDate}) {
+    this.deletedDate = deletedDate;
+    return this;
+  }
+
+  NotPhotoPhotoBuilder build() => NotPhotoPhotoBuilder(
+        name: name,
+        size: size,
+        createdDate: createdDate,
+        deletedDate: deletedDate,
+      );
+}
+```

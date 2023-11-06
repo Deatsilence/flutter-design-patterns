@@ -1,3 +1,4 @@
+import 'package:design_patterns/view/builder_view.dart';
 import 'package:design_patterns/view/prototype_view.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Design Patterns',
-      home: PrototypeView(),
+      home: BuilderView(),
     );
   }
 }

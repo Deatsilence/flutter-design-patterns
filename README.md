@@ -773,3 +773,207 @@ final class PhotoBuilder implements Photo {
       );
 }
 ```
+
+- <h2 align="left">Bridge (Structural Patterns)</h2>
+  Bridge design pattern, birbirinden bağımsız iki hiyerarşik yapıyı (abstraction ve implementation) birleştirmek ve birbirinden ayrı olarak değiştirilebilmelerini sağlamak amacıyla kullanılan bir tasarım desenidir. Bu desen, bir nesnenin soyutlamasını (abstraction) ve bu soyutlama üzerinde çalışan işlevselliği (implementation) ayırarak daha esnek bir yapı oluşturmayı hedefler.
+
+Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
+
+<h4 align="left">Bridge tasarım deseninin 4 ana bileşeni vardır:</h4>
+
+**Abstraction (Soyutlama):** Bu, istemcinin bir arayüzle etkileşim kurduğu ve işlevselliğin tam olarak gerçekleşmediği katmandır.
+
+**Refined Abstraction (İyileştirilmiş Soyutlama):** Abstraction'ın alt sınıflarıdır ve spesifik bir durumu ele alır.
+
+**Implementation (Uygulama):** Bu, soyutlamayı gerçekten uygulayan katmandır.
+
+**Concrete Implementation (Somut Uygulama):** Implementation'ın alt sınıflarıdır ve spesifik bir durumu gerçekten uygular.
+
+<h5 align="left">Bridge tasarım deseninin avantajları:</h5>
+
+- Esneklik ve Genişletilebilirlik: Soyutlama ve uygulama, birbirinden bağımsız olarak değiştirilebilir, bu da sistemdeki değişiklikleri kolaylaştırır.
+
+- Gizlilik (Encapsulation): Uygulama detayları soyutlamadan gizlenebilir. İstemci, yalnızca soyutlamayla etkileşimde bulunur.
+
+- Değişiklik Yönetimi: Bir tarafın değişmesi, diğerini etkilemez. Örneğin, sadece soyutlama değişebilir ve uygulama değişmeden kalabilir ya da tam tersi.
+
+<h5 align="left"> Bridge tasarım deseninin dezavantajları:</h5>
+
+- Komplekslik: Desenin uygulanması bazen karmaşıklığa yol açabilir, özellikle projenin boyutu küçükse veya gereksinimler basitse, bu komplekslik gereksiz olabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği projemizde Youtube, Netflix, Amazon Prime, vb. gibi uygulamaların kendi video işleme teknolojisi yerine kendi video işleme teknolojisini kullanmak istiyoruz. Bunu yaparken projemize farklı video işleme teknolojisine sahip uygulamaların ileride projemize dahil olabilme potansiyelini de göz önüne almamız gerekiyor. Bu noktada **Birdge Design Pattern** devreye giriyor. Amacımız yenilenebilen ve her yenilendiğinde eski kod yapısının işleyişini devam ettirebilmesini sağlamaktır.
+
+Senaryomuz gereği kendi **Video Processor** teknolojiz için bir **abstract** sınıf yazıyoruz. İçinde **process(String videoFile)** isimli bir method imzası barındırıyoruz.
+
+```dart
+abstract class VideoProcessor {
+  void process({required String videoFile});
+}
+```
+
+ardından **Video** için bir interface tanımlıyoruz. İçinde **Video Processor** teknolojimizi zorunlu olarak implemente edilmesini sağlıyoruz. Ardından video için **play(String videoFile)** isimli içi boş bir method tanımlıyoruz.
+
+```dart
+interface class Video {
+  VideoProcessor processor;
+
+  Video({required this.processor});
+
+  void play({required String videoFile}) {}
+}
+```
+
+buraya kadar implemente edilecek yapıları kurgulamış olduk. Şimdi Netflix ve Youtube için senaryomuzu işletmeye başlayalım. Hem Netflix Hem de Youtube için ayrı ayrı sınıflar oluşturup **Video** interface'inden kalıtım alıyoruz.
+
+```dart
+class NetflixVideo implements Video {
+  @override
+  VideoProcessor processor;
+
+  NetflixVideo({
+    required this.processor,
+  });
+
+  @override
+  void play({required String videoFile}) {
+    processor.process(videoFile: videoFile);
+  }
+}
+
+class YoutubeVideo implements Video {
+  @override
+  VideoProcessor processor;
+
+  YoutubeVideo({
+    required this.processor,
+  });
+
+  @override
+  void play({required String videoFile}) {
+    processor.process(videoFile: videoFile);
+  }
+}
+```
+
+Şimdi sıra **Video Processor** teknolojimizi ilgili video/videolar için implemente etmekte. Bunun için HD VE UHD(4K) video kalitesi desteği verdiğimizi düşünelim. Her Video kalitesi için **Video Processor** **abstract** sınıfımızdan **kalıtım** alıyoruz.
+
+```dart
+class HDProcessor implements VideoProcessor {
+  @override
+  void process({required String videoFile}) {
+    log("$videoFile is Processing HD Processor");
+  }
+}
+
+class UHD4KProcessor implements VideoProcessor {
+  @override
+  void process({required String videoFile}) {
+    log("$videoFile is Processing UHD 4K Processor");
+  }
+}
+```
+
+Senaryomuz gereği projemizde şimdilik 2 farklı şirket, 2 farklı video kalitesi için kendi **Video Processor** teknolojimizi kullanıyoruz.
+
+Sonrasında Amazon Prime da uygulamamızda yer edindi ve bunu QUHD 8K video kalitesi ile beraber yapmak istediğimizi varsayalım.
+
+```dart
+class AmazonPrimeVideo implements Video {
+  @override
+  VideoProcessor processor;
+
+  AmazonPrimeVideo({
+    required this.processor,
+  });
+
+  @override
+  void play({required String videoFile}) {
+    processor.process(videoFile: videoFile);
+  }
+}
+
+class QUHD8KProcessor implements VideoProcessor {
+  @override
+  void process({required String videoFile}) {
+    log("$videoFile is Processing UHD 8K Processor");
+  }
+}
+
+```
+
+Peki bunu UI Tarafında nasıl kullanabiliriz ?
+
+```dart
+import 'package:design_patterns/patterns/bridge/bridge.dart';
+import 'package:flutter/material.dart';
+
+class BridgeView extends StatefulWidget {
+  const BridgeView({super.key});
+
+  @override
+  State<BridgeView> createState() => _BridgeViewState();
+}
+
+class _BridgeViewState extends State<BridgeView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Bridge Design Pattern"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              onPressed: () {
+                Video youtubeVideo = YoutubeVideo(processor: HDProcessor());
+                youtubeVideo.play(videoFile: "abc.mp4");
+
+                const text = "The video playing as HD Quality in Youtube";
+                const snackbar = SnackBar(content: Text(text));
+
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(snackbar);
+              },
+              child: const Text("Watch a HD Video in Youtube"),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Video netflixVideo = NetflixVideo(processor: UHD4KProcessor());
+                netflixVideo.play(videoFile: "abc.mp4");
+
+                const text = "The video playing as UHD 4K Quality in Netflix";
+                const snackbar = SnackBar(content: Text(text));
+
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(snackbar);
+              },
+              child: const Text("Watch a UHD 4K Video in Netflix"),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Video amazonPrimeVideo = AmazonPrimeVideo(processor: QUHD8KProcessor());
+                amazonPrimeVideo.play(videoFile: "abc.mp4");
+
+                const text = "The video playing as QUHD 8K Quality in Amazon Prime";
+                const snackbar = SnackBar(content: Text(text));
+
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(snackbar);
+              },
+              child: const Text("Watch a QUHD 8K Video in Amazon Prime"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```

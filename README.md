@@ -31,7 +31,7 @@
   - Visitor
   - Memento
 
-- <h2 id="factory-method" align="left">Factory Method (Creational Patterns)</h2>
+- <h2 align="left"><a id="factory-method">Factory Method (Creational Patterns)</h2>
   Factory design pattern(Fabrika tasarım deseni) bir nesnenin nasıl oluşturulacağını soyutlaştırmaya yardımcı olan bir yaratımsal tasarım modelidir. Bu, kodunuzun daha esnek ve genişletilebilir olmasını sağlar.
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
@@ -122,7 +122,7 @@ class FactoryView extends StatelessWidget {
 }
 ```
 
-- <h2 id="abstract-factory" align="left">Abstract Factory (Creational Patterns)</h2>
+- <h2 align="left"><a id="abstract-factory">Abstract Factory (Creational Patterns)</h2>
 
 Soyut fabrika tasarım deseni, birden çok aileden nesne oluşturmak için bir fabrika sınıfı kullanır. Bu desen, nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve esnek olmasını sağlar.
 
@@ -262,7 +262,7 @@ class AbstractFactoryView extends StatelessWidget {
 
 Hangi yöntemin kullanılacağı projenin gereksinimlerine ve diğer parametrelere bağlıdır.
 
-- <h2 id="singleton" align="left">Singleton (Creational Patterns)</h2>
+- <h2 align="left"><a id="singleton">Singleton (Creational Patterns)</h2>
   Singleton tasarım deseni, bir sınıftan yalnızca bir nesnenin oluşturulmasını sağlar. Bu desen, tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanılır.
 
 <h4 align="left">Singleton tasarım deseninin iki ana bileşeni vardır:</h4>
@@ -389,7 +389,7 @@ class _SingletonViewState extends State<SingletonView> {
 
 ```
 
-- <h2 id="prototype" align="left">Prototype (Creational Patterns)</h2>
+- <h2 align="left"><a id="prototype">Prototype (Creational Patterns)</h2>
   Prototype tasarım kalıbı, nesnelerin kopyalarını oluşturmak için bir prototip nesneyi kullanan bir tasarım kalıbıdır. Bu, nesneleri doğrudan oluşturmaktan daha verimli olabilir, özellikle de nesnelerin oluşturulması karmaşık veya zaman alıcıysa.
 
 <h4 align="left">Prototype tasarım deseninin üç ana bileşeni vardır:</h4>
@@ -486,7 +486,7 @@ Output:
 [log] mete dogan  35  m@gmail
 ```
 
-- <h2 id="adapter" align="left">Adapter (Structural Patterns)</h2>
+- <h2 align="left"><a id="adapter">Adapter (Structural Patterns)</h2>
   Adapter tasarım deseni, birbiriyle uyumlu olmayan arayüzlere sahip nesnelerin birlikte çalışabilmelerini sağlayan yapısal bir tasarım desenidir. Bu desen, mevcut bir sınıfı veya arayüz sınıfını, eldeki farklı bir arayüz sınıfına uygun hale getirerek tekrar kullanmak amacıyla uygulanır.
 
 Adapter deseni, iki farklı sınıfın veya arayüzün arayüzlerini birbirine benzeterek, bu sınıfların veya arayüzlerin birlikte kullanılmasını sağlar. Bu sayede, mevcut bir sınıfı veya arayüz sınıfını, değiştirmek veya yeniden yazmak zorunda kalmadan, yeni bir sistemde veya projede kullanmak mümkün olur.
@@ -655,7 +655,7 @@ class AdapterView extends StatelessWidget {
 
 ```
 
-- <h2 id="builder" align="left">Builder (Creational Patterns)</h2>
+- <h2 align="left"><a id="builder">Builder (Creational Patterns)</h2>
   Builder deseni, karmaşık bir nesnenin inşasını iki sınıfa ayıran bir yapısal tasarım modelidir.
 
 <h4 align="left">Builder tasarım deseninin iki ana bileşeni vardır:</h4>
@@ -774,7 +774,7 @@ final class PhotoBuilder implements Photo {
 }
 ```
 
-- <h2 align="left">Bridge (Structural Patterns)</h2>
+- <h2 align="left"><a id="bridge">Bridge (Structural Patterns)</h2>
   Bridge design pattern, birbirinden bağımsız iki hiyerarşik yapıyı (abstraction ve implementation) birleştirmek ve birbirinden ayrı olarak değiştirilebilmelerini sağlamak amacıyla kullanılan bir tasarım desenidir. Bu desen, bir nesnenin soyutlamasını (abstraction) ve bu soyutlama üzerinde çalışan işlevselliği (implementation) ayırarak daha esnek bir yapı oluşturmayı hedefler.
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.

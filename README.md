@@ -12,7 +12,7 @@
 - Structural Patterns
   - [Adapter](#adapter)
   - [Bridge](#bridge)
-  - Composite
+  - [Composite](#composite)
   - Decorator
   - Facade
   - Flyweight
@@ -980,3 +980,209 @@ class _BridgeViewState extends State<BridgeView> {
 
 <pre>
 <img src="https://user-images.githubusercontent.com/78795973/282323920-b934655b-f8c4-4fe7-b12b-5b0034b67ba5.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323923-7b57245f-f14f-40e3-9758-a4db458fce52.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323927-2cbcd660-b69f-42a1-ae8a-8b223fb60eda.png" width="250">
+
+
+- <h2 align="left"><a id="composite">Composite (Structural Patterns)</h2>
+Kompozit tasarım deseni, tek tek nesneleri ve nesne bileşimlerini aynı şekilde ele almanızı sağlayan güçlü bir yapısal desendir. Hem parçaları (tek tek nesneler) hem de bütünleri (bileşik nesneler) aynı şekilde ele alabileceğiniz nesne hiyerarşileri oluşturmanıza yardımcı olur.
+
+
+
+<h4 align="left">Composite tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Abstract Interface:** Bu modelin temelidir. Hiyerarşideki hem bireysel hem de bileşik tüm nesnelerin uyması gereken ortak davranışı tanımlar.
+- **Concrete Classes:** Bunlar, belirli nesne türlerini temsil eden soyut arayüzün uygulamalarıdır. Her sınıf arayüz yöntemleri için kendi davranışını tanımlar.
+- **Client Code:** Bu, hiyerarşideki nesnelerle etkileşime giren koddur. İstemciler yalnızca soyut arabirimi görür ve hem tek tek nesnelere hem de kompozitlere aynı şekilde davranmalarına izin verir
+
+<h5 align="left">Composite tasarım deseninin avantajları:</h5>
+
+- İstemcilerin farklı nesne türlerini farklı şekilde işlemeleri gerekmez.
+- Daha esnek ve yeniden kullanılabilir kod Ortak arayüze uyan yeni öğe türlerini kolayca ekleyebilirsiniz.
+- Daha kolay bakım bir öğe türündeki değişiklikler mutlaka diğerlerini etkilemez.
+- Geliştirilmiş kod okunabilirliği: Kod, verilerinizin gerçek dünya yapısını yansıtır.
+
+<h5 align="left"> Composite tasarım deseninin dezavantajları:</h5>
+
+- Büyük bir hiyerarşik tarama yapmayalım, performans etkileyici olabilir.
+
+**Örnek Senaryo**
+
+Örneğin aynı gruba ait olduğunu hissettiğiniz belli kategoriler var. Mesela bir e-ticaret uygulamasında belli kategoriler olur. Bu kategorilerin altında ilgili kategoriyle ilgili alt kategori veya başlıklar bulunur. Bu yapıları daha kolay ve esnek bir şekilde inşa etmek için devreye **Composite Design Pattern** giriyor. İster ilgili nesneleri tek tek ele alın, ister kategorileri çoklu olarak ele alıp hiyerarşiyi insa edebiliriz. Amacımız bu esnekliği sağlamak olacak.
+
+Şimdi senaryomuz gereği ilk inşa edeceğimiz şey ortak yapıyı sağlayacak olan **Abstract Class** olacaktır.
+
+```dart
+
+import 'package:flutter/material.dart';
+
+/// Abstract class representing an item that can be added to a shopping cart.
+abstract class CartItem<T extends dynamic> {
+  /// Returns the name of the item.
+  String getName();
+
+  /// Returns the price of the item.
+  double getPrice();
+
+  /// Builds and returns the widget representation of the item.
+  T buildItemWidget();
+}
+
+```
+
+Sonrasında herhangi bir ürün için **Product** isimli bir class yaratıyoruz. Bu class oluşturmuş olduğumuz **CartItem** isimli **Abstract** sınıftan kalıtım alarak tek bir ürün için yapıyı inşa etmeye başlıyoruz. İçinde ilgili ürünle ilgili bilgiler tutacağından gerekli değişkenleri yazıyoruz. Unutmayın senaryomuz bir E-ticaret uygulaması olacak. **buildItemWidget()** methodu generic şekilde döndüğünden ürün için bir **Card** yazmayı tercih ediyoruz.
+
+```dart
+/// Represents a single product that can be added to a shopping cart.
+final class Product implements CartItem<dynamic> {
+  final String title;
+  final String description;
+  final String imageUrl;
+  final double price;
+  int quantity;
+
+  /// Constructs a new instance of the [Product] class.
+  Product({
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    required this.price,
+    this.quantity = 0,
+  });
+
+  @override
+  String getName() => title;
+
+  @override
+  double getPrice() => price * quantity;
+
+  @override
+  dynamic buildItemWidget() => Card(
+        child: ListTile(
+          leading: Image.network("https://picsum.photos/200", width: 60, height: 60),
+          title: Text(title),
+          subtitle: Text(description),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Quantity: $quantity'),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {}, // Implement quantity increment
+              ),
+              IconButton(
+                icon: const Icon(Icons.remove),
+                onPressed: () {}, // Implement quantity decrement
+              ),
+            ],
+          ),
+        ),
+      );
+}
+```
+
+Sıra toplu olarak bir ürün ağacı inşa etmeye geldi. Senaryomuzda **Araba** ve **Masaüstü Bilgisayar** kategorilerini ele alacağız. Bu kategoriler kendi içinde bir çok parçaya(teker, anakart, vb.) ayrılabileceğinden
+ilgili yapıları ortak bir şekilde yönetmek için **Category** isimli **CartItem** **Abstract** sınıfından kalıtım alan bir sınıf oluşturuyoruz. **buildItemWidget()** methodu **ExpansionPanel** dönerek **final List<CartItem<dynamic>> children** listesinde bulunan diğer benzer ürünleri tek ortak kategori başlığı adı altında topluyoruz.
+
+```dart
+final class Category implements CartItem<dynamic> {
+  final String name;
+  final List<CartItem<dynamic>> children;
+  bool isExpanded; // Track if category is expanded to show children
+
+  /// Constructs a new instance of the [Category] class.
+  Category({
+    required this.name,
+    required this.children,
+    this.isExpanded = false,
+  });
+
+  @override
+  String getName() => name;
+
+  @override
+  double getPrice() => children.fold(0, (sum, child) => sum + child.getPrice());
+
+  @override
+  dynamic buildItemWidget() => ExpansionPanel(
+        headerBuilder: (context, isExpanded) => Text(name),
+        body: Column(
+          children: children.map((child) => child.buildItemWidget() as Widget).toList(),
+        ),
+        isExpanded: isExpanded,
+      );
+}
+```
+
+UI tarafında nasıl bir kullanım senaryosu olabilir hadi beraber bakalım. Öncelikle ilgili kategori ve tekli ürünlerimizi ayarlamak için bir liste oluşturuyoruz. Daha önce söylediğim gibi kategorilerimiz **Desktop Computer** ve **Car** şeklinde olacak. Alt ürünlerinde ilgili ürünler olacak.
+
+```dart
+final List<Category> categories = [
+    Category(
+      name: "Desktop Computer",
+      children: [
+        Product(
+          title: "Main Board",
+          description: "Part of the computer",
+          imageUrl: "imageUrl#1",
+          price: 1000,
+        ),
+        Product(
+          title: "CPU",
+          description: "Part of the computer",
+          imageUrl: "imageUrl#2",
+          price: 2000,
+        )
+      ],
+    ),
+    Category(
+      name: "Car",
+      children: [
+        Product(
+          title: "Electiric car",
+          description: "type of the cars",
+          imageUrl: "imageUrl#1",
+          price: 9000,
+        ),
+        Product(
+          title: "wheel",
+          description: "Part of the cars",
+          imageUrl: "imageUrl#2",
+          price: 1000,
+        )
+      ],
+    ),
+  ];
+```
+Kategorileri ve tekli ürünü **ExpansionPanelList** kullanarak görüntülüyoruz.
+```dart
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          children: [
+            ExpansionPanelList(
+              expansionCallback: (int index, bool isExpanded) {
+                setState(() {
+                  categories[index].isExpanded = !categories[index].isExpanded;
+                });
+              },
+              children: [
+                categories[CategoryType.desktopComputer.index].buildItemWidget(),
+                categories[CategoryType.car.index].buildItemWidget(),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: product.buildItemWidget(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+<pre>
+<img src="https://user-images.githubusercontent.com/78795973/287830530-ea687dcd-3c1a-4541-b034-6e5a34dcf0ac.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/287832109-fa70e1ec-4af4-445a-925f-e1d6eba93576.png" width="250">

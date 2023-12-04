@@ -1,0 +1,4 @@
+enum CategoryType {
+  desktopComputer,
+  car,
+}

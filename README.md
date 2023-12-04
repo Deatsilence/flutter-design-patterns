@@ -978,14 +978,10 @@ class _BridgeViewState extends State<BridgeView> {
 
 ```
 
-<pre>
 <img src="https://user-images.githubusercontent.com/78795973/282323920-b934655b-f8c4-4fe7-b12b-5b0034b67ba5.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323923-7b57245f-f14f-40e3-9758-a4db458fce52.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323927-2cbcd660-b69f-42a1-ae8a-8b223fb60eda.png" width="250">
-
 
 - <h2 align="left"><a id="composite">Composite (Structural Patterns)</h2>
   Kompozit tasarım deseni, tek tek nesneleri ve nesne bileşimlerini aynı şekilde ele almanızı sağlayan güçlü bir yapısal desendir. Hem parçaları (tek tek nesneler) hem de bütünleri (bileşik nesneler) aynı şekilde ele alabileceğiniz nesne hiyerarşileri oluşturmanıza yardımcı olur.
-
-
 
 <h4 align="left">Composite tasarım deseninin üç ana bileşeni vardır:</h4>
 
@@ -1152,7 +1148,9 @@ final List<Category> categories = [
     ),
   ];
 ```
+
 Kategorileri ve tekli ürünü **ExpansionPanelList** kullanarak görüntülüyoruz.
+
 ```dart
 Widget build(BuildContext context) {
     return Scaffold(
@@ -1184,5 +1182,5 @@ Widget build(BuildContext context) {
   }
 }
 ```
-<pre>
+
 <img src="https://user-images.githubusercontent.com/78795973/287830530-ea687dcd-3c1a-4541-b034-6e5a34dcf0ac.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/287832109-fa70e1ec-4af4-445a-925f-e1d6eba93576.png" width="250">

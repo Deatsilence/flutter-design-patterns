@@ -1,5 +1,4 @@
-import 'package:design_patterns/view/bridge_view.dart';
-import 'package:design_patterns/view/composite_view.dart';
+import 'package:design_patterns/view/decorator_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Design Patterns',
-      home: CompositeView(),
+      home: DecoratorView(),
     );
   }
 }

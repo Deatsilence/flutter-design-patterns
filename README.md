@@ -13,7 +13,7 @@
   - [Adapter](#adapter)
   - [Bridge](#bridge)
   - [Composite](#composite)
-  - Decorator
+  - [Decorator](#decorator)
   - Facade
   - Flyweight
   - Proxy
@@ -2372,7 +2372,7 @@ Widget build(BuildContext context) {
 
 <img src="https://user-images.githubusercontent.com/78795973/287830530-ea687dcd-3c1a-4541-b034-6e5a34dcf0ac.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/287832109-fa70e1ec-4af4-445a-925f-e1d6eba93576.png" width="250">
 
-- <h2 align="left"><a id="composite">Decorator (Structural Patterns)</h2>
+- <h2 align="left"><a id="decorator">Decorator (Structural Patterns)</h2>
   Decorator tasarım deseni, bir nesneye dinamik olarak yeni özellikler eklemek için kullanılan bir tasarım desenidir. Bu, temel nesnenin işlevselliğini değiştirmeden veya genişletmeden yapılır. Decorator tasarım deseni, doğru bir şekilde kullanıldığında esneklik ve sürdürülebilirlik sağlar. Ancak, her tasarım deseni gibi, uygulama gereksinimlerinize uygun olup olmadığını değerlendirmek önemlidir.
 
 <h4 align="left">Decorator tasarım deseninin 3 ana bileşeni vardır:</h4>

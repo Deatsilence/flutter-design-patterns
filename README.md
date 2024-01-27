@@ -1,4 +1,4 @@
-<h1 align="center">Design Patterns with Flutter</h1>
+<h1 align="center"><a id="head">Design Patterns with Flutter</h1>
 
 - <h2 align="left">Kısaca Design Patterns nedir ?</h2>
   Tasarım desenleri, yazılım geliştirmede yaygın olarak kullanılan önemli araçlardır. Bu desenler, nesnelerin oluşturulmasını, bir araya getirilmesini ve iletişim kurmasını kontrol ederek kod kalitesini, tutarlılığını ve yeniden kullanılabilirliğini artırabilir
@@ -121,6 +121,8 @@ class FactoryView extends StatelessWidget {
   }
 }
 ```
+
+[Dökümantasyonun başına dön](#head)
 
 - <h2 align="left"><a id="abstract-factory">Abstract Factory (Creational Patterns)</h2>
 
@@ -262,6 +264,8 @@ class AbstractFactoryView extends StatelessWidget {
 
 Hangi yöntemin kullanılacağı projenin gereksinimlerine ve diğer parametrelere bağlıdır.
 
+[Dökümantasyonun başına dön](#head)
+
 - <h2 align="left"><a id="singleton">Singleton (Creational Patterns)</h2>
   Singleton tasarım deseni, bir sınıftan yalnızca bir nesnenin oluşturulmasını sağlar. Bu desen, tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanılır.
 
@@ -389,6 +393,8 @@ class _SingletonViewState extends State<SingletonView> {
 
 ```
 
+[Dökümantasyonun başına dön](#head)
+
 - <h2 align="left"><a id="prototype">Prototype (Creational Patterns)</h2>
   Prototype tasarım kalıbı, nesnelerin kopyalarını oluşturmak için bir prototip nesneyi kullanan bir tasarım kalıbıdır. Bu, nesneleri doğrudan oluşturmaktan daha verimli olabilir, özellikle de nesnelerin oluşturulması karmaşık veya zaman alıcıysa.
 
@@ -485,6 +491,8 @@ Output:
 [log] mert dogan  23  m@gmail
 [log] mete dogan  35  m@gmail
 ```
+
+[Dökümantasyonun başına dön](#head)
 
 - <h2 align="left"><a id="adapter">Adapter (Structural Patterns)</h2>
   Adapter tasarım deseni, birbiriyle uyumlu olmayan arayüzlere sahip nesnelerin birlikte çalışabilmelerini sağlayan yapısal bir tasarım desenidir. Bu desen, mevcut bir sınıfı veya arayüz sınıfını, eldeki farklı bir arayüz sınıfına uygun hale getirerek tekrar kullanmak amacıyla uygulanır.
@@ -655,6 +663,8 @@ class AdapterView extends StatelessWidget {
 
 ```
 
+[Dökümantasyonun başına dön](#head)
+
 - <h2 align="left"><a id="builder">Builder (Creational Patterns)</h2>
   Builder deseni, karmaşık bir nesnenin inşasını iki sınıfa ayıran bir yapısal tasarım modelidir.
 
@@ -774,8 +784,10 @@ final class PhotoBuilder implements Photo {
 }
 ```
 
+[Dökümantasyonun başına dön](#head)
+
 - <h2 align="left"><a id="bridge">Bridge (Structural Patterns)</h2>
-  Bridge design pattern, birbirinden bağımsız iki hiyerarşik yapıyı (abstraction ve implementation) birleştirmek ve birbirinden ayrı olarak değiştirilebilmelerini sağlamak amacıyla kullanılan bir tasarım desenidir. Bu desen, bir nesnenin soyutlamasını (abstraction) ve bu soyutlama üzerinde çalışan işlevselliği (implementation) ayırarak daha esnek bir yapı oluşturmayı hedefler.
+  Bridge design pattern, birbirinden bağımsız iki hiyerarşik yapıyı (abstraction ve implementation)birleştirmek ve birbirinden ayrı olarak değiştirilebilmelerini sağlamak amacıyla kullanılan birtasarım desenidir. Bu desen, bir nesnenin soyutlamasını (abstraction) ve bu soyutlama üzerindeçalışan işlevselliği (implementation) ayırarak daha esnek bir yapı oluşturmayı hedefler.
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
 
@@ -979,6 +991,8 @@ class _BridgeViewState extends State<BridgeView> {
 ```
 
 <img src="https://user-images.githubusercontent.com/78795973/282323920-b934655b-f8c4-4fe7-b12b-5b0034b67ba5.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323923-7b57245f-f14f-40e3-9758-a4db458fce52.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323927-2cbcd660-b69f-42a1-ae8a-8b223fb60eda.png" width="250">
+
+[Dökümantasyonun başına dön](#head)
 
 - <h2 align="left"><a id="composite">Composite (Structural Patterns)</h2>
   Kompozit tasarım deseni, tek tek nesneleri ve nesne bileşimlerini aynı şekilde ele almanızı sağlayan güçlü bir yapısal desendir. Hem parçaları (tek tek nesneler) hem de bütünleri (bileşik nesneler) aynı şekilde ele alabileceğiniz nesne hiyerarşileri oluşturmanıza yardımcı olur.
@@ -1184,6 +1198,8 @@ Widget build(BuildContext context) {
 ```
 
 <img src="https://user-images.githubusercontent.com/78795973/287830530-ea687dcd-3c1a-4541-b034-6e5a34dcf0ac.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/287832109-fa70e1ec-4af4-445a-925f-e1d6eba93576.png" width="250">
+
+[Dökümantasyonun başına dön](#head)
 
 - <h2 align="left"><a id="decorator">Decorator (Structural Patterns)</h2>
   Decorator tasarım deseni, bir nesneye dinamik olarak yeni özellikler eklemek için kullanılan bir tasarım desenidir. Bu, temel nesnenin işlevselliğini değiştirmeden veya genişletmeden yapılır. Decorator tasarım deseni, doğru bir şekilde kullanıldığında esneklik ve sürdürülebilirlik sağlar. Ancak, her tasarım deseni gibi, uygulama gereksinimlerinize uygun olup olmadığını değerlendirmek önemlidir.
@@ -1407,6 +1423,8 @@ final class _DecoratorViewState extends State<DecoratorView> {
 
 <img src="https://user-images.githubusercontent.com/78795973/290292483-048dd72f-eb9c-49d9-bf5c-aa2f473e64b3.png" width="250">
 
+[Dökümantasyonun başına dön](#head)
+
 - <h2 align="left"><a id="fecade">Fecade (Structural Patterns)</h2>
   Facade tasarım kalıbı, karmaşık sistemleri basit bir arayüzle yönetmek için kullanılan biryapısal tasarım kalıbıdır. Bu kalıp, sistemlerin kullanımını kolaylaştırmak ve karmaşıklığınıgizlemek amacıyla kullanılır. Facade tasarım kalıbı, özellikle büyük yazılım sistemlerinde, altsistemlerin doğrudan erişimini sınırlayarak ve bir dizi alt sistem işlevini tek bir, yüksekseviyeli arayüzle birleştirerek kodun anlaşılabilirliğini ve kullanımını kolaylaştırır.
 
@@ -1525,3 +1543,5 @@ class _FecadeViewState extends State<FecadeView> {
   }
 }
 ```
+
+[Dökümantasyonun başına dön](#head)

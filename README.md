@@ -1406,3 +1406,122 @@ final class _DecoratorViewState extends State<DecoratorView> {
 ```
 
 <img src="https://user-images.githubusercontent.com/78795973/290292483-048dd72f-eb9c-49d9-bf5c-aa2f473e64b3.png" width="250">
+
+- <h2 align="left"><a id="fecade">Fecade (Structural Patterns)</h2>
+  Facade tasarım kalıbı, karmaşık sistemleri basit bir arayüzle yönetmek için kullanılan biryapısal tasarım kalıbıdır. Bu kalıp, sistemlerin kullanımını kolaylaştırmak ve karmaşıklığınıgizlemek amacıyla kullanılır. Facade tasarım kalıbı, özellikle büyük yazılım sistemlerinde, altsistemlerin doğrudan erişimini sınırlayarak ve bir dizi alt sistem işlevini tek bir, yüksekseviyeli arayüzle birleştirerek kodun anlaşılabilirliğini ve kullanımını kolaylaştırır.
+
+Facade, karmaşık alt sistemlerin basitleştirilmiş bir arayüzle dış dünyaya sunulmasını sağlar. Kullanıcılar, alt sistemlerin karmaşık yapıları ve işleyişleri hakkında derinlemesine bilgi sahibi olmadan, bu sistemleri kullanabilirler.
+
+<h4 align="left">Fecade tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Fecade:** Dış dünyaya sunulan basitleştirilmiş arayüzü sağlar. Alt sistemlerin işlevlerini birleştirir ve kullanıcıya sunar.
+- **Alt Sistemler:** Facade arayüzü tarafından kapsanan karmaşık işlevselliği barındıran sınıflar. Bunlar doğrudan kullanıcı tarafından çağrılmaz, ancak Facade sınıfı tarafından yönetilir.
+
+<h5 align="left">Fecade tasarım deseninin avantajları:</h5>
+
+- Karmaşık sistemlerin daha basit bir arayüzle kullanılmasını sağlar.
+- Alt sistemlerle doğrudan etkileşimi azaltır, böylece kodun bakımı ve güncellenmesi kolaylaşır.
+- Alt sistemlerin ayrı ayrı test edilmesini kolaylaştırır.
+
+<h5 align="left"> Fecade tasarım deseninin dezavantajları:</h5>
+
+- Ekstra bir soyutlama katmanı, bazen performans kaybına yol açabilir.
+- Çok basitleştirilmiş bir arayüz, bazı durumlarda alt sistemlerin tüm özelliklerine erişimi kısıtlayabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği teknik alt yapımızda birden fazla alt sistemizin (Network katmanımızın) olduğunu varsayalım. Bunlar Hava durumu için **WeatherService**, haberler için **NewsService**, Kullanıcı için **UserProfileService** olsun. Bu katmanları tek bir katmanda toplayarak kullanabiliriz. Bu katmanımızın ismi **ApiFacadeService** olsun. **ApiFacadeService** katmanını kullanarak diğer alt sistemlere erişerek işlemlerimizde kullanacağız. Gerçek veriden kaçınarak ana mantığı kod üzerinde oturtalım.
+
+**WeatherService** `Future<Weather> getWeather()` method imzasına sahip bir methoda sahiptir ve bize **Weather** modelini döner.
+
+```dart
+import 'package:design_patterns/patterns/fecade/model/weather.dart';
+
+final class WeatherService {
+  Future<Weather> getWeather() {
+    return Future.value(Weather());
+  }
+}
+
+```
+
+**NewsService** `Future<List<News>> getLatestNews()` method imzasına sahip bir methoda sahiptir ve bize **News** modelinin listesini döner döner.
+
+```dart
+import 'package:design_patterns/patterns/fecade/model/news.dart';
+
+final class NewsService {
+  Future<List<News>> getLatestNews() {
+    return Future.value(
+      List.generate(
+        10,
+        (index) => News(),
+      ),
+    );
+  }
+}
+```
+
+**UserProfileService** `final class UserProfileService` method imzasına sahip bir methoda sahiptir ve bize **UserProfile** modelini döner.
+
+```dart
+import 'package:design_patterns/patterns/fecade/model/user_profile.dart';
+
+final class UserProfileService {
+  Future<UserProfile> getUserProfile() {
+    return Future.value(UserProfile());
+  }
+}
+
+```
+
+Sıra **ApiFacadeService** katmanını oluşturmaya geldi. Bu katmanda kullanmak istediğimiz alt katmanları kullanıyoruz. Bu sayede alt katmanlara erişimi sınırlayarak kullanabiliyoruz.
+
+```dart
+final class ApiFacadeService {
+  final WeatherService _weatherService = WeatherService();
+  final NewsService _newsService = NewsService();
+  final UserProfileService _userProfileService = UserProfileService();
+
+  Future<Weather> getWeather() => _weatherService.getWeather();
+  Future<List<News>> getNews() => _newsService.getLatestNews();
+  Future<UserProfile> getUserProfile() => _userProfileService.getUserProfile();
+}
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz ? Örnek olması açısından **FutureBuilder** vb. yapılarda kullanabilirsiniz.
+
+```dart
+final class FecadeView extends StatefulWidget {
+  const FecadeView({super.key});
+
+  @override
+  State<FecadeView> createState() => _FecadeViewState();
+}
+
+class _FecadeViewState extends State<FecadeView> {
+  ApiFacadeService? _apiFacadeService;
+
+  @override
+  void initState() {
+    super.initState();
+    _apiFacadeService = ApiFacadeService();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _apiFacadeService != null
+            ? FutureBuilder(
+                future: _apiFacadeService!.getNews(),
+                //! future: _apiFacadeService!.getUserProfile(),
+                //! future: _apiFacadeService!.getWeather(),
+                builder: (context, snapshot) => const Text("data"),
+              )
+            : const Text('an error occured'),
+      ),
+    );
+  }
+}
+```

@@ -14,7 +14,7 @@
   - [Bridge](#bridge)
   - [Composite](#composite)
   - [Decorator](#decorator)
-  - Facade
+  - [Facade](#fecade)
   - Flyweight
   - Proxy
 - Behavioral Patterns

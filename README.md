@@ -13,7 +13,7 @@
   - [Adapter](#adapter)
   - [Bridge](#bridge)
   - [Composite](#composite)
-  - Decorator
+  - [Decorator](#decorator)
   - Facade
   - Flyweight
   - Proxy

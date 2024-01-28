@@ -1664,7 +1664,7 @@ final class FlyWeightView extends StatelessWidget {
 
 ```
 
-<img src="https://user-images.githubusercontent.com/78795973/300271066-72f1007d-a5fc-4f1d-b3f9-215dc7bcf365.png" width="250">
-<img src="https://user-images.githubusercontent.com/78795973/300271213-b5a1d964-e308-4445-8a8e-6f2965cb140a.png" width="250">
+<img src="https://private-user-images.githubusercontent.com/78795973/300271066-72f1007d-a5fc-4f1d-b3f9-215dc7bcf365.png" width="250">
+<img src="https://private-user-images.githubusercontent.com/78795973/300271213-b5a1d964-e308-4445-8a8e-6f2965cb140a.png" width="250">
 
 [Dökümantasyonun başına dön](#head)

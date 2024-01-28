@@ -4,19 +4,23 @@
   Tasarım desenleri, yazılım geliştirmede yaygın olarak kullanılan önemli araçlardır. Bu desenler, nesnelerin oluşturulmasını, bir araya getirilmesini ve iletişim kurmasını kontrol ederek kod kalitesini, tutarlılığını ve yeniden kullanılabilirliğini artırabilir
 
 - Creational Patterns
+
   - [Factory Method](#factory-method)
   - [Abstract Factory](#abstract-factory)
   - [Singleton](#singleton)
   - [Builder](#builder)
   - [Prototype](#prototype)
+
 - Structural Patterns
+
   - [Adapter](#adapter)
   - [Bridge](#bridge)
   - [Composite](#composite)
   - [Decorator](#decorator)
   - [Facade](#fecade)
   - [Flyweight](#flyweight)
-  - Proxy
+  - [Proxy](#proxy)
+
 - Behavioral Patterns
 
   - Chain of Responsibility
@@ -1549,7 +1553,7 @@ class _FecadeViewState extends State<FecadeView> {
 - <h2 align="left"><a id="flyweight">Flyweight (Structural Patterns)</h2>
   Flyweight tasarım kalıbı, bellek kullanımını optimize etmek amacıyla kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, nesneler arasında paylaşılabilir durumları (intrinsic state) ve paylaşılamayan durumları (extrinsic state) ayırarak, tekrar eden durumları azaltmayı ve böylece bellek kullanımını verimli bir şekilde azaltmayı hedefler. Özellikle birçok benzer nesnenin oluşturulduğu durumlarda önem kazanır. Flutter'da Flyweight tasarım kalıbını kullanmanın bir örneği, özellikle widget ağaçlarında tekrar eden widget'ları optimize etmek olabilir. Flutter uygulamalarında, bazı widget'lar özellikle liste veya ızgara görünümlerinde tekrar tekrar kullanılır. Bu durumda, Flyweight kalıbını uygulayarak, bellek kullanımını optimize edebilir ve uygulamanın performansını artırabiliriz.
 
-<h4 align="left">Flyweight tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Flyweight tasarım deseninin 4 ana bileşeni vardır:</h4>
 
 - **Flyweight Interface:** Paylaşılan nesnelerin ortak bir arayüzünü tanımlar.
 - **Concrete Flyweight:** Flyweight interface'ini uygulayan ve iç durumu (intrinsic state) saklayan sınıf.
@@ -1669,3 +1673,120 @@ final class FlyWeightView extends StatelessWidget {
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/72f1007d-a5fc-4f1d-b3f9-215dc7bcf365" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/b5a1d964-e308-4445-8a8e-6f2965cb140a" width="250">
 
 [Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="proxy">Proxy (Structural Patterns)</h2>
+  Proxy tasarım kalıbı, bir nesneye erişimi kontrol etmek veya bu erişimi başka bir nesne üzerinden yapmak için kullanılan yapısal bir tasarım kalıbıdır. Bu kalıp, bir nesnenin işlevselliğini genişletmek veya değiştirmek için kullanılırken, orijinal nesnenin yapısını değiştirmeden çalışır. Proxy, gerçek nesneye bir tür arayüz ya da temsilci olarak hizmet eder.
+
+<h4 align="left">Proxy tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Subject Interface:** Gerçek nesne ve proxy'nin uygulaması gereken arayüz.
+- **Real Subject:** İstemcinin erişmek istediği asıl nesne.
+- **Proxy:** Gerçek nesneye erişimi kontrol eden ya da onun yerine geçen nesne.
+
+<h5 align="left">Proxy tasarım deseninin avantajları:</h5>
+
+- Proxy, gerçek nesnelere erişimi kontrol etmenize olanak tanır. Örneğin, güvenlik kontrolleri veya erişim izinleri ekleyebilirsiniz.
+- Pahalı kaynakların yüklenmesini erteleyerek uygulamanın performansını artırabilir. Özellikle büyük nesneler veya ağ üzerinden gelen veriler için faydalıdır.
+- Özellikle uzak sunuculardan veri çekme işlemlerinde, gereksiz ağ trafiğini azaltarak performansı artırabilir. Örneğin, verileri önbelleğe alarak (caching) aynı verinin tekrar tekrar yüklenmesini önleyebilir.
+- Proxy, gerçek nesne üzerinde yapılan işlemleri loglayabilir ve ekstra güvenlik katmanları ekleyebilir.
+- Kullanıcılar veya diğer nesneler, proxy'nin varlığından habersiz olarak gerçek nesnelerle etkileşimde bulunabilir.
+
+<h5 align="left"> Proxy tasarım deseninin dezavantajları:</h5>
+
+- Proxy kalıbının uygulanması, sistemin genel karmaşıklığını artırabilir. Basit durumlar için, bu ekstra karmaşıklık gereksiz olabilir.
+- Proxy sınıfı, bazı durumlarda ekstra işlem yükü oluşturabilir. Özellikle, her istekte proxy üzerinden geçmek, işlem süresini artırabilir.
+- Proxy'nin doğru şekilde yönetilmesi gereklidir, özellikle caching veya güvenlik gibi özellikler eklenmişse. Yanlış yönetilen bir proxy, veri tutarsızlığına veya güvenlik açıklarına yol açabilir.
+- Proxy kalıbını doğru bir şekilde uygulamak, bazı durumlarda tasarımın anlaşılmasını ve genişletilmesini zorlaştırabilir.
+- Proxy'nin eklediği katmanlar, bazı durumlarda test süreçlerini daha karmaşık hale getirebilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Flutter'da bir gerçek hayat senaryosu olarak, uzak bir API'ye erişim sağlamak için bir proxy kullanılabilir. Örneğin, bir uygulama, uzak bir sunucudan veri çekerken, bu istekleri yönetmek ve gerekirse cache mekanizması eklemek için bir proxy kullanabilir. Bu senaryoda bir **Weather** API kullandığımızı varsayalım.
+
+Öncelikle **Subject Interface** olarak **WeatherSerice** isimli bir **interface** oluşturuyoruz. Bu interface API'den verileri çekmek için **getWeatherData** isimli bir method'a sahip. Bu katmanı orijinal nesneye ve proxy katmanına implemente edeceğiz.
+
+```dart
+abstract class WeatherService {
+    Future<String> getWeatherData();
+}
+```
+
+akabinde **WeatherApiService** isminde bir **Real Subject** katmanını yazarken **Subject Interface** i implemente ediyoruz.
+
+```dart
+final class WeatherApiService implements WeatherService {
+    @override
+    Future<String> getWeatherData() async => 'Sunny, 25°C';
+}
+```
+
+Sıra **Proxy Design Pattern**'in kilit noktası olan **Proxy** katmanına geldi. Proxy katmanı API isteklerini yakalar ve gerekirse cache mekanizması ekler veya istekleri loglar.
+
+```dart
+final class WeatherServiceProxy implements WeatherService {
+    final WeatherApiService _weatherApiService = WeatherApiService();
+    String _cachedData;
+
+    @override
+    Future<String> getWeatherData() async {
+        if (_cachedData == null) {
+            print('Fetching data from API...');
+            _cachedData = await _weatherApiService.getWeatherData();
+        } else {
+            print('Returning cached data...');
+        }
+        return _cachedData;
+    }
+}
+
+```
+
+Peki bunu nasıl kullanabiliriz ? Bu örnekte, WeatherServiceProxy sınıfı, API'den veri çekme işlemini kontrol eder ve veriyi cache'ler. İlk istekte gerçek API'ye erişir ve veriyi alır, sonraki isteklerde ise cache'lenmiş veriyi kullanır. Bu yaklaşım, özellikle sık sık aynı veriye ihtiyaç duyulan durumlarda performansı artırabilir ve ağ trafiğini azaltabilir. Proxy tasarım kalıbı, bu tür senaryolarda verimli bir çözüm sunar. Bizim durumumuzda 5 defa çekilen verinin ilk kez çekildikten sonra cache e atanarak geriye kalan 4 isteğin cevabını cache den hızlıca elde edeceğiz. Bu sayede gereksiz yere ağ trafiğine yüklenmeyeceğiz.
+
+```dart
+
+final class ProxyView extends StatelessWidget {
+  final IWeatherService _weatherService = WeatherServiceProxy();
+
+  ProxyView({super.key});
+
+  Future<String> getWeatherFiveTimes() async {
+    var results = [];
+
+    for (var i = 0; i < 5; i++) {
+      var data = await _weatherService.getWeatherData();
+      results.add(data);
+    }
+    return results.join('\n');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Weather App'),
+      ),
+      body: Center(
+        child: FutureBuilder<String?>(
+          future: getWeatherFiveTimes(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              // Veriyi ekranda göster
+              return Text('Weather: ${snapshot.data}');
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+```
+
+[Dökümantasyonun başına dön](#head)
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8db12fb1-b5ba-44b7-be36-8040afe72990" width="250">
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/27fed6e3-eb3a-4161-a893-cee09d291f27" width="250">

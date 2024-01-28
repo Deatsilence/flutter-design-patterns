@@ -1426,7 +1426,7 @@ final class _DecoratorViewState extends State<DecoratorView> {
 [Dökümantasyonun başına dön](#head)
 
 - <h2 align="left"><a id="fecade">Fecade (Structural Patterns)</h2>
-  Facade tasarım kalıbı, karmaşık sistemleri basit bir arayüzle yönetmek için kullanılan biryapısal tasarım kalıbıdır. Bu kalıp, sistemlerin kullanımını kolaylaştırmak ve karmaşıklığınıgizlemek amacıyla kullanılır. Facade tasarım kalıbı, özellikle büyük yazılım sistemlerinde, altsistemlerin doğrudan erişimini sınırlayarak ve bir dizi alt sistem işlevini tek bir, yüksekseviyeli arayüzle birleştirerek kodun anlaşılabilirliğini ve kullanımını kolaylaştırır.
+  Facade tasarım kalıbı, karmaşık sistemleri basit bir arayüzle yönetmek için kullanılan biryapısal tasarım kalıbıdır. Bu kalıp, sistemlerin kullanımını kolaylaştırmak ve karmaşıklığınıgizlemek amacıyla kullanılır. Facadetasarım kalıbı, özellikle büyük yazılım sistemlerinde, altsistemlerin doğrudan erişimini sınırlayarak ve bir dizi alt sistem işlevini tek bir, yüksekseviyeli arayüzle birleştirerek kodun anlaşılabilirliğini ve kullanımınıkolaylaştırır.
 
 Facade, karmaşık alt sistemlerin basitleştirilmiş bir arayüzle dış dünyaya sunulmasını sağlar. Kullanıcılar, alt sistemlerin karmaşık yapıları ve işleyişleri hakkında derinlemesine bilgi sahibi olmadan, bu sistemleri kullanabilirler.
 
@@ -1545,3 +1545,121 @@ class _FecadeViewState extends State<FecadeView> {
 ```
 
 [Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="flyweight">Flyweight (Structural Patterns)</h2>
+  Flyweight tasarım kalıbı, bellek kullanımını optimize etmek amacıyla kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, nesneler arasında paylaşılabilir durumları (intrinsic state) ve paylaşılamayan durumları (extrinsic state) ayırarak, tekrar eden durumları azaltmayı ve böylece bellek kullanımını verimli bir şekilde azaltmayı hedefler. Özellikle birçok benzer nesnenin oluşturulduğu durumlarda önem kazanır. Flutter'da Flyweight tasarım kalıbını kullanmanın bir örneği, özellikle widget ağaçlarında tekrar eden widget'ları optimize etmek olabilir. Flutter uygulamalarında, bazı widget'lar özellikle liste veya ızgara görünümlerinde tekrar tekrar kullanılır. Bu durumda, Flyweight kalıbını uygulayarak, bellek kullanımını optimize edebilir ve uygulamanın performansını artırabiliriz.
+
+<h4 align="left">Flyweight tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Flyweight Interface:** Paylaşılan nesnelerin ortak bir arayüzünü tanımlar.
+- **Concrete Flyweight:** Flyweight interface'ini uygulayan ve iç durumu (intrinsic state) saklayan sınıf.
+- **Flyweight Factory:** Flyweight nesnelerini yaratır ve yönetir. Aynı nesne önceden yaratılmışsa, yeniden kullanılmasını sağlar.
+- **Client:** Flyweight nesnelerini kullanır. Dış durumu (extrinsic state) sağlar ve onu Flyweight ile birleştirir.
+
+<h5 align="left">Flyweight tasarım deseninin avantajları:</h5>
+
+- Benzer nesnelerin tekrar tekrar yaratılmasını engelleyerek bellek kullanımını azaltır.
+- Daha az nesne yaratıldığı için performans artar.
+
+<h5 align="left"> Flyweight tasarım deseninin dezavantajları:</h5>
+
+- Tasarım karmaşıklaşabilir.
+- İç ve dış durumların yönetimi zorlaşabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği bir sosyal medya uygulaması yapmak istiyoruz. Bu uygulamada gönderileri gösteren bir liste düşünelim. Her gönderide yorum, beğeni ve paylaşım gibi işlemler için aynı ikonlar, tekrar tekrar oluşturmak yerine **Flyweight** tasarım kalıbı ile optimize edeceğiz.
+
+İlk olarak **Flyweight Interface** katmanını yapmakla başlıyoruz. İçinde **Widget** dönen **Widget createWidget(Color color, double size)** method imzasına sahip bir method yerleştiriyoruz.
+
+```dart
+abstract class Flyweight {
+  Widget createWidget(Color color, double size);
+}
+```
+
+Sonrasında sıra, **Concrete Flyweight** katmanına geliyor. Bu katmanda **iç durum(intrinsic state)** i saklayacağız. Bizim durumumuzda bu bir icon olacak. Aynı zamanda **Flyweight** katmanını **implement** ederek **createWidget** methodunu **@override** ediyoruz.
+
+```dart
+final class IconFlyweight implements Flyweight {
+    final IconData iconData;
+
+    IconFlyweight(this.iconData);
+
+    @override
+    Widget createWidget(Color color, double size) {
+        return Icon(iconData, color: color, size: size);
+    }
+}
+```
+
+Sıra **Flyweight Factory** katmanında **Flyweight** nesnelerini yaratmaya geldi. Burada eğer daha önce yaratılmış bir nesne varsa **\_icons** map içinden çekiliyor. Eğer ilk defa gelen bir nesneyse map'e ekleniyor.
+
+```dart
+final class IconFactory {
+    final Map<IconData, IconFlyweight> _icons = {};
+
+    IconFlyweight getIcon({required IconData iconData}) {
+        if (!_icons.containsKey(iconData)) {
+            _icons[iconData] = IconFlyweight(iconData);
+        }
+        return _icons[iconData];
+    }
+}
+```
+
+Peki bunu UI (**Client**) tarafında nasıl kullanabiliriz ?
+
+```dart
+final class FlyWeightView extends StatelessWidget {
+  final IconFactory iconFactory = IconFactory();
+
+  FlyWeightView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverList.builder(
+              itemBuilder: (context, index) {
+                final post = SocialMediaPost(
+                  title: 'Post $index',
+                  content:
+                      '-$index Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                );
+
+                return ListTile(
+                  leading: iconFactory
+                      .getIcon(iconData: Icons.account_circle)
+                      .createWidget(Colors.blue, 24.0),
+                  title: Text(post.title),
+                  subtitle: Text(post.content),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      iconFactory
+                          .getIcon(iconData: Icons.comment)
+                          .createWidget(Colors.grey, 20.0),
+                      const SizedBox(width: 8),
+                      iconFactory
+                          .getIcon(iconData: Icons.thumb_up)
+                          .createWidget(Colors.grey, 20.0),
+                      const SizedBox(width: 8),
+                      iconFactory
+                          .getIcon(iconData: Icons.share)
+                          .createWidget(Colors.grey, 20.0),
+                    ],
+                  ),
+                );
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```

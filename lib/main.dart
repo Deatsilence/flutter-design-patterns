@@ -1,4 +1,5 @@
 import 'package:design_patterns/view/decorator_view.dart';
+import 'package:design_patterns/view/fly_weight_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,9 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Design Patterns',
-      home: DecoratorView(),
+      home: FlyWeightView(),
     );
   }
 }

@@ -23,7 +23,7 @@
 
 - Behavioral Patterns
 
-  - Chain of Responsibility
+  - [Chain of Responsibility](#chainofresponsibility)
   - Iterator
   - Interpreter
   - Observer
@@ -1790,3 +1790,142 @@ final class ProxyView extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8db12fb1-b5ba-44b7-be36-8040afe72990" width="250">
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/27fed6e3-eb3a-4161-a893-cee09d291f27" width="250">
+
+- <h2 align="left"><a id="chainofresponsibility">Chain of Responsibility (Behavioral Patterns)</h2>
+  Flutter'da Sorumluluk Zinciri tasarım desenini daha detaylı bir şekilde ele alalım. Bu desen, özellikle büyük ve modüler Flutter uygulamalarında, farklı widget'lar veya ekranlar arasında gelen istekleri veya komutları yönetmek için kullanışlıdır.
+
+<h4 align="left">Chain of Responsibility tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Handler:** İsteği nasıl işleyeceğini ve isteği zincirdeki bir sonraki işleyiciye nasıl geçireceğini tanımlayan bir arayüz.
+- **Concrete Handlers:** Handler arayüzünü uygulayan sınıflar. Her işleyici, isteği işleyip işlemeyeceğine veya onu zincirdeki bir sonraki işleyiciye geçireceğine karar verir.
+- **Client:** İsteği başlatan ve zincirin ilk işleyicisine gönderen kişi veya sistem.
+
+<h5 align="left">Çalışma Mekanizması:</h5>
+
+- Müşteri, isteği zincirdeki ilk işleyiciye gönderir.
+- Her işleyici, isteği kontrol eder ve onu işleyip işlemeyeceğine karar verir.
+- Eğer bir işleyici isteği işleyebilirse, işlemi yapar ve süreç sona erer.
+- Eğer işleyici isteği işleyemezse, onu zincirdeki bir sonraki işleyiciye iletir.
+- Bu süreç, bir işleyicinin isteği işleyene kadar veya zincir sona erene kadar devam eder.
+
+<h5 align="left">Chain of Responsibility tasarım deseninin avantajları:</h5>
+
+- Gönderen ve alıcı bağımsız hale gelir, sistemde gevşek bağlantıyı teşvik eder.
+- Yeni işleyiciler eklemek veya mevcut olanların sırasını değiştirmek kolaydır.
+- Her işleyicinin tek bir sorumluluğu vardır, bu da kodun bakımını kolaylaştırır.
+
+<h5 align="left"> Proxy tasarım deseninin dezavantajları:</h5>
+
+- İstek, birden fazla işleyiciden geçebilir, bu da performansı etkileyebilir.
+- İstek çeşitli işleyicilerden geçtiği için hata ayıklaması zor olabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Farklı türde kullanıcı girdilerini (jestler, buton tıklamaları, metin girişleri) işleyen bir Flutter uygulamasını düşünün. Uygulama, bu girdileri işlemek için Sorumluluk Zinciri modelini kullanabilir.
+
+Sorumluluk Zinciri deseninin temelini oluşturan **Handler (İşleyici)** arayüzü, her bir **Concrete Handlers** sınıfın uygulaması gereken temel metotları tanımlar. Flutter'da bu, genellikle bir abstract class şeklinde yapılır. Bizim durumumuzda **InteractionHandler** bizim **Handler** **abstarct** sınıfımız olacak. Bu soyut sınıf **Concrete Handlers**'ler tarafından kalıtım alınacak. **setNextHandler** zincirler arasında bağlantı kurmaya yarayan bir method olacak. Bu sayede uyumsuz bir durum oluştuğunda bir sonraki zincir çalışacak.
+
+```dart
+/// [CommandHandler] is the abstract class for all the handlers.
+abstract class InteractionHandler {
+  InteractionHandler? nextHandler;
+
+  void handleInteraction(String interactionType, BuildContext context);
+
+  void setNextHandler(InteractionHandler handler) {
+    nextHandler = handler;
+  }
+}
+```
+
+akabinde **Concrete Handlers** sınıflarımızı tanımlıyoruz. Bizim durumumuzda örnek olması açısından **ButtonInteractionHandler** ve **FormInteractionHandler** olmak üzere 2 farklı **Concrete Handlers** sınıfımızı yazıyoruz. Bu sınıflardan **ButtonInteractionHandler** kullanılrsa senaryo gereği ekranda bir **AlertBox** çıkartmak istiyoruz. Eğer **FormInteractionHandler** sınıfı kullanılırsa submit yaparak _Form submitted_ logunu yazdırmak istiyoruz. **interactionType** Bulunamazsa **handleUnrecognizedInteraction** methodu çalışarak ilgili bilgilendirmeyi yapıyoruz.
+
+```dart
+/// [ButtonInteractionHandler] is a concrete handler.
+final class ButtonInteractionHandler extends InteractionHandler {
+  @override
+  void handleInteraction(String interactionType, BuildContext context) {
+    if (interactionType == 'buttonClick') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            title: Text("Button Clicked"),
+            content: Text("Button interaction handled."),
+          );
+        },
+      );
+    } else if (nextHandler != null) {
+      nextHandler!.handleInteraction(interactionType, context);
+    } else {
+      handleUnrecognizedInteraction(interactionType, context);
+    }
+  }
+}
+
+/// [FormInteractionHandler] is a concrete handler.
+final class FormInteractionHandler extends InteractionHandler {
+  @override
+  void handleInteraction(String interactionType, BuildContext context) {
+    if (interactionType == 'formSubmit') {
+      // Form submit logic
+      log("Form submitted.");
+    } else if (nextHandler != null) {
+      nextHandler!.handleInteraction(interactionType, context);
+    } else {
+      handleUnrecognizedInteraction(interactionType, context);
+    }
+  }
+}
+```
+
+Peki bunu UI tarafında nasıl bir senaryoda kullanabiliriz ? **Click Me**, **Submit Form** ve **Unknown** olmak üzere 3 adet butonumuzun olduğunu varsayalım. Öncelikle bir adet **ButtonInteractionHandler** oluşturuyoruz ve **interactionType** ını **buttonClick** yapıyoruz. Bu butonun amacı eğer **buttonClick** mevcutsa bir **AlertDialog** göstermektir. Eğer mevcut handlerda **interactionType** teknik olarak desteklenmiyorsa bir sonraki handler işlenecektir. **interactionType** hiç bir şekilde desteklenmiyorsa bunu kullanıcıya **handleUnrecognizedInteraction** ile bildiriyoruz.
+
+```dart
+/// [ChainOfResponsibilityView] is the view that shows the Chain of Responsibility Pattern.
+final class ChainOfResponsibilityView extends StatefulWidget {
+  const ChainOfResponsibilityView({super.key});
+
+  @override
+  State<ChainOfResponsibilityView> createState() => _ChainOfResponsibilityViewState();
+}
+
+class _ChainOfResponsibilityViewState extends State<ChainOfResponsibilityView> {
+  @override
+  Widget build(BuildContext context) {
+    var buttonHandler = ButtonInteractionHandler();
+    var formHandler = FormInteractionHandler();
+
+    buttonHandler.setNextHandler(formHandler);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Chain of Responsibility in Flutter")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () => buttonHandler.handleInteraction('buttonClick', context),
+              child: const Text('Click Me'),
+            ),
+            ElevatedButton(
+              onPressed: () => buttonHandler.handleInteraction('formSubmit', context),
+              child: const Text('Submit Form'),
+            ),
+            ElevatedButton(
+              onPressed: () => buttonHandler.handleInteraction('unknown', context),
+              child: const Text('unknown'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+Butonların yukarıdan aşağıya göre tıklanılması
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/a7c5ad17-3eca-4382-84cb-3350ca789a70" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/9549a990-f535-47ba-a93c-9acd0cf8983e" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/78626739-f4df-4929-8c2c-3c47bb45643c" width="250">
+
+[Dökümantasyonun başına dön](#head)

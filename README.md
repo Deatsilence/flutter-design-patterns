@@ -24,7 +24,7 @@
 - Behavioral Patterns
 
   - [Chain of Responsibility](#chainofresponsibility)
-  - Iterator
+  - [Iterator](#iterator)
   - Interpreter
   - Observer
   - Command
@@ -1927,5 +1927,144 @@ class _ChainOfResponsibilityViewState extends State<ChainOfResponsibilityView> {
 Butonların yukarıdan aşağıya göre tıklanılması
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/a7c5ad17-3eca-4382-84cb-3350ca789a70" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/9549a990-f535-47ba-a93c-9acd0cf8983e" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/78626739-f4df-4929-8c2c-3c47bb45643c" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="iterator">Iterator(Creational Patterns)</h2>
+  Iterator deseni, davranışsal bir tasarım desenidir ve bir koleksiyonun (liste veya ağaç gibi) elemanlarına, altında yatan yapısını açığa çıkarmadan sıralı bir şekilde erişim sağlar. Bu desen, yineleme mantığını koleksiyondan ayırarak, koleksiyonu dolaşmak için standart bir yol sunar.
+
+<h4 align="left">Iterator tasarım deseninin 4 ana bileşeni vardır:</h4>
+
+- **Iterator:** next(), hasNext() gibi yineleme için gerekli standart operasyonları tanımlar.
+- **Concrete Iterator:** Iterator arayüzünü uygular ve koleksiyondaki mevcut pozisyonun takibini yapar.
+- **Aggregate:** Bir Iterator nesnesi oluşturmak için bir arayüz tanımlar.
+- **Concrete Aggregate:** Aggregate arayüzünü uygular ve ilgili Somut Iterator'ın bir örneğini döndürür.
+
+<h5 align="left">Iterator tasarım deseninin avantajları:</h5>
+
+- Tek Sorumluluk İlkesi: Bir koleksiyon üzerinde yineleme yapma sorumluluğunu koleksiyondan ayırır.
+- Esneklik: Farklı yineleme stratejilerini desteklemek için farklı türlerde iterator'lar uygulanabilir.
+- Bağımsızlık: Müşteri kodu, koleksiyonla iterator arayüzü üzerinden etkileşimde bulunur ve koleksiyonun formuna bağımlılığı azalır.
+
+<h5 align="left"> Iterator tasarım deseninin dezavantajları:</h5>
+
+- Özellikle basit döngüler kullanılarak yinelenebilecek basit koleksiyonlar için kodu karmaşıklaştırabilir.
+- Etkin bir şekilde uygulanmazsa, performans üzerinde ek yük oluşturabilir.
+
+**Örnek Senaryo**
+
+Örneğin, bir fotoğraf galerisi uygulamasını düşünün, bu uygulama resimleri bir k carousel'de gösteriyor. Resimler bir listede saklanabilir ve her bir resmi göstermek için bir iterator kullanılabilir. Biz bu durumda **Iterator Design Pattern** kullanarak resimleri **moveNext()** kullanarak kullanıcıya göstereceğiz.
+
+Öncelikle galeride göstereceğimiz fotoğraf modelini oluşturuyoruz ve her fotoğrafın bir url si olduğunu varsayalım.
+
+```dart
+/// [Photo] is a simple model class that holds the url of a photo.
+@immutable
+final class Photo {
+  final String url;
+  const Photo(this.url);
+}
+```
+
+Sonrasında **PhotoCollection** isimli, **Aggregate** bileşenini yazıyoruz.
+**PhotoCollection**, koleksiyonun kendisini, **getIterator**() **Iterator** bileşenini, Iterator oluşturma yeteneğini temsil eder.
+
+```dart
+/// [PhotoCollection] is the Concrete Aggregate.
+final class PhotoCollection {
+  final List<Photo> _photos = [];
+
+  void addPhoto(Photo photo) {
+    _photos.add(photo);
+  }
+
+  /// [getIterator] returns an iterator for the collection.
+  Iterator<Photo> getIterator() => _photos.iterator;
+
+  int get length => _photos.length;
+}
+```
+
+Akabinde **Concrete Iterator** bileşenimize **Iterator<Photo>** sınıfını implemente ederek somut bir uygulama elde etmiş oluyoruz. Bunun sonucunda koleksiyon üzerinde gezinmek için gerekli mantığı içererek fotoğrafları görüntülememizi sağlıyoruz.
+
+```dart
+/// [PhotoIterator] is Concrete Iterator
+final class PhotoIterator implements Iterator<Photo> {
+  final List<Photo> _photos;
+  int _current = 0;
+
+  PhotoIterator(this._photos);
+
+  @override
+  Photo get current => _photos[_current];
+
+  @override
+  bool moveNext() {
+    if (_current < _photos.length - 1) {
+      _current++;
+      return true;
+    }
+    return false;
+  }
+}
+
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz ? Öncelikle **IteratorView** isimli bir view sayfası oluşturuyoruz. İçinde GridView.builder kullanarak resimlerimizi iterate ederek görüntülüyoruz.
+
+```dart
+/// [IteratorView] is Iterator View.
+final class IteratorView extends StatelessWidget {
+  final PhotoCollection photos;
+
+  const IteratorView({required this.photos, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var iterator = photos.getIterator();
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Iterator in Flutter")),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount: 2,
+        ),
+        shrinkWrap: true,
+        itemCount: photos.length,
+        itemBuilder: (context, index) {
+          if (iterator.moveNext()) {
+            return Image.network(iterator.current.url);
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
+      ),
+    );
+  }
+}
+
+```
+
+**IteratorView** _PhotoCollection_ parametresi aldığı için öncesinde resimlere ait url leri ekliyoruz.
+
+```dart
+PhotoCollection()
+          ..addPhoto(
+            const Photo('https://picsum.photos/200'),
+          )
+          ..addPhoto(
+            const Photo('https://picsum.photos/200'),
+          )
+          ..addPhoto(
+            const Photo('https://picsum.photos/200'),
+          )
+          ..addPhoto(
+            const Photo('https://picsum.photos/200'),
+          ),
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/2d48efc0-9950-491b-a060-5fd7f192e384" width="250">
 
 [Dökümantasyonun başına dön](#head)

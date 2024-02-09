@@ -2068,3 +2068,73 @@ PhotoCollection()
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/2d48efc0-9950-491b-a060-5fd7f192e384" width="250">
 
 [Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="interpreter">Interpreter (Behavioral Patterns)</h2>
+  Interpreter tasarım deseni, bir dil için dilbilgisi tanımlamamızı ve bu dildeki ifadeleri işleyen bir yorumlayıcı sağlamamızı sağlayan bir davranışsal tasarım desenidir.
+
+<h4 align="left">Interpreter tasarım deseninin 4 ana bileşeni vardır:</h4>
+
+- **Expression Interface:** Bu arayüz, belirli bir bağlamı yorumlama yöntemini bildirir. Interpreter deseninin çekirdeğidir.
+- **Concrete Expression Classes:** Bu sınıflar İfade arayüzünü uygular ve dildeki özel kuralları yorumlar.
+- **Context Class:** Bu sınıf, yorumlayıcının geneline ait bilgileri içerir.
+- **Client:** İstemci, dilin dilbilgisini tanımlayan belirli bir cümleyi temsil eden sözdizimi ağacını oluşturur. Ağaç, Somut İfade sınıflarının örneklerinden oluşur.
+
+<h5 align="left">Interpreter tasarım deseninin avantajları:</h5>
+
+- Dilbilgisi kuralları ve yorumlayıcı, ihtiyaç duyulduğunda kolayca değiştirilebilir ve yeni ifadeler eklenebilir.
+- Kodun modüler ve tekrar kullanılabilir olmasını sağlar.
+- Karmaşık ifadelerin işlenmesi için optimize edilebilir.
+
+<h5 align="left"> Interpreter tasarım deseninin dezavantajları:</h5>
+
+- Karmaşık diller için yorumlayıcı geliştirmek zor olabilir.
+- Basit ifadeler için yorumlayıcı, doğrudan koddan daha yavaş olabilir.
+
+**Örnek Senaryo**
+
+Normal koşullarda **Interpreter Design Pattern** _programlama dillerinde_, _SQL sorgularında_, _Matematiksel ifadelerde_, _Oyun motorlarında_ daha çok kullanılır fakat bizim şu anki odağımız **Flutter** olduğu için **Flutter Framework** ü üzerinde **Interpreter Design Pattern** i kullanmaya çalışacağız. Senaryomuz gereği kullanıcıların metin tabanlı bir dil kullanarak özelleştirilebilir widget yapılarını tanımlamasına olanak tanıyan bir mobil uygulama düşünelim. Kullanıcılar, belirli widget türlerini, özelliklerini ve düzenlerini belirten basit bir dili kullanarak arayüzlerini dinamik olarak oluşturabilirler. Örneğin, kullanıcı `"Button(text='Click Me', color='blue')"` gibi bir ifade yazarak bir buton oluşturmak isteyebilir.
+
+İlk olarak **WidgetExpression** isminde bir **Expression Interface** tanımlıyoruz. **WidgetExpression** içinde Widget döndüren _interpret()_ isimli bir method imzası yazıyoruz. Bu interface **Concrete Expression** sınıfları tarafından implemente edilecek.
+
+```dart
+/// [WidgetExpression] is the interface for the expression
+abstract class WidgetExpression {
+  Widget interpret();
+}
+```
+
+Sonrasında **ButtonExpression** isimli bir **Concrete Expression Class** oluşturuyoruz ve **WidgetExpression** isimli soyut sınıfı implemente ediyoruz. **ButtonExpression** içerisinde _interpret_ methodunu _override_ ediyoruz ve kullanıcıdan gelen text ve color parametrelerine göre bir adet **ElevatedButton** döndürüyoruz. Bunu başka Widgetlar için de yapabiliriz ama senaryomuz gereği button özelinde devam ediyoruz.
+
+```dart
+/// [ButtonExpression] is a concrete expression
+final class ButtonExpression implements WidgetExpression {
+  final String text;
+  final Color color;
+
+  ButtonExpression({required this.text,required this.color});
+
+  @override
+  Widget interpret() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(backgroundColor: color),
+      child: Text(text),
+    );
+  }
+}
+```
+
+Akabinde **WidgetContext** isimli bir **Context Class** oluşturuyoruz. **Context** sınıf yorumlama sırasında kullanılacak ortak bilgileri ve durumları içerir. Örneğin senaryomuz gereği renkleri saklayabilir.
+
+```dart
+/// [WidgetContext] is the context class
+final class WidgetContext {
+  Map<String, Color> colorMap;
+
+  WidgetContext({required this.colorMap});
+
+  Color getColor(String colorName) {
+    return colorMap[colorName] ?? Colors.black;
+  }
+}
+```

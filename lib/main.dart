@@ -3,6 +3,7 @@ import 'package:design_patterns/patterns/iterator/photo_collection_aggregate.dar
 import 'package:design_patterns/view/chain_of_responsibility_view.dart';
 import 'package:design_patterns/view/decorator_view.dart';
 import 'package:design_patterns/view/fly_weight_view.dart';
+import 'package:design_patterns/view/interpreter_view.dart';
 import 'package:design_patterns/view/iterator_view.dart';
 import 'package:design_patterns/view/proxy_view.dart';
 import 'package:flutter/material.dart';
@@ -16,24 +17,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design Patterns',
-      home: IteratorView(
-        photos: PhotoCollection()
-          ..addPhoto(
-            const Photo('https://picsum.photos/200'),
-          )
-          ..addPhoto(
-            const Photo('https://picsum.photos/200'),
-          )
-          ..addPhoto(
-            const Photo('https://picsum.photos/200'),
-          )
-          ..addPhoto(
-            const Photo('https://picsum.photos/200'),
-          ),
-      ),
+      home: InterpreterView(),
     );
   }
 }

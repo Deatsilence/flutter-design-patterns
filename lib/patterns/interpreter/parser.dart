@@ -1,30 +1,36 @@
+import 'package:design_patterns/patterns/interpreter/concrate_expression.dart';
 import 'package:design_patterns/patterns/interpreter/expression_interface.dart';
+import 'package:flutter/material.dart';
 
-class WidgetParser {
-  static List<WidgetExpression> parse(String input) {
+final class WidgetParser {
+  List<WidgetExpression> parseScript(String script) {
     List<WidgetExpression> expressions = [];
-    RegExp exp = RegExp(r'(\w+)\(([^)]+)\)'); // Basit bir regex pattern
-    Iterable<RegExpMatch> matches = exp.allMatches(input);
+    for (String line in script.split('\n')) {
+      line = line.trim();
+      if (line.isEmpty) continue;
 
-    for (final match in matches) {
-      String widgetType = match.group(1)!;
-      String params = match.group(2)!;
+      /// for example: Text("Hello World")
+      if (line.startsWith("Text:")) {
+        String text = line.substring(5, line.length);
+        expressions.add(
+          ConcreteExpressionText(
+            text: text,
+            style: const TextStyle(fontSize: 20),
+          ),
+        );
+        continue;
+      }
 
-      switch (widgetType.toLowerCase()) {
-        case 'button':
-          expressions.add(parseButton(params));
-          break;
+      /// for example: Image:https://example.com/image.png
+      if (line.startsWith("Image:") && line.contains("https://")) {
+        String url = line.substring(6, line.length);
+        debugPrint(url);
+        List<String> parts = url.split(',');
+        String urlTrimmed = parts[0].trim();
+        expressions.add(ConcreteExpressionImage(url: urlTrimmed));
+        continue;
       }
     }
-
     return expressions;
-  }
-
-  static WidgetExpression parseButton(String params) {
-    Map<String, String> paramsMap = parseParams(params);
-    String text = paramsMap['text'] ?? '';
-    String colorName = paramsMap['color'] ?? 'blue';
-
-    return ButtonExpression(text, Colors.blue); // Basit renk dönüşümü
   }
 }

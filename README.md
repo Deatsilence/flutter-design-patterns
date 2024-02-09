@@ -25,7 +25,7 @@
 
   - [Chain of Responsibility](#chainofresponsibility)
   - [Iterator](#iterator)
-  - Interpreter
+  - [Interpreter](#interpreter)
   - Observer
   - Command
   - Mediator
@@ -2076,7 +2076,7 @@ PhotoCollection()
 
 - **Expression Interface:** Bu arayüz, belirli bir bağlamı yorumlama yöntemini bildirir. Interpreter deseninin çekirdeğidir.
 - **Concrete Expression Classes:** Bu sınıflar İfade arayüzünü uygular ve dildeki özel kuralları yorumlar.
-- **Context Class:** Bu sınıf, yorumlayıcının geneline ait bilgileri içerir.
+- **Context Class(optional):** Bu sınıf, yorumlayıcının geneline ait bilgileri içerir.
 - **Client:** İstemci, dilin dilbilgisini tanımlayan belirli bir cümleyi temsil eden sözdizimi ağacını oluşturur. Ağaç, Somut İfade sınıflarının örneklerinden oluşur.
 
 <h5 align="left">Interpreter tasarım deseninin avantajları:</h5>
@@ -2092,7 +2092,7 @@ PhotoCollection()
 
 **Örnek Senaryo**
 
-Normal koşullarda **Interpreter Design Pattern** _programlama dillerinde_, _SQL sorgularında_, _Matematiksel ifadelerde_, _Oyun motorlarında_ daha çok kullanılır fakat bizim şu anki odağımız **Flutter** olduğu için **Flutter Framework** ü üzerinde **Interpreter Design Pattern** i kullanmaya çalışacağız. Senaryomuz gereği kullanıcıların metin tabanlı bir dil kullanarak özelleştirilebilir widget yapılarını tanımlamasına olanak tanıyan bir mobil uygulama düşünelim. Kullanıcılar, belirli widget türlerini, özelliklerini ve düzenlerini belirten basit bir dili kullanarak arayüzlerini dinamik olarak oluşturabilirler. Örneğin, kullanıcı `"Button(text='Click Me', color='blue')"` gibi bir ifade yazarak bir buton oluşturmak isteyebilir.
+Normal koşullarda **Interpreter Design Pattern** _programlama dillerinde_, _SQL sorgularında_, _Matematiksel ifadelerde_, _Oyun motorlarında_ daha çok kullanılır fakat bizim şu anki odağımız **Flutter** olduğu için **Flutter Framework** ü üzerinde **Interpreter Design Pattern** i kullanmaya çalışacağız. Senaryomuz gereği kullanıcıların metin tabanlı bir dil kullanarak özelleştirilebilir widget yapılarını tanımlamasına olanak tanıyan bir mobil uygulama düşünelim. Kullanıcılar, belirli widget türlerini, özelliklerini ve düzenlerini belirten basit bir dili kullanarak arayüzlerini dinamik olarak oluşturabilirler. Örneğin, kullanıcı `"Text: Deatsilence"` gibi bir ifade yazarak bir yazı göstermek isteyebilir veya `"Image: https://picsum.photos/200"` yazarak bir resim göstermek isteyebilir.
 
 İlk olarak **WidgetExpression** isminde bir **Expression Interface** tanımlıyoruz. **WidgetExpression** içinde Widget döndüren _interpret()_ isimli bir method imzası yazıyoruz. Bu interface **Concrete Expression** sınıfları tarafından implemente edilecek.
 
@@ -2103,38 +2103,134 @@ abstract class WidgetExpression {
 }
 ```
 
-Sonrasında **ButtonExpression** isimli bir **Concrete Expression Class** oluşturuyoruz ve **WidgetExpression** isimli soyut sınıfı implemente ediyoruz. **ButtonExpression** içerisinde _interpret_ methodunu _override_ ediyoruz ve kullanıcıdan gelen text ve color parametrelerine göre bir adet **ElevatedButton** döndürüyoruz. Bunu başka Widgetlar için de yapabiliriz ama senaryomuz gereği button özelinde devam ediyoruz.
+Sonrasında **ConcreteExpressionText** ve **ConcreteExpressionImage** isimli iki adet **Concrete Expression Class** oluşturuyoruz ve **WidgetExpression** isimli soyut sınıfı implemente ediyoruz. **Concrete Expression** sınıflarının içerisinde _interpret_ methodunu _override_ ediyoruz ve kullanıcıdan gelen text scriptine göre **Text veya Image** döndürüyoruz. Bunu başka Widgetlar için de yapabiliriz ama senaryomuz gereği bu ikisi özelinde devam ediyoruz.
 
 ```dart
-/// [ButtonExpression] is a concrete expression
-final class ButtonExpression implements WidgetExpression {
+/// [ConcreteExpressionText] is the concrete expression for the text
+final class ConcreteExpressionText implements WidgetExpression {
   final String text;
-  final Color color;
+  final TextStyle style;
 
-  ButtonExpression({required this.text,required this.color});
+  ConcreteExpressionText({required this.text, required this.style});
 
   @override
-  Widget interpret() {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(backgroundColor: color),
-      child: Text(text),
+  Widget interpret(BuildContext? context) => Text(text, style: style);
+}
+
+/// [ConcreteExpressionButton] is the concrete expression for the button
+final class ConcreteExpressionImage implements WidgetExpression {
+  final String url;
+
+  ConcreteExpressionImage({
+    required this.url,
+  });
+
+  @override
+  Widget interpret(BuildContext? context) => Image.network(url, width: 100, height: 100);
+}
+```
+
+akabinde kullanıcıdan gelen scriptleri yorumlamak için **WidgetParser** sınıfının içine **parseScript()** isimli bir method ekliyoruz.
+
+```dart
+final class WidgetParser {
+  List<WidgetExpression> parseScript(String script) {
+    List<WidgetExpression> expressions = [];
+    for (String line in script.split('\n')) {
+      line = line.trim();
+      if (line.isEmpty) continue;
+
+      /// for example: Text("Hello World")
+      if (line.startsWith("Text:")) {
+        String text = line.substring(5, line.length);
+        expressions.add(
+          ConcreteExpressionText(
+            text: text,
+            style: const TextStyle(fontSize: 20),
+          ),
+        );
+        continue;
+      }
+
+      /// for example: Image:https://example.com/image.png
+      if (line.startsWith("Image:") && line.contains("https://")) {
+        String url = line.substring(6, line.length);
+        debugPrint(url);
+        List<String> parts = url.split(',');
+        String urlTrimmed = parts[0].trim();
+        expressions.add(ConcreteExpressionImage(url: urlTrimmed));
+        continue;
+      }
+    }
+    return expressions;
+  }
+}
+```
+
+Son olarak bunları UI tarafında nasıl kullanabiliriz ? Ona bakalım. Örneğin bir **TextField** üzerinden kullanııcdan bazı scriptler alarak yorumlayalım. Yorumlama sonucunda kullanıcıya image veya text gösterelim.
+
+```dart
+
+final class InterpreterView extends StatefulWidget {
+  const InterpreterView({super.key});
+
+  @override
+  State<InterpreterView> createState() => _InterpreterViewState();
+}
+
+class _InterpreterViewState extends State<InterpreterView> {
+  String? _script;
+  List<WidgetExpression>? _expressions;
+
+  @override
+  void initState() {
+    super.initState();
+    _script = "";
+    _expressions = WidgetParser().parseScript(_script ?? "");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Interpreter Pattern"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: TextEditingController(text: _script),
+              onChanged: (value) {
+                _script = value;
+              },
+              decoration: const InputDecoration(
+                labelText: "Command Script",
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _expressions = WidgetParser().parseScript(_script ?? "");
+                setState(() {});
+              },
+              child: const Text("Comment the script"),
+            ),
+            const SizedBox(height: 16.0),
+            if (_expressions != null && _expressions!.isNotEmpty)
+              _expressions!.first.interpret(context),
+          ],
+        ),
+      ),
     );
   }
 }
+
 ```
 
-Akabinde **WidgetContext** isimli bir **Context Class** oluşturuyoruz. **Context** sınıf yorumlama sırasında kullanılacak ortak bilgileri ve durumları içerir. Örneğin senaryomuz gereği renkleri saklayabilir.
+- Kullanıcı text göstermek için **Text:** keywordunun ardından herhangi bir yazı gelince ilgili yazıyı ekranda gösterecektir.
 
-```dart
-/// [WidgetContext] is the context class
-final class WidgetContext {
-  Map<String, Color> colorMap;
+- Kullanıcı bir image göstermek için **Image:** keywordunun ardından bir url vermek zorundadır. Url de bulunan resmi ekranda gösterecektir
 
-  WidgetContext({required this.colorMap});
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1323d690-0800-4599-b4a0-520d6827c655" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/5cf8b3ba-e99f-43e9-8ece-596b4daf9459" width="250">
 
-  Color getColor(String colorName) {
-    return colorMap[colorName] ?? Colors.black;
-  }
-}
-```
+[Dökümantasyonun başına dön](#head)

@@ -26,7 +26,7 @@
   - [Chain of Responsibility](#chainofresponsibility)
   - [Iterator](#iterator)
   - [Interpreter](#interpreter)
-  - Observer
+  - [Observer](#observer)
   - Command
   - Mediator
   - State
@@ -2232,5 +2232,223 @@ class _InterpreterViewState extends State<InterpreterView> {
 - Kullanıcı bir image göstermek için **Image:** keywordunun ardından bir url vermek zorundadır. Url de bulunan resmi ekranda gösterecektir
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1323d690-0800-4599-b4a0-520d6827c655" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/5cf8b3ba-e99f-43e9-8ece-596b4daf9459" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="observer">Observer(Behavioral Patterns)</h2>
+  Observer tasarım deseni, Flutter uygulamalarınızda durum değişikliklerini yönetmek için güçlü bir araçtır. Bir nesnenin (Konu) durumunda bir değişiklik olduğunda, bağlı birden fazla nesneyi (Gözlemciler) bilgilendiren iletişim sistemi kurarak reaktif ve verimli bir sistem oluşturur.
+
+<h4 align="left">Observer tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Subject:** Bu bileşen, gözlemcilerin abone olduğu ve durum değişiklikleri hakkında onları bilgilendiren nesnedir. Konu, içerdiği verilerdeki herhangi bir değişikliği takip eden ve bu değişiklikleri gözlemcilere bildiren bir arayüz sağlar.
+- **Observer:** Gözlemci, konunun durumundaki değişiklikleri takip eden ve buna tepki veren nesnelerdir. Bu nesneler, genellikle bir arayüzü (Observer Interface) uygular ve bu arayüz, konunun durumu değiştiğinde çağrılan metodları içerir.
+- **Client:** Bu bileşen, Observer tasarım kalıbını kullanarak uygulama mantığını yönetir. Müşteri, genellikle konu nesnelerini oluşturur, gözlemcileri bu konulara abone eder ve konunun durumunu günceller.
+
+<h5 align="left">Observer tasarım deseninin avantajları:</h5>
+
+- Observer kalıbı, konu ve gözlemciler arasında zayıf bir bağlantı sağlar. Bu, birinin değiştirilmesinin diğerini doğrudan etkilememesi anlamına gelir, böylece uygulamanın bakımı ve genişletilmesi kolaylaşır.
+- Aynı gözlemci, farklı konuları takip edebilir ve bir konu birden fazla gözlemciye sahip olabilir. Bu esneklik, kodun yeniden kullanılabilirliğini artırır.
+- Gözlemciler, çalışma zamanında konulara abone olabilir ve abonelikten çıkabilirler. Bu, dinamik ve değişken uygulama gereksinimlerini destekler.
+- Observer kalıbı, uygulamanın farklı bölümlerini soyutlayarak modülerlik sağlar. Bu, kodun okunabilirliğini ve yönetilebilirliğini artırır.
+
+<h5 align="left"> Observer tasarım deseninin dezavantajları:</h5>
+
+- Eğer gözlemciler ve konular arasındaki bağlantılar düzgün bir şekilde yönetilmezse, hafıza sızıntılarına yol açabilir. Özellikle, gözlemcilerin kaydını silmeyi unutmak bu soruna sebep olabilir.
+- Çok sayıda gözlemci varsa veya bildirimler çok sık yapılıyorsa, performans sorunları ortaya çıkabilir. Her bildirim, tüm gözlemcilerin tepki vermesini gerektireceğinden, işlem yükü artabilir.
+- Eğer bir konu kısa süre içinde çok sayıda güncelleme yaparsa, gözlemcilerin bu güncellemelere sürekli tepki vermesi gerekir. Bu durum, beklenmedik davranışlara yol açabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği sepette 2 farklı yemek türünden varsayılan olarak daha önce 1 tane **Food1**, 1 tane **Food2** olduğunu varsayalım ve bu yemeklerin sepetteki sayısını arttırıp azalttığımı hayal edelim. Duruma göre **Total Price** artabilir veya azalabilir olacaktır.
+
+İlk önce **Subject** bileşenimizi yani Flutter tarafında **Mobx** paketiyle birlikte **Observer** in dinleyeceği **State** bileşenlerini ve methodlarını tanımlıyoruz. Her yemek için adet arttırma ve azaltma methodlarını yazıyoruz. UI tarafında **Observer** in dinleyeceği değişkenleri **@observable** annotation ile dinleyeceğimiz değişkenleri, **@action** ile **@observable** ile etiketlenmiş değişkenleri değiştirerek UI tarafında **Observer** ile çevrili kısımların yeniden çizilmesini sağlıyoruz.
+
+```dart
+
+@immutable
+final class Item {
+  final String id;
+  final String name;
+  final double price;
+  final String image;
+  final int quantity;
+
+  const Item({
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.price,
+    this.quantity = 1,
+  });
+
+  Item copyWith({
+    String? id,
+    String? image,
+    String? name,
+    double? price,
+    int? quantity,
+  }) {
+    return Item(
+      id: id ?? this.id,
+      image: image ?? this.image,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+    );
+  }
+}
+
+```
+
+```dart
+import 'package:design_patterns/patterns/observer/model/item.dart';
+import 'package:mobx/mobx.dart';
+
+part 'observer.g.dart';
+
+final class ShoppingItemsStore = ShoppingItemsStoreBase with _$ShoppingItemsStore;
+
+abstract class ShoppingItemsStoreBase with Store {
+  /// The list of items that the user had added to the cart.
+  @observable
+  ObservableList<Item> items = ObservableList.of(
+    [
+      const Item(
+        id: '1',
+        image: 'https://picsum.photos/200',
+        name: 'Food 1',
+        price: 10.0,
+      ),
+      const Item(
+        id: '2',
+        image: 'https://picsum.photos/200',
+        name: 'Food 2',
+        price: 20.0,
+      ),
+    ],
+  );
+
+  @observable
+  double totalPrice = 30.0;
+
+  /// [increase] Increases the quantity of the item by 1.
+  @action
+  void increase(Item item, int index) {
+    if (!items.contains(item)) {
+      items.add(item);
+    }
+
+    items[index] = item.copyWith(quantity: item.quantity + 1);
+    totalPrice += item.price;
+  }
+
+  /// [decrease] Decreases the quantity of the item by 1.
+  @action
+  void decrease(Item item, int index) {
+    if (items.contains(item) && items[index].quantity >= 1 && totalPrice >= item.price) {
+      totalPrice -= item.price;
+
+      items[index] = item.copyWith(quantity: item.quantity - 1);
+      if (items[index].quantity == 0) {
+        items.remove(item);
+      }
+    }
+  }
+}
+
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz ? Daha önce bahsettiğim gibi sepetteki yemeklerin sayısını arttırıp, azaltmaya yarayan ve buna bağlı olarak toplam tutarın güncellenmesini sağlıyoruz. Eğer **@observable** ile etiketlenmiş değişkenler **@action** ile güncellenirse UI tarafında **Observable** ile sarışmış widget ağacını yeniden çizer.
+
+```dart
+final class ObserverView extends StatefulWidget {
+  const ObserverView({super.key});
+
+  @override
+  State<ObserverView> createState() => _ObserverViewState();
+}
+
+class _ObserverViewState extends State<ObserverView> {
+  late final ShoppingItemsStore _store;
+
+  @override
+  void initState() {
+    super.initState();
+    _store = ShoppingItemsStore();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Observer'),
+      ),
+      body: Center(
+        child: SizedBox(
+          width: 300,
+          height: double.infinity,
+          child: Observer(builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _store.items.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _Food(store: _store, index: index);
+                  },
+                ),
+                const SizedBox(height: 20),
+                Text('Total Price: ${_store.totalPrice}'),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
+
+
+final class _Food extends StatelessWidget {
+  const _Food({
+    super.key,
+    required ShoppingItemsStore store,
+    required this.index,
+  }) : _store = store;
+
+  final ShoppingItemsStore _store;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(_store.items[index].name),
+      subtitle: Text("Price: ${_store.items[index].price}"),
+      leading: Image.network(_store.items[index].image),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.remove),
+            onPressed: () {
+              _store.decrease(_store.items[index], index);
+            },
+          ),
+          Text('${_store.items[index].quantity}'),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _store.increase(_store.items[index], index);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8a57831f-5c57-4c7d-a253-0c0d2558a1e7" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/ce28b883-156c-4369-a45b-fe946b390af4" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1b82506b-b915-4427-968f-3b9ea43f67c7" width="250">
 
 [Dökümantasyonun başına dön](#head)

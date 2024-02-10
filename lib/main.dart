@@ -5,6 +5,7 @@ import 'package:design_patterns/view/decorator_view.dart';
 import 'package:design_patterns/view/fly_weight_view.dart';
 import 'package:design_patterns/view/interpreter_view.dart';
 import 'package:design_patterns/view/iterator_view.dart';
+import 'package:design_patterns/view/observer_view.dart';
 import 'package:design_patterns/view/proxy_view.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design Patterns',
-      home: InterpreterView(),
+      home: ObserverView(),
     );
   }
 }

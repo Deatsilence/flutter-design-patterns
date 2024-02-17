@@ -27,7 +27,7 @@
   - [Iterator](#iterator)
   - [Interpreter](#interpreter)
   - [Observer](#observer)
-  - Command
+  - [Command](#command)
   - Mediator
   - State
   - Strategy
@@ -2450,5 +2450,149 @@ final class _Food extends StatelessWidget {
 ```
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8a57831f-5c57-4c7d-a253-0c0d2558a1e7" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/ce28b883-156c-4369-a45b-fe946b390af4" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1b82506b-b915-4427-968f-3b9ea43f67c7" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="command">Command (Behavioral Patterns)</h2>
+  Komut tasarım deseni (Command pattern), yazılım mühendisliğinde, özellikle nesne tabanlı programlamada sıklıkla kullanılan bir desendir. Bu desen, bir isteği veya eylemi bir nesne olarak kapsüllemeyi sağlar. Bu yaklaşımın temel amacı, işlemleri gerçekleştiren kod ile bu işlemleri çağıran kod arasında bir soyutlama katmanı oluşturmaktır.
+
+<h4 align="left">Command tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Command Interface:** Tüm komutların uygulayacağı bir arayüz oluşturun. Genellikle tek bir execute() metodu içerir.
+- **Concrete Command:** Komut arayüzünü uygulayan ve spesifik bir işlemi gerçekleştiren sınıflar oluşturun.
+- **Invoker:** Komutları tetikler. Örneğin, bir buton bu rolü üstlenebilir.
+- **Receiver:** Komutun gerçekte işi yaptığı nesne. Örneğin, bir uygulama içindeki belirli bir işlemi gerçekleştiren bir sınıf.
+- **Client:** Komut nesnesini oluşturur ve çağırıcıya atar.
+
+<h5 align="left">Command tasarım deseninin avantajları:</h5>
+
+- Komutlar, farklı bağlamlarda yeniden kullanılabilir.
+- UI ve iş mantığı arasında net bir ayrım sağlar.
+- Yeni komutlar kolaylıkla eklenebilir.
+- Unit testlerin yazılmasını kolaylaştırır, çünkü her komut, bağımsız olarak test edilebilen ayrı bir işlevsellik barındırır.
+
+<h5 align="left"> Command tasarım deseninin dezavantajları:</h5>
+
+- Basit işlemler için fazla karmaşık olabilir.
+- Her yeni komut için ekstra sınıflar gerekebilir, bu da kod tabanını şişirebilir.
+
+**Örnek Senaryo**
+Bir Flutter uygulamasında basit bir metin düzenleyici oluşturalım. Kullanıcı metni düzenlerken, her düzenleme işlemi bir komut olarak kaydedilecek ve bu sayede geri alma ve yeniden yapma işlevleri sağlanacak.
+
+İlk olarak **TextCommand** isimli **Command Interface** bileşenini yazarak başlıyoruz.
+
+```dart
+/// [TextCommand] is the abstract class for the Command Pattern.
+abstract class TextCommand {
+  void execute();
+  void undo();
+}
+```
+
+sonrasında **UpdateTextCommand** isimli **Concrate Command** bileşeniniz yazıyoruz. Bu bileşene **TextCommand** **Abstract** sınıfı implemente ediliyor. Bu sınıf yeni ve eski text durumlarını takip etmeye yarayacak.
+
+```dart
+/// [UpdateTextCommand] is the concrete class for the Command Pattern.
+final class UpdateTextCommand implements TextCommand {
+  final TextEditingController controller;
+  final String newText;
+  String oldText;
+
+  UpdateTextCommand(this.controller, this.newText) : oldText = controller.text;
+
+  @override
+  void execute() {
+    controller.text = newText;
+  }
+
+  @override
+  void undo() {
+    controller.text = oldText;
+  }
+}
+```
+
+Sıra **TextEditorController** isimli **Invoker** bileşenini yazmaya geldi. **Invoker** işlem geçmişini yönetmeye yarayacak. Bunun için **undo()**, **redo()** gibi methodları kullanacak.
+
+```dart
+/// [TextEditorController] is the Invoker class for the Command Pattern.
+final class TextEditorController {
+  final List<TextCommand> _commandHistory = [];
+  int _currentCommandIndex = -1;
+
+  void executeCommand(TextCommand command) {
+    if (_currentCommandIndex != _commandHistory.length - 1) {
+      _commandHistory.removeRange(_currentCommandIndex + 1, _commandHistory.length);
+    }
+    _commandHistory.add(command);
+    _currentCommandIndex++;
+    command.execute();
+  }
+
+  void undo() {
+    if (_currentCommandIndex >= 0) {
+      _commandHistory[_currentCommandIndex].undo();
+      _currentCommandIndex--;
+    }
+  }
+
+  void redo() {
+    if (_currentCommandIndex < _commandHistory.length - 1) {
+      _currentCommandIndex++;
+      _commandHistory[_currentCommandIndex].execute();
+    }
+  }
+}
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz ? Bunun için bir **TextField** oluşturarak. **Undo**, **Redo** butonlarıyla bu işlemleri gerçekleştireceğiz.
+
+```dart
+
+/// [CommandView] is the view that shows the Command Pattern.
+final class CommandView extends StatelessWidget {
+  final TextEditorController controller = TextEditorController();
+  final TextEditingController textEditingController = TextEditingController();
+
+  CommandView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Command Pattern in Flutter')),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: textEditingController,
+              onChanged: (text) {
+                controller.executeCommand(UpdateTextCommand(textEditingController, text));
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              controller.undo();
+            },
+            child: const Text('Undo'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              controller.redo();
+            },
+            child: const Text('Redo'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+İlk görselde girilen metin, ikinci görselde **Undo** butonuna birkez basıldıktan sonraki durum, üçüncü görselde **Redo** butonuna birkez basıldıktan sonraki durumlar yer almaktadır.
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/d6eabff6-2d9c-446b-bd1c-2a9e5723c795" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250">
 
 [Dökümantasyonun başına dön](#head)

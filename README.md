@@ -29,7 +29,7 @@
   - [Observer](#observer)
   - [Command](#command)
   - [Mediator](#mediator)
-  - State
+  - [State](#state)
   - Strategy
   - Template Method
   - Visitor
@@ -2709,5 +2709,101 @@ final class MediatorView extends StatelessWidget {
 ```
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/35d6419d-c084-4490-b290-3e3184bc3cd0" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/216b8558-2b8a-4f5d-a9c0-23f1bb0d7949" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="state">State (Behaverioal Patterns)</h2>
+  State design pattern, Flutter'da widget'ların durumlarını yönetmek için kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, widget'ların durumlarının değiştiği durumlarda, bu değişiklikleri verimli ve anlaşılır bir şekilde yönetmeyi sağlar. Şimdi bu kalıbı adım adım inceleyelim ve Flutter framework içinde gerçek bir senaryo ile bu kalıbın avantajlarını ve dezavantajlarını ele alalım.
+
+<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Stateful ve Stateless Widgets:** Flutter'da iki temel widget türü vardır: Stateless ve Stateful. Stateless widget'lar sabit (değişmeyen) verileri gösterirken, Stateful widget'lar değişken verileri gösterir ve güncelleyebilir.
+- **Make a Stateful Widget:** Bir Stateful widget, genellikle iki sınıftan oluşur: Birincisi, StatefulWidget sınıfından türetilen bir widget sınıfı; ikincisi ise, State sınıfından türetilen bir durum sınıfıdır.
+- **State Object:** sınıfı, widget'ın durumunu tutar. Bu sınıf içinde, widget'ın verileri ve bu veriler üzerinde yapılan değişiklikleri yöneten metodlar bulunur.
+- **build Method:** sınıfı, widget'ın durumunu tutar. Bu sınıf içinde, widget'ın verileri ve bu veriler üzerinde yapılan değişiklikleri yöneten metodlar bulunur.
+- **setState Method:** Durum değiştiğinde, setState metodu kullanılır. Bu metod, durum değişikliklerini Flutter framework'üne bildirir ve build metodunun yeniden çalışmasını sağlar.
+
+<h5 align="left">Mediator tasarım deseninin avantajları:</h5>
+
+- Esneklik ve Yeniden Kullanım: Stateful widget'lar, durumlarına göre dinamik olarak değişebilir, bu da onları yeniden kullanılabilir ve esnek yapar.
+- Anlaşılır Kod Yapısı: Durum ve arayüz ayrımı, kodun daha anlaşılır ve yönetilebilir olmasını sağlar.
+
+<h5 align="left"> Mediator tasarım deseninin dezavantajları:</h5>
+
+- Performans: Her setState çağrısı, widget'ın yeniden inşa edilmesine neden olur, bu da gereksiz render işlemlerine yol açabilir.
+- Karmaşıklık: Küçük ve basit uygulamalarda, Stateful widget kullanmak gereksiz karmaşıklığa yol açabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki bir alışveriş uygulaması yapıyorsunuz ve kullanıcının sepetindeki ürün sayısını gösteren bir widget'ınız var. Kullanıcı her yeni bir ürün eklediğinde, bu sayının güncellenmesi gerekiyor. Burada StatefulWidget kullanarak, sepet sayısını dinamik bir şekilde güncelleyebilirsiniz.
+
+İlk önce **CardWidget** isimli bir **StateFul Widget** oluşturuyoruz. Akabinde **State** sınıfından kalıtım almış **\_CartWidgetState** isimli bir private sınıf oluşturuyoruz. **StateFul** widget'a ait _createState_ methodunu _@override_ ederek **\_CartWidgetState** sınıfını bir state olarak oluşturmasını istiyoruz. Akabinde _setState_ methodunu kullanarak mevcut _itemCount_ değişkenini arttırıp azaltabiliyoruz. Bu sayede bütün **CartWidget**'ını baştan aşağı güncellemiş oluyoruz fakat bu büyük ve dallanmış widget ağaçlarında büyük bir performans sorununa yol açacaktır. Bu yüzden güncel **State** yöntemlerine bakmanızı tavsiye ediyorum. _setState_ methodunu küçük widgetlarda kullanmanızda herhangi bir sakınca yoktur.
+
+```dart
+/// [CartWidget] is a widget that is a colleague in the mediator pattern.
+final class CartWidget extends StatefulWidget {
+  const CartWidget({super.key});
+
+  @override
+  State<CartWidget> createState() => _CartWidgetState();
+}
+
+class _CartWidgetState extends State<CartWidget> {
+  int itemCount = 0;
+
+  void addItem() {
+    setState(() {
+      itemCount++;
+    });
+  }
+
+  void removeItem() {
+    setState(() {
+      itemCount--;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Amount of product in basket: $itemCount'),
+              OutlinedButton(
+                onPressed: addItem,
+                child: const Text('Add Product to Basket'),
+              ),
+              OutlinedButton(
+                onPressed: removeItem,
+                child: const Text('Remove Product from Basket'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+UI tarafında kullanmak için **StateView**'da **CartWidget**'ı döndürüyorum.
+
+```dart
+
+/// [StateView] is a widget that is a view in the state pattern.
+final class StateView extends StatelessWidget {
+  const StateView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CartWidget();
+  }
+}
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/baa72dfb-7f19-4bed-9770-9c8aee033c4d" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/b52b7781-82bc-4e78-9ade-75d94bb2b8d9" width="250">
 
 [Dökümantasyonun başına dön](#head)

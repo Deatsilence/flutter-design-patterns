@@ -28,7 +28,7 @@
   - [Interpreter](#interpreter)
   - [Observer](#observer)
   - [Command](#command)
-  - Mediator
+  - [Mediator](#mediator)
   - State
   - Strategy
   - Template Method
@@ -2594,5 +2594,120 @@ final class CommandView extends StatelessWidget {
 İlk görselde girilen metin, ikinci görselde **Undo** butonuna birkez basıldıktan sonraki durum, üçüncü görselde **Redo** butonuna birkez basıldıktan sonraki durumlar yer almaktadır.
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/d6eabff6-2d9c-446b-bd1c-2a9e5723c795" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="mediator">Mediator (Behaverioal Patterns)</h2>
+  Mediator Design Pattern, yazılımda nesneler arasındaki iletişimi ve etkileşimi düzenleyen bir davranışsal tasarım desenidir. Temel amacı, nesneler arasındaki sıkı bağımlılıkları azaltmak ve daha modüler bir kod yapısı oluşturmaktır.
+
+  Mediator Design Pattern, Flutter'da bileşenler arasındaki iletişimi kolaylaştırmak için kullanılır. Bu model, bileşenlerin birbirleriyle doğrudan iletişim kurmak yerine bir aracı (mediator) üzerinden iletişim kurmalarını sağlar. Bu yaklaşım, kodun bakımını ve genişletilmesini kolaylaştırır çünkü bileşenler arasındaki bağlantıyı azaltır.
+
+<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır:</h4>
+
+- **Mediator Interface::** Tüm aracıların uyması gereken bir arayüz oluşturun. Bu arayüz, bileşenlerin haberleşebileceği ortak bir metod seti sağlar.
+- **Concrete Mediator:** Mediator arayüzünü uygulayan ve bileşenler arasındaki iletişimi koordine eden sınıf.
+- **Colleagues:** Birbirleriyle iletişim kurmak için mediator'u kullanan bileşenler.
+
+<h5 align="left">Mediator tasarım deseninin avantajları:</h5>
+
+- Azaltılmış Karmaşıklık: Mediator, birçok küçük bileşen arasındaki karmaşık iletişimi yönetir. Bu, sistemdeki genel karmaşıklığı azaltır.
+- Gevşek Bağlama (Loose Coupling): Bileşenler doğrudan birbirleriyle değil, mediator aracılığıyla iletişim kurar. Bu, bileşenlerin daha bağımsız olmasını sağlar ve kodun bakımını kolaylaştırır.
+- Merkezi Kontrol Noktası: Tüm iletişim merkezi bir noktadan geçtiği için, uygulamanın davranışını ve iletişimi kolayca izleyebilir ve değiştirebilirsiniz.
+- Yeniden Kullanılabilirlik: Mediator ve bireysel bileşenler, uygun şekilde tasarlandığında, farklı senaryolarda yeniden kullanılabilir.
+- Kolay Genişletilebilirlik: Yeni bileşenler eklemek genellikle sadece mediatorun güncellenmesini gerektirir, bu da sistem genişletmeyi kolaylaştırır.
+
+<h5 align="left"> Mediator tasarım deseninin dezavantajları:</h5>
+
+- Mediatorun Aşırı Yüklenmesi: Tüm iletişim merkezi bir noktadan geçtiği için, mediator çok fazla sorumluluk üstlenebilir ve karmaşık hale gelebilir.
+- Performans Sorunları: Mediator üzerinden yapılan tüm iletişim, büyük sistemlerde performans sorunlarına yol açabilir.
+- Bağımlılık Sorunları: Bileşenlerin mediatora olan bağımlılığı, mediatorun değişmesi durumunda bileşenlerin de güncellenmesini gerektirebilir.
+- Küçük veya basit uygulamalar için mediator tasarım modeli gereksiz yere karmaşıklık ekleyebilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği bir anket uygulaması yapalım. Bu uygulamada, çeşitli soru widgetları ve bir sonuç gösterme widgetı bulunacak. Soru widgetları, kullanıcının cevaplarını toplar ve bu bilgileri sonuç widgetına mediator üzerinden iletir.
+
+Öncelikle **SurveyMediator** isimli **Mediator Interface** bileşenimizi yazarak başlayalım. **submitAnswer(String question, String answer)** method imzası tanımlıyoruz. Bu **abstract** sınıf bizim anket ve sonuç gösterme widget'ları arasında iletişim kurmamıza yarayacak.
+
+```dart
+/// [SurveyMediator] is the mediator interface
+abstract class SurveyMediator {
+  void submitAnswer(String question, String answer);
+}
+```
+
+Sonrasında **SurveyManager** isimli **Concrete Mediator** bileşenimizi oluşturuyoruz. Bu bileşen **SurveyMediator** bileşenini implemente ederek bileşenler arasındaki iletişimi kordine eder. Bizim durumumuzda **SurveyManager** içerisinde **submitAnswer(String question, String answer)** methodunu _@override_ ederek her soru için bir cevapları _responses_ map'ine atıyoruz.
+
+```dart
+/// [SurveyManager] is the concrete mediator
+final class SurveyManager extends ChangeNotifier implements SurveyMediator {
+  final Map<String, String> responses = {};
+
+  @override
+  void submitAnswer(String question, String answer) {
+    responses[question] = answer;
+    notifyListeners();
+  }
+}
+```
+
+Sıra **QuestionWidget** isimli **Colleagues** bileşenimizi oluşturmaya geldi. Bu sınıf önceden de bahsedildiği gibi birbirleriyle iletişim kurmak için mediator'u kullanan bir bileşendir. Her **QuestionWidget** bileşeni bir adet soru ve bir adet cevabı kapsar.
+
+```dart
+/// [QuestionWidget] is a widget that is a colleague in the mediator pattern.
+final class QuestionWidget extends StatelessWidget {
+  final String question;
+
+  const QuestionWidget({super.key, required this.question});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text(question),
+          TextField(
+            onChanged: (answer) {
+              Provider.of<SurveyManager>(context, listen: false)
+                  .submitAnswer(question, answer);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz ? Örneğin 2 adet sorumuz olsun. Her soru için **QuestionWidget**'ını kullanacağız. Her butona basışımızda güncel cevabı ve soruyu console üzerinde yazdıralım.
+
+```dart
+/// [MediatorView] is a widget that is a view in the mediator pattern.
+final class MediatorView extends StatelessWidget {
+  const MediatorView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Mediator Design Pattern')),
+      body: Column(
+        children: [
+          const QuestionWidget(question: "What is your favorite color ?"),
+          const SizedBox(height: 10),
+          const QuestionWidget(question: "What is your favorite meal ?"),
+          ElevatedButton(
+            onPressed: () => log(
+                Provider.of<SurveyManager>(context, listen: false).responses.toString()),
+            child: const Text('Show The Results'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/35d6419d-c084-4490-b290-3e3184bc3cd0" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/216b8558-2b8a-4f5d-a9c0-23f1bb0d7949" width="250">
 
 [Dökümantasyonun başına dön](#head)

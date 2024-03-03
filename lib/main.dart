@@ -13,6 +13,7 @@ import 'package:design_patterns/view/observer_view.dart';
 import 'package:design_patterns/view/proxy_view.dart';
 import 'package:design_patterns/view/state_view.dart';
 import 'package:design_patterns/view/strategy_view.dart';
+import 'package:design_patterns/view/templete_method_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Design Patterns',
-      home: StrategyView(),
+      home: TempleteMethodView(),
     );
   }
 }

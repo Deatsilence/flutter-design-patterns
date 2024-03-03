@@ -31,7 +31,7 @@
   - [Mediator](#mediator)
   - [State](#state)
   - [Strategy](#strategy)
-  - Template Method
+  - [Template Method](#template-method)
   - Visitor
   - Memento
 
@@ -2976,5 +2976,121 @@ final class StrategyView extends StatelessWidget {
 ```
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/605f8e14-a62e-4951-8180-66ecbd18e662" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/02bf12c8-adcf-4f30-a419-858bcf39a3a3" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+ <h2 align="left"><a id="template-method">Template Method (Behaverioal Patterns)</h2>
+  Flutter'da, Şablon Metodu deseni, bir temel widget'ta ortak bir algoritma veya iş akışını tanımlamak için kullanılabilir, bu da alt sınıfların bu algoritmanın belirli kısımlarını uygulamasına veya değiştirmesine olanak tanır.
+
+<h4 align="left">Template Method tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Abstract Class:** Bu sınıf, şablon metodu ve alt sınıflar tarafından uygulanması gereken soyut metotları tanımlar. Şablon metodu, soyut metotları çağırır ve adımların sırasını belirler.
+- **Concrete Class:** Bu sınıflar, soyut sınıfı genişletir ve soyut metotların özel uygulamalarını sağlar.
+- **Template Method:** Şablon metodu çağrılır ve algoritmayı, somut sınıflar tarafından sağlanan uygulamaları kullanarak yürütür.
+
+<h5 align="left">Template Method tasarım deseninin avantajları:</h5>
+
+- Yeniden Kullanılabilirlik: Ortak kodun tek bir yerde (soyut sınıf) bulunmasını teşvik eder.
+- Esneklik: Alt sınıflar, yapısını değiştirmeden algoritmanın bölümlerini değiştirebilir.
+
+<h5 align="left"> Template Method tasarım deseninin dezavantajları:</h5>
+
+- Karmaşıklık: Ek soyutlama katmanları getirebilir, bu da kodu karmaşıklaştırabilir.
+- Sınırlı Esneklik: Sadece önceden tanımlanmış adımlar, alt sınıflar tarafından değiştirilebilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki Flutter uygulamanız için bir yapıya (örneğin; dolgu, şekil) ama farklı içerik ve davranışlara sahip özel button oluşturduğunuzu düşünün. Bunun üzerine konuşalım.
+
+Öncelikle **CustomButton** isimli **Abstract Class** bileşenimizi yazıyoruz. Bu bileşen **Concrate Class**'lar tarafından uygulanacak.
+
+```dart
+/// [CustomButton] is the abstract class for the template method pattern
+abstract class CustomButton extends StatelessWidget {
+  const CustomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          // Common styling
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+          ),
+        ),
+        child: buildButtonContent(),
+      ),
+    );
+  }
+
+  Widget buildButtonContent(); // Abstract method to be implemented by subclasses
+
+  void onPressed() {
+    log("Button Pressed");
+  }
+}
+```
+
+akabinde **CustomButton** isimli **Abstract Class** bileşenini _implement_ eden **Concrete Class** bileşenlerini yazmaya geldi. _Icon_ ve _Text_ için iki farklı button tasarlıyoruz.
+
+```dart
+/// [IconCustomButton] is a concrete class
+final class IconCustomButton extends CustomButton {
+  final IconData icon;
+
+  const IconCustomButton({super.key, required this.icon});
+
+  @override
+  Widget buildButtonContent() {
+    return Icon(icon);
+  }
+}
+
+/// [TextCustomButton] is a concrete class
+final class TextCustomButton extends CustomButton {
+  final String text;
+
+  const TextCustomButton({super.key, required this.text});
+
+  @override
+  Widget buildButtonContent() {
+    return Text(text);
+  }
+}
+```
+
+sonra UI tarafında bu butonları kullanmaya başlıyoruz. Bu sayede **Templete Design Pattern**'i kullanarak butonlarımızı tasarlamış olduk.
+
+```dart
+/// [TempleteMethodView] is the main view for the template method pattern
+final class TempleteMethodView extends StatelessWidget {
+  const TempleteMethodView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Template Method Example')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextCustomButton(text: 'Text Button'),
+            IconCustomButton(icon: Icons.add),
+            // ... other buttons
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/08e1ff70-310e-4c5a-bee7-48471f775967" width="250">
 
 [Dökümantasyonun başına dön](#head)

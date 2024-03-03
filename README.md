@@ -30,7 +30,7 @@
   - [Command](#command)
   - [Mediator](#mediator)
   - [State](#state)
-  - Strategy
+  - [Strategy](#strategy)
   - Template Method
   - Visitor
   - Memento
@@ -2805,5 +2805,176 @@ final class StateView extends StatelessWidget {
 ```
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/baa72dfb-7f19-4bed-9770-9c8aee033c4d" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/b52b7781-82bc-4e78-9ade-75d94bb2b8d9" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+- <h2 align="left"><a id="strategy">Strategy (Behaverioal Patterns)</h2>
+  Strateji tasarım modeli, nesnelerin davranışını çalışma zamanında değiştirmelerine olanak tanıyan bir yazılım tasarım modelidir. Flutter'da, bu model genellikle farklı widget davranışlarını yönetmek için kullanılır. Aşağıda, Strateji modelinin Flutter'da nasıl uygulanacağına dair adım adım bir açıklama ve gerçek hayat senaryosu bulunmaktadır.
+
+<h4 align="left">Strategy tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Context:** Kullanılacak stratejiye bağlı olan ve onu içeren sınıftır. Uygulamanın geri kalanı ile strateji arasındaki arabirim görevi görür. Uygulama sırasında hangi stratejinin kullanılacağını saklar ve yönetir.
+- **Strategy Interface:** Tüm stratejilerin uygulaması gereken bir arayüzdür veya soyut sınıftır. Bu arayüz, her bir strateji sınıfının uygulayacağı metotları tanımlar.
+- **Concrete Strategies:** Strategy arayüzünü veya soyut sınıfını uygulayan sınıflardır. Bu sınıflar, arayüzde tanımlanan metodları gerçekleştirir ve Context tarafından kullanılan spesifik algoritmaları içerirler.
+
+<h5 align="left">Strategy tasarım deseninin avantajları:</h5>
+
+- Esneklik ve Değişime Uyumluluk: Strateji modeli, farklı algoritmaları veya davranışları kolayca değiştirmenize olanak tanır. Bu, uygulamanın çalışma zamanındaki davranışını dinamik olarak ayarlamanızı sağlar.
+- Yeniden Kullanım ve Organizasyon: Benzer davranışları birbirinden bağımsız olarak tanımlayabilir ve farklı bağlamlarda yeniden kullanabilirsiniz. Bu, kodun temiz ve organize kalmasına yardımcı olur.
+- Açık/Kapalı İlkesi: Yeni stratejiler eklemek, mevcut sınıfları değiştirmenizi gerektirmez. Bu, mevcut kod üzerinde yapılan değişikliklerin riskini azaltır.
+- SOLID Prensiplerine Uygunluk: Strateji modeli, SOLID prensiplerinden biri olan Single Responsibility Principle’a (Tek Sorumluluk Prensibi) uygun şekilde, bir sınıfın yalnızca bir sebepten dolayı değişmesi gerektiğini vurgular.
+
+<h5 align="left"> Strategy tasarım deseninin dezavantajları:</h5>
+
+- Komplekslik: Strateji modeli, basit problemler için aşırı karmaşık bir çözüm sunabilir. Küçük uygulamalar için bu modelin getirdiği ekstra sınıf ve arayüzler gereksiz olabilir.
+- Nesne Sayısının Artması: Her strateji için ayrı bir sınıfın oluşturulması, uygulamanın hafıza kullanımını artırabilir ve performans üzerinde olumsuz etkiler yaratabilir.
+- Bağlam ve Stratejiler Arasındaki Bağlantıyı Anlamak: Strateji ve bağlam arasındaki etkileşimi anlamak, özellikle büyük ve karmaşık sistemlerde zor olabilir.
+- Uygulama Zorluğu: Doğru stratejiyi seçmek ve uygulamak, özellikle birden fazla strateji ve karmaşık bir bağlam olduğunda zorlayıcı olabilir.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki farklı animasyon stilleri uygulayan widget'lar oluşturacağız. Örneğin, bir uygulamada farklı sayfalar arasında geçiş yaparken kullanılabilecek çeşitli sayfa geçiş animasyonları sunabiliriz. Örneğin **FadeTransitionStrategy** ve **SlideTransitionStrategy** isimli iki farklı animasyon türlerini dinamik olarak kullanmak istediğimizi varsayalım. İlk olarak **PageTransitionStrategy** isimli **Strategy Interface** bileşenimizi oluşturuyoruz.
+
+```dart
+/// [PageTransitionStrategy] is the strategy interface
+abstract class PageTransitionStrategy {
+  Widget buildTransition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  );
+}
+```
+
+Sonrasında sıra **FadeTransitionStrategy** ve **SlideTransitionStrategy** isimli **Concrete Strategies** bileşenlerini oluşturmaya geldi. Bu bileşenlere **PageTransitionStrategy** bileşeni _implement_ ediliyor. Her animasyona özel ayarlamalar yapıldıktan sonra **Concrete Stratagies** bileşenlerimiz hazır oluyor.
+
+```dart
+/// [FadeTransitionStrategy] is a concrete strategy
+final class FadeTransitionStrategy implements PageTransitionStrategy {
+  @override
+  Widget buildTransition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return FadeTransition(opacity: animation, child: child);
+  }
+}
+
+/// [SlideTransitionStrategy] is a concrete strategy
+final class SlideTransitionStrategy implements PageTransitionStrategy {
+  @override
+  Widget buildTransition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    var begin = const Offset(1.0, 0.0);
+    var end = Offset.zero;
+    var tween = Tween(begin: begin, end: end);
+    var offsetAnimation = animation.drive(tween);
+
+    return SlideTransition(position: offsetAnimation, child: child);
+  }
+}
+```
+
+akabinde sıra **CustomPageRoute** isimli **Context** bileşenini yazmaya geldi. Daha önceden de bahsedildiği gibi bu bileşen geçiş stratejisini içeren ve kullanacak bir sayfa yönlendirme sınıfı oluşturur.
+
+```dart
+/// [CustomPageRoute] is the context
+final class CustomPageRoute extends PageRouteBuilder {
+  final Widget page;
+  final PageTransitionStrategy transitionStrategy;
+
+  CustomPageRoute({
+    required this.page,
+    required this.transitionStrategy,
+  }) : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              transitionStrategy.buildTransition(
+                  context, animation, secondaryAnimation, child),
+        );
+}
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz hemen görelim. _HomeView_ ve _DetailView_ isimli iki ekranımızın olduğunu düşünelim. birbirleri arasında _navigate_ işlemleri olacak. Bu geçişleri kullandığımız **Strategy Design Pattern**'e uygun olarak farklı animasyonlar kullanacak bir şekilde gerçekleştirelim.
+
+```dart
+/// [HomeView] is the main view for the strategy pattern
+final class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home View'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Go to Detail View'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              CustomPageRoute(
+                page: const DetailView(),
+                transitionStrategy: FadeTransitionStrategy(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+/// [DetailView] is the detail view for the strategy pattern
+final class DetailView extends StatelessWidget {
+  const DetailView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Detail View'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Go Back to Home View'),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    );
+  }
+}
+
+
+/// [StrategyView] is the main view for the strategy pattern
+final class StrategyView extends StatelessWidget {
+  const StrategyView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const HomeView();
+  }
+}
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/605f8e14-a62e-4951-8180-66ecbd18e662" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/02bf12c8-adcf-4f30-a419-858bcf39a3a3" width="250">
 
 [Dökümantasyonun başına dön](#head)

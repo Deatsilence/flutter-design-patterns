@@ -32,7 +32,7 @@
   - [State](#state)
   - [Strategy](#strategy)
   - [Template Method](#template-method)
-  - Visitor
+  - [Visitor](#visitor)
   - Memento
 
 - <h2 align="left"><a id="factory-method">Factory Method (Creational Patterns)</h2>
@@ -3092,5 +3092,157 @@ final class TempleteMethodView extends StatelessWidget {
 ```
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/08e1ff70-310e-4c5a-bee7-48471f775967" width="250">
+
+[Dökümantasyonun başına dön](#head)
+
+ <h2 align="left"><a id="visitor">Visitor (Behaverioal Patterns)</h2>
+  Bu model, ziyaretçiler ve elementler olmak üzere iki tür nesneyi içerir. Elementler bir yapı parçasıdır (Flutter'da widget ağacındaki widgetlar gibi), ve ziyaretçiler bu elementler üzerinde operasyonlar gerçekleştiren nesnelerdir. Ana fikir, mevcut nesne yapılarına yapıları değiştirmeden yeni operasyonlar ekleyebilmektir.
+
+<h4 align="left">Visitor tasarım deseninin dört ana bileşeni vardır:</h4>
+
+- **Visitor Interface:** Nesne yapısındaki her tür element için bir ziyaret operasyonu tanımlar. Flutter'da, bunlar farklı türdeki widgetlar olabilir.
+- **Concrete Visitor:** Ziyaretçi arayüzünü uygular ve elementler üzerinde gerçekleştirilecek operasyonu tanımlar.
+- **Element Interface:** Bir ziyaretçiyi argüman olarak alan bir accept metodu sağlar.
+- **Concrete Element:** Element arayüzünü uygulayan gerçek nesnelerdir. Flutter'da, widgetlar bu rolü oynar.
+
+<h5 align="left">Visitor tasarım deseninin avantajları:</h5>
+
+- Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
+- Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
+- Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
+
+<h5 align="left"> Visitor tasarım deseninin dezavantajları:</h5>
+
+- Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
+- Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki farklı widget türlerinde gezinirken belirli özellikleri güncelleyen veya onları farklı şekillerde manipüle eden bir ziyaretçi sınıfını ele alacağız. Örneğin, bir dizi text'in padding veya margin değerlerini dinamik olarak değiştirmek isteyebiliriz.
+
+Öncelikle **WidgetVisitor** isimli **Visitor Interface** bileşenimizi yazıyoruz. Bu bileşen _visitText(VisitableText text)_ method imzasına sahip bir method barındırıyor. Bu method ziyaret edilen elementler üzerinde hangi işlerin yapılacağına karar verir. Bizim durumumuzda **VisitableText** isimli bir **Concrete Element** bileşenini parametrik olark alıyoruz.
+
+```dart
+/// [WidgetVisitor] is the interface for the visitor pattern. Visitor Interface
+abstract class WidgetVisitor {
+  Widget visitText(VisitableText text);
+}
+```
+
+Sonrasında **VisitableWidget** isimli **Element Interface** bileşenimizi yazıyoruz. Bu bileşen _accept(WidgetVisitor visitor)_ method imzasına sahiptir ve **Visitor Interface** tipinde bir parametre alır.
+_accept_ methodunda, ziyaretçinin (_WidgetVisitor_) _accept_ methodu çağırması sağlanır. Bu yaklaşım, ziyaretçinin **VisitableText** üzerinde tanımlanmış özel işlemi uygulamasına olanak tanır.
+
+```dart
+/// [VisitableWidget] is the interface for the elements in the object structure. Element Interface
+abstract class VisitableWidget {
+  Widget accept(WidgetVisitor visitor);
+}
+
+```
+
+akabinde sıra **PaddingAdjuster** isimli **Concrete Visitor** bileşenimizi yazmaya geldi. Bu bileşen içerisinde elementlere uygulanacak adımları barındırır. Bizim durumumuzda bu bir padding ayarlama olduğundan dolayı padding odaklı bir içeriğimiz bulunmaktatır. İlgili bileşene paddingi uygulamak için _visitText_ methodunu _@override_ ediyoruz.
+
+```dart
+/// [PaddingAdjuster] is a concrete visitor that implements the [WidgetVisitor] interface.
+final class PaddingAdjuster implements WidgetVisitor {
+  final double padding;
+
+  PaddingAdjuster({required this.padding});
+
+  @override
+  Widget visitText(VisitableText text) {
+    return Padding(
+      padding: EdgeInsets.all(padding),
+      child: text,
+    );
+  }
+}
+```
+
+**VisitableText** isimli **Concrete Element** bileşenimizi yazıyoruz. Bu bileşen **Element Interface** bileşeninden implement alır ve Flutterda gerçek widgetlar'a tekabul eder. Bizim durumumuzda bu bir **Text** komponentidir.
+
+```dart
+/// [VisitableText] is a concrete element that implements the [CustomWidget] interface.
+final class VisitableText extends StatelessWidget implements VisitableWidget {
+  final String text;
+
+  const VisitableText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text);
+  }
+
+  @override
+  Widget accept(WidgetVisitor visitor) {
+    return visitor.visitText(this);
+  }
+}
+```
+
+Peki bunu UI tarafında nasıl kullanabiliriz gelin bakalım. Senaryomuz gereği ilgili **Text** widget'ının padding değerini arttırıp-azaltma olaylarını gerçekleyelim.
+
+```dart
+/// [VisitorView] is a view that visitor design pattern is implemented.
+final class VisitorView extends StatefulWidget {
+  const VisitorView({super.key});
+
+  @override
+  State<VisitorView> createState() => _VisitorViewState();
+}
+
+class _VisitorViewState extends State<VisitorView> {
+  late double _currentPadding;
+
+  @override
+  void initState() {
+    _currentPadding = 0;
+    super.initState();
+  }
+
+  void increasePadding() {
+    setState(() {
+      _currentPadding += 10;
+    });
+  }
+
+  void decreasePadding() {
+    setState(() {
+      if (_currentPadding > 0) {
+        _currentPadding = _currentPadding - 10;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final paddingAdjuster = PaddingAdjuster(padding: _currentPadding);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Visitor Pattern')),
+      body: const VisitableText(text: 'Hello Visitor').accept(paddingAdjuster),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: increasePadding,
+            mini: true,
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 10),
+          FloatingActionButton(
+            onPressed: decreasePadding,
+            mini: true,
+            child: const Icon(Icons.remove),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/175de900-bd3b-45f2-af8f-12b080a00bc7" width="250">
 
 [Dökümantasyonun başına dön](#head)

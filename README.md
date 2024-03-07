@@ -3306,7 +3306,7 @@ final class CartMemento {
 }
 ```
 
-Akabinde **CartCaretaker** isimli **Caretaker** bileşenimizi oluşturuyoruz. Bu bileşen içerisinde _saveState(CartMemento memento)_, _undo()_ methodlarını barındırıyor. _saveState_ methodu anlık olarak stati güncelleyip kopyasını oluştururken, _undo_ isimli method sepetteki işlemlerin geri alınmasını sağlıyor.
+Akabinde **CartCaretaker** isimli **Caretaker** bileşenimizi oluşturuyoruz. Bu bileşen içerisinde _saveState(CartMemento memento)_, _undo()_ methodlarını barındırıyor. _saveState_ methodu anlık olarak state'i güncelleyip kopyasını oluştururken, _undo_ isimli method sepetteki işlemlerin geri alınmasını sağlıyor.
 
 ```dart
 /// [CartCaretaker] class is responsible for keeping the history of the [CartMemento] objects.

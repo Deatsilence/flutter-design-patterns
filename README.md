@@ -3246,3 +3246,196 @@ class _VisitorViewState extends State<VisitorView> {
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/175de900-bd3b-45f2-af8f-12b080a00bc7" width="250">
 
 [Dökümantasyonun başına dön](#head)
+
+<h2 align="left"><a id="momento">Momento (Behaverioal Patterns)</h2>
+  Memento Tasarım Deseni, bir nesnenin iç durumunu yakalamak ve dışa vurmak için kullanılan davranışsal bir tasarım desenidir, böylece nesne daha sonra bu duruma geri dönebilir. Flutter çatısında, widget'ların durumlarıyla uğraşırken özellikle yararlıdır.
+
+<h4 align="left">Momento tasarım deseninin üç ana bileşeni vardır:</h4>
+
+- **Originator:** Durumunu kaydetmek ve geri yüklemek istediğiniz ana nesnedir. Flutter'da bu bir widget veya model sınıfı olabilir. Mevcut iç durumunun bir anlık görüntüsünü içeren bir memento oluşturur.
+- **Memento:** Kaynağın durumunun bir anlık görüntüsü olarak hareket eden değer nesnesidir. Değişmez olmalı ve yalnızca kaynak tarafından erişilebilir olmalıdır.
+- **Caretaker:** Memento'nun güvenliğinden sorumlu olan nesnedir, ancak memento'nun içeriğini işlemez veya incelemez. Flutter'da bu, bir yönetici veya kontrolör sınıfı olabilir.
+
+<h5 align="left">Momento tasarım deseninin avantajları:</h5>
+
+- Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
+- Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
+- Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
+
+<h5 align="left"> Momento tasarım deseninin dezavantajları:</h5>
+
+- Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
+- Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.
+
+**Örnek Senaryo**
+
+Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki bir alışveriş uygulaması düşünelim. Kullanıcılar, sepete ürün ekleyip çıkartabiliyorlar ve biz bu değişiklikleri geri alınabilir yapmak istiyoruz.
+
+Öncelikle durumunu takip etmek istediğimiz modeli tasarlıyoruz. Bizim senaryomuzda bu bir _Product_ modeli olacak.
+
+```dart
+/// [Product] class is a model class that holds the product details.
+@immutable
+final class Product {
+  final String name;
+  final double price;
+
+  const Product({
+    required this.name,
+    required this.price,
+  });
+}
+
+```
+
+Sonra **CartMemento** isimli **Memento** bileşenimizi yazmakla başlayalım. Bu bileşen sepetteki ürünlerin anlık olarak bir kopyasını almak için _copy()_ methodu barındırıyor. Bu method **CartCaretaker** bileşenindeki _saveState()_ methodunda kullanılarak her seferinde sepetin durumunu takip edeceğiz. Bu sayede sepetten çıkarılan/eklenen ürünleri ilgili ürün sayfasına gitmeden sepetten ekleyip/çıkartabileceğiz.
+
+```dart
+/// [CartMemento] class is a memento class that holds the state of the [Cart].
+final class CartMemento {
+  final List<Product> products;
+
+  CartMemento(this.products);
+
+  /// [copy] method is used to create a copy of the [CartMemento] object.
+  CartMemento copy() => CartMemento(
+        List.from(
+          products,
+        ),
+      );
+}
+```
+
+Akabinde **CartCaretaker** isimli **Caretaker** bileşenimizi oluşturuyoruz. Bu bileşen içerisinde _saveState(CartMemento memento)_, _undo()_ methodlarını barındırıyor. _saveState_ methodu anlık olarak stati güncelleyip kopyasını oluştururken, _undo_ isimli method sepetteki işlemlerin geri alınmasını sağlıyor.
+
+```dart
+/// [CartCaretaker] class is responsible for keeping the history of the [CartMemento] objects.
+final class CartCaretaker {
+  List<CartMemento> _history = [];
+  int _currentIndex = -1;
+
+  void saveState(CartMemento memento) {
+    CartMemento mementoCopy = memento.copy();
+
+    if (_currentIndex != _history.length - 1) {
+      _history = _history.sublist(0, _currentIndex + 1);
+    }
+    _history.add(mementoCopy);
+    _currentIndex = _history.length - 1;
+  }
+
+  CartMemento? undo() {
+    if (_currentIndex > 0) {
+      _currentIndex--;
+      return _history[_currentIndex];
+    }
+    return null;
+  }
+}
+```
+
+Son olarak **Product** modelini _Widget_ üzerine taşıyarak **ShoppingCartWidget** isimli **Originator** bileşenini yazıyoruz. Takip edeceğimiz _Widget_ artık senaryomuz gereği **ShoppingCartWidget** oluyor.
+
+```dart
+/// [ShoppingCartWidget] Originator
+final class ShoppingCartWidget extends StatefulWidget {
+  const ShoppingCartWidget({super.key});
+
+  @override
+  State<ShoppingCartWidget> createState() => _ShoppingCartWidgetState();
+}
+
+class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
+  List<Product> products = [];
+  CartCaretaker caretaker = CartCaretaker();
+
+  @override
+  void initState() {
+    super.initState();
+    saveState();
+  }
+
+  void addProduct(Product product) {
+    setState(() {
+      products.add(product);
+      saveState();
+    });
+  }
+
+  void removeProduct(Product product) {
+    setState(() {
+      products.remove(product);
+      saveState();
+    });
+  }
+
+  void saveState() {
+    caretaker.saveState(CartMemento(products));
+  }
+
+  void undo() {
+    var memento = caretaker.undo();
+    if (memento != null) {
+      setState(() {
+        products = memento.products;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            /// Products List
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(products[index].name),
+                    subtitle: Text(products[index].price.toString()),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.remove_circle),
+                      onPressed: () => removeProduct(products[index]),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            /// Undo and redo buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                /// Add Product button
+                ElevatedButton(
+                  onPressed: () => addProduct(Product(
+                      name: 'New Product',
+                      price: double.parse(
+                          (Random().nextDouble() * 100).toStringAsFixed(2)))),
+                  child: const Text('Add Product'),
+                ),
+                const SizedBox(width: 8),
+
+                /// Undo button
+                ElevatedButton(
+                  onPressed: undo,
+                  child: const Text('Undo'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+```
+
+<img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/90ba1231-9343-4498-b0fb-6096bd06fb8b" width="250">
+
+[Dökümantasyonun başına dön](#head)

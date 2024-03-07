@@ -33,7 +33,7 @@
   - [Strategy](#strategy)
   - [Template Method](#template-method)
   - [Visitor](#visitor)
-  - Memento
+  - [Memento](#momento)
 
 - <h2 align="left"><a id="factory-method">Factory Method (Creational Patterns)</h2>
   Factory design pattern(Fabrika tasarım deseni) bir nesnenin nasıl oluşturulacağını soyutlaştırmaya yardımcı olan bir yaratımsal tasarım modelidir. Bu, kodunuzun daha esnek ve genişletilebilir olmasını sağlar.

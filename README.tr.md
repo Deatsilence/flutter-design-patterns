@@ -1,5 +1,4 @@
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.md)
-[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.tr.md)
 
 <h1 align="center"><a id="head">Flutter ile Tasarım Desenleri</h1>
 

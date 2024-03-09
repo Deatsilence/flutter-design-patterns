@@ -1,3 +1,7 @@
+[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/Deatsilence/flutter-design-patterns/main/README.md)
+
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/main/README.en.md)
+
 <h1 align="center"><a id="head">Design Patterns with Flutter</h1>
 
 - <h2 align="left">Kısaca Design Patterns nedir ?</h2>
@@ -40,18 +44,18 @@
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
 
-<h4 align="left">Fabrika tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Fabrika tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Ürün:** Oluşturulacak nesnedir.
 - **Fabrika:** Ürün nesnesini oluşturan sınıftır.
 
-<h5 align="left">Fabrika tasarım deseninin avantajları:</h5>
+<h5 align="left">Fabrika tasarım deseninin avantajları</h5>
 
 - Kodunuzu daha esnek ve genişletilebilir hale getirir.
 - Nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve anlaşılır olmasını sağlar.
 - Yazılım geliştirme sürecini daha verimli hale getirir.
 
-<h5 align="left"> Fabrika tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Fabrika tasarım deseninin dezavantajları</h5>
 
 - Karmaşık uygulamalarda kullanımı zor olabilir.
 - Daha fazla kod yazmanıza neden olabilir.
@@ -132,18 +136,18 @@ class FactoryView extends StatelessWidget {
 
 Soyut fabrika tasarım deseni, birden çok aileden nesne oluşturmak için bir fabrika sınıfı kullanır. Bu desen, nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve esnek olmasını sağlar.
 
-<h4 align="left">Soyut fabrika tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Soyut fabrika tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Soyut fabrika:** Birden çok aileden nesne oluşturmak için kullanılan bir sınıftır.
 - **Somut fabrika:** Soyut fabrikayı somutlaştıran ve belirli bir aileden nesneler oluşturmak için kullanılan bir sınıftır.
 
-<h5 align="left">Soyut fabrika tasarım deseninin avantajları:</h5>
+<h5 align="left">Soyut fabrika tasarım deseninin avantajları</h5>
 
 - Kodunuzu daha esnek ve genişletilebilir hale getirir.
 - Nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve anlaşılır olmasını sağlar.
 - Yazılım geliştirme sürecini daha verimli hale getirir.
 
-<h5 align="left"> Soyut fabrika tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Soyut fabrika tasarım deseninin dezavantajları</h5>
 
 - Karmaşık uygulamalarda kullanımı zor olabilir.
 - Daha fazla kod yazmanıza neden olabilir.
@@ -273,18 +277,18 @@ Hangi yöntemin kullanılacağı projenin gereksinimlerine ve diğer parametrele
 - <h2 align="left"><a id="singleton">Singleton (Creational Patterns)</h2>
   Singleton tasarım deseni, bir sınıftan yalnızca bir nesnenin oluşturulmasını sağlar. Bu desen, tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanılır.
 
-<h4 align="left">Singleton tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Singleton tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Singleton sınıfı:** Yalnızca bir nesnenin oluşturulmasını sağlayan sınıftır..
 - **Singleton nesnesi:** Singleton sınıfından oluşturulan tek nesnedir.
 
-<h5 align="left">Singleton tasarım deseninin avantajları:</h5>
+<h5 align="left">Singleton tasarım deseninin avantajları</h5>
 
 -Tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanışlıdır.
 -Kodunuzu daha okunaklı ve anlaşılır hale getirir.
 -Yazılım geliştirme sürecini daha verimli hale getirir.
 
-<h5 align="left"> Fabrika tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Fabrika tasarım deseninin dezavantajları</h5>
 
 - Karmaşık uygulamalarda kullanımı zor olabilir.
 - Daha fazla kod yazmanıza neden olabilir.
@@ -402,17 +406,17 @@ class _SingletonViewState extends State<SingletonView> {
 - <h2 align="left"><a id="prototype">Prototype (Creational Patterns)</h2>
   Prototype tasarım kalıbı, nesnelerin kopyalarını oluşturmak için bir prototip nesneyi kullanan bir tasarım kalıbıdır. Bu, nesneleri doğrudan oluşturmaktan daha verimli olabilir, özellikle de nesnelerin oluşturulması karmaşık veya zaman alıcıysa.
 
-<h4 align="left">Prototype tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Prototype tasarım deseninin üç ana bileşeni vardır</h4>
 - **Prototip:** Kopyalanacak nesne.
 - **Kopyalayıcı:** Prototip nesneyi kopyalayan sınıf.
 - **Kullanıcılar:** Kopyalanmış nesneleri kullanan sınıflar.
 
-<h5 align="left">Prototype tasarım deseninin avantajları:</h5>
+<h5 align="left">Prototype tasarım deseninin avantajları</h5>
 - Nesnelerin oluşturulmasını daha verimli hale getirir.
 - Nesnelerin aynı özelliklerine sahip bir dizi kopya oluşturmayı kolaylaştırır.
 - Nesnelerin belirli bir durumdan bağımsız olarak oluşturulmasını sağlar.
 
-<h5 align="left"> Prototype tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Prototype tasarım deseninin dezavantajları</h5>
 
 - Prototip nesnenin değiştirilmesi, tüm kopyalanmış nesneleri de değiştirebilir.
 - Prototip nesnenin özelliği değiştirildiğinde, kopyalanmış nesnelerin özelliklerini de değiştirmek gerekir.
@@ -503,19 +507,19 @@ Output:
 
 Adapter deseni, iki farklı sınıfın veya arayüzün arayüzlerini birbirine benzeterek, bu sınıfların veya arayüzlerin birlikte kullanılmasını sağlar. Bu sayede, mevcut bir sınıfı veya arayüz sınıfını, değiştirmek veya yeniden yazmak zorunda kalmadan, yeni bir sistemde veya projede kullanmak mümkün olur.
 
-<h4 align="left">Adapter tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Adapter tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Adapte edilen sınıf veya arayüz:** Adaptör deseninin amacı, bu sınıf veya arayüzü, farklı bir arayüze sahip olacak şekilde uyarlamaktır.
 - **Adaptör sınıfı:** Adaptör sınıfı, adapte edilen sınıf veya arayüzü, farklı bir arayüze uygun hale getiren sınıftır.
 - **Müşteri sınıfı:** Adaptör sınıfının arayüzünü kullanan sınıftır.
 
-<h5 align="left">Adapter tasarım deseninin avantajları:</h5>
+<h5 align="left">Adapter tasarım deseninin avantajları</h5>
 
 - Mevcut bir sınıfı veya arayüzü değiştirmeden yeni bir sistemde veya projede kullanmayı sağlar.
 - Farklı teknolojileri veya platformları bir araya getirmeyi kolaylaştırır.
 - Bir sınıfın veya arayüzün işlevselliğini genişletmeyi sağlar.
 
-<h5 align="left"> Adapter tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Adapter tasarım deseninin dezavantajları</h5>
 
 - Adaptör sınıfı, adapte edilen sınıf veya arayüzün tüm işlevselliğini desteklemek zorundadır.
 - Adaptör sınıfı, adapte edilen sınıf veya arayüzün koduna bağımlı olabilir.
@@ -672,21 +676,21 @@ class AdapterView extends StatelessWidget {
 - <h2 align="left"><a id="builder">Builder (Creational Patterns)</h2>
   Builder deseni, karmaşık bir nesnenin inşasını iki sınıfa ayıran bir yapısal tasarım modelidir.
 
-<h4 align="left">Builder tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Builder tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Builder sınıfı:** Bu sınıf, nesnenin inşasını gerçekleştirir.
 - **Nesne sınıfı:** Bu sınıf, inşa edilen nesnenin temsilini sağlar.
 
 Builder sınıfı, nesnenin inşası için bir dizi yöntem sağlar. Bu yöntemler, nesnenin özelliklerini ayarlamak için kullanılır. Nesne inşa edildiğinde, Builder sınıfı build() yöntemini çağırır. Bu yöntem, nesnenin inşasını tamamlar ve nesneyi döndürür.
 
-<h5 align="left">Builder tasarım deseninin avantajları:</h5>
+<h5 align="left">Builder tasarım deseninin avantajları</h5>
 
 - Karmaşık nesneleri adım adım oluşturmayı kolaylaştırır.
 - Aynı nesnenin farklı temsillerinin, inşa sürecini değiştirmeden oluşturulmasına olanak tanır.
 - Karmaşık nesnelerin inşa sürecini test etmeyi kolaylaştırır.
 - Okunabilirlik ve Bakım Kolaylığı: Builder tasarım deseni, nesne oluşturma işlemini daha okunaklı ve bakımı daha kolay hale getirir. Her bir adım açıkça tanımlanır ve değiştirilmesi gerektiğinde sadece ilgili Builder sınıfı değiştirilir.
 
-<h5 align="left">Builder tasarım deseninin dezavantajları:</h5>
+<h5 align="left">Builder tasarım deseninin dezavantajları</h5>
 
 - Basit nesneler için Builder kullanmak gereksiz bir karmaşıklık yaratabilir. Bu tasarım deseni, yalnızca karmaşık nesneleri oluşturmak gerektiğinde mantıklıdır.
 
@@ -795,7 +799,7 @@ final class PhotoBuilder implements Photo {
 
 Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
 
-<h4 align="left">Bridge tasarım deseninin 4 ana bileşeni vardır:</h4>
+<h4 align="left">Bridge tasarım deseninin 4 ana bileşeni vardır</h4>
 
 **Abstraction (Soyutlama):** Bu, istemcinin bir arayüzle etkileşim kurduğu ve işlevselliğin tam olarak gerçekleşmediği katmandır.
 
@@ -805,7 +809,7 @@ Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika s
 
 **Concrete Implementation (Somut Uygulama):** Implementation'ın alt sınıflarıdır ve spesifik bir durumu gerçekten uygular.
 
-<h5 align="left">Bridge tasarım deseninin avantajları:</h5>
+<h5 align="left">Bridge tasarım deseninin avantajları</h5>
 
 - Esneklik ve Genişletilebilirlik: Soyutlama ve uygulama, birbirinden bağımsız olarak değiştirilebilir, bu da sistemdeki değişiklikleri kolaylaştırır.
 
@@ -813,7 +817,7 @@ Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika s
 
 - Değişiklik Yönetimi: Bir tarafın değişmesi, diğerini etkilemez. Örneğin, sadece soyutlama değişebilir ve uygulama değişmeden kalabilir ya da tam tersi.
 
-<h5 id="bridge" align="left"> Bridge tasarım deseninin dezavantajları:</h5>
+<h5 id="bridge" align="left"> Bridge tasarım deseninin dezavantajları</h5>
 
 - Komplekslik: Desenin uygulanması bazen karmaşıklığa yol açabilir, özellikle projenin boyutu küçükse veya gereksinimler basitse, bu komplekslik gereksiz olabilir.
 
@@ -1001,20 +1005,20 @@ class _BridgeViewState extends State<BridgeView> {
 - <h2 align="left"><a id="composite">Composite (Structural Patterns)</h2>
   Kompozit tasarım deseni, tek tek nesneleri ve nesne bileşimlerini aynı şekilde ele almanızı sağlayan güçlü bir yapısal desendir. Hem parçaları (tek tek nesneler) hem de bütünleri (bileşik nesneler) aynı şekilde ele alabileceğiniz nesne hiyerarşileri oluşturmanıza yardımcı olur.
 
-<h4 align="left">Composite tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Composite tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Abstract Interface:** Bu modelin temelidir. Hiyerarşideki hem bireysel hem de bileşik tüm nesnelerin uyması gereken ortak davranışı tanımlar.
 - **Concrete Classes:** Bunlar, belirli nesne türlerini temsil eden soyut arayüzün uygulamalarıdır. Her sınıf arayüz yöntemleri için kendi davranışını tanımlar.
 - **Client Code:** Bu, hiyerarşideki nesnelerle etkileşime giren koddur. İstemciler yalnızca soyut arabirimi görür ve hem tek tek nesnelere hem de kompozitlere aynı şekilde davranmalarına izin verir
 
-<h5 align="left">Composite tasarım deseninin avantajları:</h5>
+<h5 align="left">Composite tasarım deseninin avantajları</h5>
 
 - İstemcilerin farklı nesne türlerini farklı şekilde işlemeleri gerekmez.
 - Daha esnek ve yeniden kullanılabilir kod Ortak arayüze uyan yeni öğe türlerini kolayca ekleyebilirsiniz.
 - Daha kolay bakım bir öğe türündeki değişiklikler mutlaka diğerlerini etkilemez.
 - Geliştirilmiş kod okunabilirliği: Kod, verilerinizin gerçek dünya yapısını yansıtır.
 
-<h5 align="left"> Composite tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Composite tasarım deseninin dezavantajları</h5>
 
 - Büyük bir hiyerarşik tarama yapmayalım, performans etkileyici olabilir.
 
@@ -1208,20 +1212,20 @@ Widget build(BuildContext context) {
 - <h2 align="left"><a id="decorator">Decorator (Structural Patterns)</h2>
   Decorator tasarım deseni, bir nesneye dinamik olarak yeni özellikler eklemek için kullanılan bir tasarım desenidir. Bu, temel nesnenin işlevselliğini değiştirmeden veya genişletmeden yapılır. Decorator tasarım deseni, doğru bir şekilde kullanıldığında esneklik ve sürdürülebilirlik sağlar. Ancak, her tasarım deseni gibi, uygulama gereksinimlerinize uygun olup olmadığını değerlendirmek önemlidir.
 
-<h4 align="left">Decorator tasarım deseninin 3 ana bileşeni vardır:</h4>
+<h4 align="left">Decorator tasarım deseninin 3 ana bileşeni vardır</h4>
 
 - **Abstract Component Interface(OPTIONAL):** Bu interface tamamen opsiyonel olarak kullanılabilir. Dekore edilecek component için **abstract** bir davranış sergiletebilirsiniz..
 - **Concrete Component:** Dekore edilecek componentin saf halidir. İsteğe göre **abstract component interface** implemente edilebilir.
 - **Abstract Decorator Class:** Dekore edilecek component için dekor sınıflarına bir **abstract** katman sağlar. Kullanılacak dekor sınıfları bu sınıftan kalıtım alırlar.
 - **Decorator Class:** Dekore edilecek componenti dekore eder. Dekore edilecek component için birden fazla **dekoratör** sınıfı yapılabilir.
 
-<h5 align="left">Decorator tasarım deseninin avantajları:</h5>
+<h5 align="left">Decorator tasarım deseninin avantajları</h5>
 
 - Esneklik (Flexibility): Decorator deseni, nesnelere dinamik olarak davranış eklemenin esnek bir yolunu sağlar. Yeni sorumluluklar eklemek veya var olanları kaldırmak, sınıfları değiştirmeden yapılabilir.
 - Açık Kapalı Prensibi (Open-Closed Principle): Decorator deseni, sınıfların açık olmasını (yeni davranışları eklemeye izin vermesi) ve kapalı olmasını (mevcut kodu değiştirmemesi) sağlar. Bu, kodunuzun daha sürdürülebilir olmasına yardımcı olur.
 - Birleşik Nesneler (Composite Objects): Decorator deseni, bir nesnenin üzerine başka nesneleri birleştirebilmenizi sağlar. Bu, bir nesneyi farklı kombinasyonlarda birleştirerek karmaşık yapılar oluşturmanıza olanak tanır.
 
-<h5 align="left"> Decorator tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Decorator tasarım deseninin dezavantajları</h5>
 
 - Kod Karmaşası (Code Complexity): Decorator deseni kullanıldığında, bir nesnenin üzerine ek sorumluluklar eklemek için bir dizi sınıf oluşturulur. Bu durum zamanla kod karmaşıklığına yol açabilir.
 - Fazla Sayıda Küçük Nesne (Lots of Small Objects): Decorator deseni, her dekoratör sınıfı için bir sınıf yaratılmasını gerektirir. Bu durum, çok sayıda küçük nesnenin oluşmasına ve proje boyutunda artışa neden olabilir.
@@ -1434,18 +1438,18 @@ final class _DecoratorViewState extends State<DecoratorView> {
 
 Facade, karmaşık alt sistemlerin basitleştirilmiş bir arayüzle dış dünyaya sunulmasını sağlar. Kullanıcılar, alt sistemlerin karmaşık yapıları ve işleyişleri hakkında derinlemesine bilgi sahibi olmadan, bu sistemleri kullanabilirler.
 
-<h4 align="left">Fecade tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Fecade tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Fecade:** Dış dünyaya sunulan basitleştirilmiş arayüzü sağlar. Alt sistemlerin işlevlerini birleştirir ve kullanıcıya sunar.
 - **Alt Sistemler:** Facade arayüzü tarafından kapsanan karmaşık işlevselliği barındıran sınıflar. Bunlar doğrudan kullanıcı tarafından çağrılmaz, ancak Facade sınıfı tarafından yönetilir.
 
-<h5 align="left">Fecade tasarım deseninin avantajları:</h5>
+<h5 align="left">Fecade tasarım deseninin avantajları</h5>
 
 - Karmaşık sistemlerin daha basit bir arayüzle kullanılmasını sağlar.
 - Alt sistemlerle doğrudan etkileşimi azaltır, böylece kodun bakımı ve güncellenmesi kolaylaşır.
 - Alt sistemlerin ayrı ayrı test edilmesini kolaylaştırır.
 
-<h5 align="left"> Fecade tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Fecade tasarım deseninin dezavantajları</h5>
 
 - Ekstra bir soyutlama katmanı, bazen performans kaybına yol açabilir.
 - Çok basitleştirilmiş bir arayüz, bazı durumlarda alt sistemlerin tüm özelliklerine erişimi kısıtlayabilir.
@@ -1553,19 +1557,19 @@ class _FecadeViewState extends State<FecadeView> {
 - <h2 align="left"><a id="flyweight">Flyweight (Structural Patterns)</h2>
   Flyweight tasarım kalıbı, bellek kullanımını optimize etmek amacıyla kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, nesneler arasında paylaşılabilir durumları (intrinsic state) ve paylaşılamayan durumları (extrinsic state) ayırarak, tekrar eden durumları azaltmayı ve böylece bellek kullanımını verimli bir şekilde azaltmayı hedefler. Özellikle birçok benzer nesnenin oluşturulduğu durumlarda önem kazanır. Flutter'da Flyweight tasarım kalıbını kullanmanın bir örneği, özellikle widget ağaçlarında tekrar eden widget'ları optimize etmek olabilir. Flutter uygulamalarında, bazı widget'lar özellikle liste veya ızgara görünümlerinde tekrar tekrar kullanılır. Bu durumda, Flyweight kalıbını uygulayarak, bellek kullanımını optimize edebilir ve uygulamanın performansını artırabiliriz.
 
-<h4 align="left">Flyweight tasarım deseninin 4 ana bileşeni vardır:</h4>
+<h4 align="left">Flyweight tasarım deseninin 4 ana bileşeni vardır</h4>
 
 - **Flyweight Interface:** Paylaşılan nesnelerin ortak bir arayüzünü tanımlar.
 - **Concrete Flyweight:** Flyweight interface'ini uygulayan ve iç durumu (intrinsic state) saklayan sınıf.
 - **Flyweight Factory:** Flyweight nesnelerini yaratır ve yönetir. Aynı nesne önceden yaratılmışsa, yeniden kullanılmasını sağlar.
 - **Client:** Flyweight nesnelerini kullanır. Dış durumu (extrinsic state) sağlar ve onu Flyweight ile birleştirir.
 
-<h5 align="left">Flyweight tasarım deseninin avantajları:</h5>
+<h5 align="left">Flyweight tasarım deseninin avantajları</h5>
 
 - Benzer nesnelerin tekrar tekrar yaratılmasını engelleyerek bellek kullanımını azaltır.
 - Daha az nesne yaratıldığı için performans artar.
 
-<h5 align="left"> Flyweight tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Flyweight tasarım deseninin dezavantajları</h5>
 
 - Tasarım karmaşıklaşabilir.
 - İç ve dış durumların yönetimi zorlaşabilir.
@@ -1677,13 +1681,13 @@ final class FlyWeightView extends StatelessWidget {
 - <h2 align="left"><a id="proxy">Proxy (Structural Patterns)</h2>
   Proxy tasarım kalıbı, bir nesneye erişimi kontrol etmek veya bu erişimi başka bir nesne üzerinden yapmak için kullanılan yapısal bir tasarım kalıbıdır. Bu kalıp, bir nesnenin işlevselliğini genişletmek veya değiştirmek için kullanılırken, orijinal nesnenin yapısını değiştirmeden çalışır. Proxy, gerçek nesneye bir tür arayüz ya da temsilci olarak hizmet eder.
 
-<h4 align="left">Proxy tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Proxy tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Subject Interface:** Gerçek nesne ve proxy'nin uygulaması gereken arayüz.
 - **Real Subject:** İstemcinin erişmek istediği asıl nesne.
 - **Proxy:** Gerçek nesneye erişimi kontrol eden ya da onun yerine geçen nesne.
 
-<h5 align="left">Proxy tasarım deseninin avantajları:</h5>
+<h5 align="left">Proxy tasarım deseninin avantajları</h5>
 
 - Proxy, gerçek nesnelere erişimi kontrol etmenize olanak tanır. Örneğin, güvenlik kontrolleri veya erişim izinleri ekleyebilirsiniz.
 - Pahalı kaynakların yüklenmesini erteleyerek uygulamanın performansını artırabilir. Özellikle büyük nesneler veya ağ üzerinden gelen veriler için faydalıdır.
@@ -1691,7 +1695,7 @@ final class FlyWeightView extends StatelessWidget {
 - Proxy, gerçek nesne üzerinde yapılan işlemleri loglayabilir ve ekstra güvenlik katmanları ekleyebilir.
 - Kullanıcılar veya diğer nesneler, proxy'nin varlığından habersiz olarak gerçek nesnelerle etkileşimde bulunabilir.
 
-<h5 align="left"> Proxy tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Proxy tasarım deseninin dezavantajları</h5>
 
 - Proxy kalıbının uygulanması, sistemin genel karmaşıklığını artırabilir. Basit durumlar için, bu ekstra karmaşıklık gereksiz olabilir.
 - Proxy sınıfı, bazı durumlarda ekstra işlem yükü oluşturabilir. Özellikle, her istekte proxy üzerinden geçmek, işlem süresini artırabilir.
@@ -1794,13 +1798,13 @@ final class ProxyView extends StatelessWidget {
 - <h2 align="left"><a id="chainofresponsibility">Chain of Responsibility (Behavioral Patterns)</h2>
   Flutter'da Sorumluluk Zinciri tasarım desenini daha detaylı bir şekilde ele alalım. Bu desen, özellikle büyük ve modüler Flutter uygulamalarında, farklı widget'lar veya ekranlar arasında gelen istekleri veya komutları yönetmek için kullanışlıdır.
 
-<h4 align="left">Chain of Responsibility tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Chain of Responsibility tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Handler:** İsteği nasıl işleyeceğini ve isteği zincirdeki bir sonraki işleyiciye nasıl geçireceğini tanımlayan bir arayüz.
 - **Concrete Handlers:** Handler arayüzünü uygulayan sınıflar. Her işleyici, isteği işleyip işlemeyeceğine veya onu zincirdeki bir sonraki işleyiciye geçireceğine karar verir.
 - **Client:** İsteği başlatan ve zincirin ilk işleyicisine gönderen kişi veya sistem.
 
-<h5 align="left">Çalışma Mekanizması:</h5>
+<h5 align="left">Çalışma Mekanizması</h5>
 
 - Müşteri, isteği zincirdeki ilk işleyiciye gönderir.
 - Her işleyici, isteği kontrol eder ve onu işleyip işlemeyeceğine karar verir.
@@ -1808,13 +1812,13 @@ final class ProxyView extends StatelessWidget {
 - Eğer işleyici isteği işleyemezse, onu zincirdeki bir sonraki işleyiciye iletir.
 - Bu süreç, bir işleyicinin isteği işleyene kadar veya zincir sona erene kadar devam eder.
 
-<h5 align="left">Chain of Responsibility tasarım deseninin avantajları:</h5>
+<h5 align="left">Chain of Responsibility tasarım deseninin avantajları</h5>
 
 - Gönderen ve alıcı bağımsız hale gelir, sistemde gevşek bağlantıyı teşvik eder.
 - Yeni işleyiciler eklemek veya mevcut olanların sırasını değiştirmek kolaydır.
 - Her işleyicinin tek bir sorumluluğu vardır, bu da kodun bakımını kolaylaştırır.
 
-<h5 align="left"> Proxy tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Proxy tasarım deseninin dezavantajları</h5>
 
 - İstek, birden fazla işleyiciden geçebilir, bu da performansı etkileyebilir.
 - İstek çeşitli işleyicilerden geçtiği için hata ayıklaması zor olabilir.
@@ -1933,20 +1937,20 @@ Butonların yukarıdan aşağıya göre tıklanılması
 - <h2 align="left"><a id="iterator">Iterator(Creational Patterns)</h2>
   Iterator deseni, davranışsal bir tasarım desenidir ve bir koleksiyonun (liste veya ağaç gibi) elemanlarına, altında yatan yapısını açığa çıkarmadan sıralı bir şekilde erişim sağlar. Bu desen, yineleme mantığını koleksiyondan ayırarak, koleksiyonu dolaşmak için standart bir yol sunar.
 
-<h4 align="left">Iterator tasarım deseninin 4 ana bileşeni vardır:</h4>
+<h4 align="left">Iterator tasarım deseninin 4 ana bileşeni vardır</h4>
 
 - **Iterator:** next(), hasNext() gibi yineleme için gerekli standart operasyonları tanımlar.
 - **Concrete Iterator:** Iterator arayüzünü uygular ve koleksiyondaki mevcut pozisyonun takibini yapar.
 - **Aggregate:** Bir Iterator nesnesi oluşturmak için bir arayüz tanımlar.
 - **Concrete Aggregate:** Aggregate arayüzünü uygular ve ilgili Somut Iterator'ın bir örneğini döndürür.
 
-<h5 align="left">Iterator tasarım deseninin avantajları:</h5>
+<h5 align="left">Iterator tasarım deseninin avantajları</h5>
 
 - Tek Sorumluluk İlkesi: Bir koleksiyon üzerinde yineleme yapma sorumluluğunu koleksiyondan ayırır.
 - Esneklik: Farklı yineleme stratejilerini desteklemek için farklı türlerde iterator'lar uygulanabilir.
 - Bağımsızlık: Müşteri kodu, koleksiyonla iterator arayüzü üzerinden etkileşimde bulunur ve koleksiyonun formuna bağımlılığı azalır.
 
-<h5 align="left"> Iterator tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Iterator tasarım deseninin dezavantajları</h5>
 
 - Özellikle basit döngüler kullanılarak yinelenebilecek basit koleksiyonlar için kodu karmaşıklaştırabilir.
 - Etkin bir şekilde uygulanmazsa, performans üzerinde ek yük oluşturabilir.
@@ -2072,20 +2076,20 @@ PhotoCollection()
 - <h2 align="left"><a id="interpreter">Interpreter (Behavioral Patterns)</h2>
   Interpreter tasarım deseni, bir dil için dilbilgisi tanımlamamızı ve bu dildeki ifadeleri işleyen bir yorumlayıcı sağlamamızı sağlayan bir davranışsal tasarım desenidir.
 
-<h4 align="left">Interpreter tasarım deseninin 4 ana bileşeni vardır:</h4>
+<h4 align="left">Interpreter tasarım deseninin 4 ana bileşeni vardır</h4>
 
 - **Expression Interface:** Bu arayüz, belirli bir bağlamı yorumlama yöntemini bildirir. Interpreter deseninin çekirdeğidir.
 - **Concrete Expression Classes:** Bu sınıflar İfade arayüzünü uygular ve dildeki özel kuralları yorumlar.
 - **Context Class(optional):** Bu sınıf, yorumlayıcının geneline ait bilgileri içerir.
 - **Client:** İstemci, dilin dilbilgisini tanımlayan belirli bir cümleyi temsil eden sözdizimi ağacını oluşturur. Ağaç, Somut İfade sınıflarının örneklerinden oluşur.
 
-<h5 align="left">Interpreter tasarım deseninin avantajları:</h5>
+<h5 align="left">Interpreter tasarım deseninin avantajları</h5>
 
 - Dilbilgisi kuralları ve yorumlayıcı, ihtiyaç duyulduğunda kolayca değiştirilebilir ve yeni ifadeler eklenebilir.
 - Kodun modüler ve tekrar kullanılabilir olmasını sağlar.
 - Karmaşık ifadelerin işlenmesi için optimize edilebilir.
 
-<h5 align="left"> Interpreter tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Interpreter tasarım deseninin dezavantajları</h5>
 
 - Karmaşık diller için yorumlayıcı geliştirmek zor olabilir.
 - Basit ifadeler için yorumlayıcı, doğrudan koddan daha yavaş olabilir.
@@ -2238,20 +2242,20 @@ class _InterpreterViewState extends State<InterpreterView> {
 - <h2 align="left"><a id="observer">Observer(Behavioral Patterns)</h2>
   Observer tasarım deseni, Flutter uygulamalarınızda durum değişikliklerini yönetmek için güçlü bir araçtır. Bir nesnenin (Konu) durumunda bir değişiklik olduğunda, bağlı birden fazla nesneyi (Gözlemciler) bilgilendiren iletişim sistemi kurarak reaktif ve verimli bir sistem oluşturur.
 
-<h4 align="left">Observer tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Observer tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Subject:** Bu bileşen, gözlemcilerin abone olduğu ve durum değişiklikleri hakkında onları bilgilendiren nesnedir. Konu, içerdiği verilerdeki herhangi bir değişikliği takip eden ve bu değişiklikleri gözlemcilere bildiren bir arayüz sağlar.
 - **Observer:** Gözlemci, konunun durumundaki değişiklikleri takip eden ve buna tepki veren nesnelerdir. Bu nesneler, genellikle bir arayüzü (Observer Interface) uygular ve bu arayüz, konunun durumu değiştiğinde çağrılan metodları içerir.
 - **Client:** Bu bileşen, Observer tasarım kalıbını kullanarak uygulama mantığını yönetir. Müşteri, genellikle konu nesnelerini oluşturur, gözlemcileri bu konulara abone eder ve konunun durumunu günceller.
 
-<h5 align="left">Observer tasarım deseninin avantajları:</h5>
+<h5 align="left">Observer tasarım deseninin avantajları</h5>
 
 - Observer kalıbı, konu ve gözlemciler arasında zayıf bir bağlantı sağlar. Bu, birinin değiştirilmesinin diğerini doğrudan etkilememesi anlamına gelir, böylece uygulamanın bakımı ve genişletilmesi kolaylaşır.
 - Aynı gözlemci, farklı konuları takip edebilir ve bir konu birden fazla gözlemciye sahip olabilir. Bu esneklik, kodun yeniden kullanılabilirliğini artırır.
 - Gözlemciler, çalışma zamanında konulara abone olabilir ve abonelikten çıkabilirler. Bu, dinamik ve değişken uygulama gereksinimlerini destekler.
 - Observer kalıbı, uygulamanın farklı bölümlerini soyutlayarak modülerlik sağlar. Bu, kodun okunabilirliğini ve yönetilebilirliğini artırır.
 
-<h5 align="left"> Observer tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Observer tasarım deseninin dezavantajları</h5>
 
 - Eğer gözlemciler ve konular arasındaki bağlantılar düzgün bir şekilde yönetilmezse, hafıza sızıntılarına yol açabilir. Özellikle, gözlemcilerin kaydını silmeyi unutmak bu soruna sebep olabilir.
 - Çok sayıda gözlemci varsa veya bildirimler çok sık yapılıyorsa, performans sorunları ortaya çıkabilir. Her bildirim, tüm gözlemcilerin tepki vermesini gerektireceğinden, işlem yükü artabilir.
@@ -2456,7 +2460,7 @@ final class _Food extends StatelessWidget {
 - <h2 align="left"><a id="command">Command (Behavioral Patterns)</h2>
   Komut tasarım deseni (Command pattern), yazılım mühendisliğinde, özellikle nesne tabanlı programlamada sıklıkla kullanılan bir desendir. Bu desen, bir isteği veya eylemi bir nesne olarak kapsüllemeyi sağlar. Bu yaklaşımın temel amacı, işlemleri gerçekleştiren kod ile bu işlemleri çağıran kod arasında bir soyutlama katmanı oluşturmaktır.
 
-<h4 align="left">Command tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Command tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Command Interface:** Tüm komutların uygulayacağı bir arayüz oluşturun. Genellikle tek bir execute() metodu içerir.
 - **Concrete Command:** Komut arayüzünü uygulayan ve spesifik bir işlemi gerçekleştiren sınıflar oluşturun.
@@ -2464,14 +2468,14 @@ final class _Food extends StatelessWidget {
 - **Receiver:** Komutun gerçekte işi yaptığı nesne. Örneğin, bir uygulama içindeki belirli bir işlemi gerçekleştiren bir sınıf.
 - **Client:** Komut nesnesini oluşturur ve çağırıcıya atar.
 
-<h5 align="left">Command tasarım deseninin avantajları:</h5>
+<h5 align="left">Command tasarım deseninin avantajları</h5>
 
 - Komutlar, farklı bağlamlarda yeniden kullanılabilir.
 - UI ve iş mantığı arasında net bir ayrım sağlar.
 - Yeni komutlar kolaylıkla eklenebilir.
 - Unit testlerin yazılmasını kolaylaştırır, çünkü her komut, bağımsız olarak test edilebilen ayrı bir işlevsellik barındırır.
 
-<h5 align="left"> Command tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Command tasarım deseninin dezavantajları</h5>
 
 - Basit işlemler için fazla karmaşık olabilir.
 - Her yeni komut için ekstra sınıflar gerekebilir, bu da kod tabanını şişirebilir.
@@ -2602,13 +2606,13 @@ final class CommandView extends StatelessWidget {
 
   Mediator Design Pattern, Flutter'da bileşenler arasındaki iletişimi kolaylaştırmak için kullanılır. Bu model, bileşenlerin birbirleriyle doğrudan iletişim kurmak yerine bir aracı (mediator) üzerinden iletişim kurmalarını sağlar. Bu yaklaşım, kodun bakımını ve genişletilmesini kolaylaştırır çünkü bileşenler arasındaki bağlantıyı azaltır.
 
-<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Mediator Interface::** Tüm aracıların uyması gereken bir arayüz oluşturun. Bu arayüz, bileşenlerin haberleşebileceği ortak bir metod seti sağlar.
 - **Concrete Mediator:** Mediator arayüzünü uygulayan ve bileşenler arasındaki iletişimi koordine eden sınıf.
 - **Colleagues:** Birbirleriyle iletişim kurmak için mediator'u kullanan bileşenler.
 
-<h5 align="left">Mediator tasarım deseninin avantajları:</h5>
+<h5 align="left">Mediator tasarım deseninin avantajları</h5>
 
 - Azaltılmış Karmaşıklık: Mediator, birçok küçük bileşen arasındaki karmaşık iletişimi yönetir. Bu, sistemdeki genel karmaşıklığı azaltır.
 - Gevşek Bağlama (Loose Coupling): Bileşenler doğrudan birbirleriyle değil, mediator aracılığıyla iletişim kurar. Bu, bileşenlerin daha bağımsız olmasını sağlar ve kodun bakımını kolaylaştırır.
@@ -2616,7 +2620,7 @@ final class CommandView extends StatelessWidget {
 - Yeniden Kullanılabilirlik: Mediator ve bireysel bileşenler, uygun şekilde tasarlandığında, farklı senaryolarda yeniden kullanılabilir.
 - Kolay Genişletilebilirlik: Yeni bileşenler eklemek genellikle sadece mediatorun güncellenmesini gerektirir, bu da sistem genişletmeyi kolaylaştırır.
 
-<h5 align="left"> Mediator tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Mediator tasarım deseninin dezavantajları</h5>
 
 - Mediatorun Aşırı Yüklenmesi: Tüm iletişim merkezi bir noktadan geçtiği için, mediator çok fazla sorumluluk üstlenebilir ve karmaşık hale gelebilir.
 - Performans Sorunları: Mediator üzerinden yapılan tüm iletişim, büyük sistemlerde performans sorunlarına yol açabilir.
@@ -2715,7 +2719,7 @@ final class MediatorView extends StatelessWidget {
 - <h2 align="left"><a id="state">State (Behaverioal Patterns)</h2>
   State design pattern, Flutter'da widget'ların durumlarını yönetmek için kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, widget'ların durumlarının değiştiği durumlarda, bu değişiklikleri verimli ve anlaşılır bir şekilde yönetmeyi sağlar. Şimdi bu kalıbı adım adım inceleyelim ve Flutter framework içinde gerçek bir senaryo ile bu kalıbın avantajlarını ve dezavantajlarını ele alalım.
 
-<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır:</h4>
+<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır</h4>
 
 - **Stateful ve Stateless Widgets:** Flutter'da iki temel widget türü vardır: Stateless ve Stateful. Stateless widget'lar sabit (değişmeyen) verileri gösterirken, Stateful widget'lar değişken verileri gösterir ve güncelleyebilir.
 - **Make a Stateful Widget:** Bir Stateful widget, genellikle iki sınıftan oluşur: Birincisi, StatefulWidget sınıfından türetilen bir widget sınıfı; ikincisi ise, State sınıfından türetilen bir durum sınıfıdır.
@@ -2723,12 +2727,12 @@ final class MediatorView extends StatelessWidget {
 - **build Method:** sınıfı, widget'ın durumunu tutar. Bu sınıf içinde, widget'ın verileri ve bu veriler üzerinde yapılan değişiklikleri yöneten metodlar bulunur.
 - **setState Method:** Durum değiştiğinde, setState metodu kullanılır. Bu metod, durum değişikliklerini Flutter framework'üne bildirir ve build metodunun yeniden çalışmasını sağlar.
 
-<h5 align="left">Mediator tasarım deseninin avantajları:</h5>
+<h5 align="left">Mediator tasarım deseninin avantajları</h5>
 
 - Esneklik ve Yeniden Kullanım: Stateful widget'lar, durumlarına göre dinamik olarak değişebilir, bu da onları yeniden kullanılabilir ve esnek yapar.
 - Anlaşılır Kod Yapısı: Durum ve arayüz ayrımı, kodun daha anlaşılır ve yönetilebilir olmasını sağlar.
 
-<h5 align="left"> Mediator tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Mediator tasarım deseninin dezavantajları</h5>
 
 - Performans: Her setState çağrısı, widget'ın yeniden inşa edilmesine neden olur, bu da gereksiz render işlemlerine yol açabilir.
 - Karmaşıklık: Küçük ve basit uygulamalarda, Stateful widget kullanmak gereksiz karmaşıklığa yol açabilir.
@@ -2811,20 +2815,20 @@ final class StateView extends StatelessWidget {
 - <h2 align="left"><a id="strategy">Strategy (Behaverioal Patterns)</h2>
   Strateji tasarım modeli, nesnelerin davranışını çalışma zamanında değiştirmelerine olanak tanıyan bir yazılım tasarım modelidir. Flutter'da, bu model genellikle farklı widget davranışlarını yönetmek için kullanılır. Aşağıda, Strateji modelinin Flutter'da nasıl uygulanacağına dair adım adım bir açıklama ve gerçek hayat senaryosu bulunmaktadır.
 
-<h4 align="left">Strategy tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Strategy tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Context:** Kullanılacak stratejiye bağlı olan ve onu içeren sınıftır. Uygulamanın geri kalanı ile strateji arasındaki arabirim görevi görür. Uygulama sırasında hangi stratejinin kullanılacağını saklar ve yönetir.
 - **Strategy Interface:** Tüm stratejilerin uygulaması gereken bir arayüzdür veya soyut sınıftır. Bu arayüz, her bir strateji sınıfının uygulayacağı metotları tanımlar.
 - **Concrete Strategies:** Strategy arayüzünü veya soyut sınıfını uygulayan sınıflardır. Bu sınıflar, arayüzde tanımlanan metodları gerçekleştirir ve Context tarafından kullanılan spesifik algoritmaları içerirler.
 
-<h5 align="left">Strategy tasarım deseninin avantajları:</h5>
+<h5 align="left">Strategy tasarım deseninin avantajları</h5>
 
 - Esneklik ve Değişime Uyumluluk: Strateji modeli, farklı algoritmaları veya davranışları kolayca değiştirmenize olanak tanır. Bu, uygulamanın çalışma zamanındaki davranışını dinamik olarak ayarlamanızı sağlar.
 - Yeniden Kullanım ve Organizasyon: Benzer davranışları birbirinden bağımsız olarak tanımlayabilir ve farklı bağlamlarda yeniden kullanabilirsiniz. Bu, kodun temiz ve organize kalmasına yardımcı olur.
 - Açık/Kapalı İlkesi: Yeni stratejiler eklemek, mevcut sınıfları değiştirmenizi gerektirmez. Bu, mevcut kod üzerinde yapılan değişikliklerin riskini azaltır.
 - SOLID Prensiplerine Uygunluk: Strateji modeli, SOLID prensiplerinden biri olan Single Responsibility Principle’a (Tek Sorumluluk Prensibi) uygun şekilde, bir sınıfın yalnızca bir sebepten dolayı değişmesi gerektiğini vurgular.
 
-<h5 align="left"> Strategy tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Strategy tasarım deseninin dezavantajları</h5>
 
 - Komplekslik: Strateji modeli, basit problemler için aşırı karmaşık bir çözüm sunabilir. Küçük uygulamalar için bu modelin getirdiği ekstra sınıf ve arayüzler gereksiz olabilir.
 - Nesne Sayısının Artması: Her strateji için ayrı bir sınıfın oluşturulması, uygulamanın hafıza kullanımını artırabilir ve performans üzerinde olumsuz etkiler yaratabilir.
@@ -2982,18 +2986,18 @@ final class StrategyView extends StatelessWidget {
  <h2 align="left"><a id="template-method">Template Method (Behaverioal Patterns)</h2>
   Flutter'da, Şablon Metodu deseni, bir temel widget'ta ortak bir algoritma veya iş akışını tanımlamak için kullanılabilir, bu da alt sınıfların bu algoritmanın belirli kısımlarını uygulamasına veya değiştirmesine olanak tanır.
 
-<h4 align="left">Template Method tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Template Method tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Abstract Class:** Bu sınıf, şablon metodu ve alt sınıflar tarafından uygulanması gereken soyut metotları tanımlar. Şablon metodu, soyut metotları çağırır ve adımların sırasını belirler.
 - **Concrete Class:** Bu sınıflar, soyut sınıfı genişletir ve soyut metotların özel uygulamalarını sağlar.
 - **Template Method:** Şablon metodu çağrılır ve algoritmayı, somut sınıflar tarafından sağlanan uygulamaları kullanarak yürütür.
 
-<h5 align="left">Template Method tasarım deseninin avantajları:</h5>
+<h5 align="left">Template Method tasarım deseninin avantajları</h5>
 
 - Yeniden Kullanılabilirlik: Ortak kodun tek bir yerde (soyut sınıf) bulunmasını teşvik eder.
 - Esneklik: Alt sınıflar, yapısını değiştirmeden algoritmanın bölümlerini değiştirebilir.
 
-<h5 align="left"> Template Method tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Template Method tasarım deseninin dezavantajları</h5>
 
 - Karmaşıklık: Ek soyutlama katmanları getirebilir, bu da kodu karmaşıklaştırabilir.
 - Sınırlı Esneklik: Sadece önceden tanımlanmış adımlar, alt sınıflar tarafından değiştirilebilir.
@@ -3098,20 +3102,20 @@ final class TempleteMethodView extends StatelessWidget {
  <h2 align="left"><a id="visitor">Visitor (Behaverioal Patterns)</h2>
   Bu model, ziyaretçiler ve elementler olmak üzere iki tür nesneyi içerir. Elementler bir yapı parçasıdır (Flutter'da widget ağacındaki widgetlar gibi), ve ziyaretçiler bu elementler üzerinde operasyonlar gerçekleştiren nesnelerdir. Ana fikir, mevcut nesne yapılarına yapıları değiştirmeden yeni operasyonlar ekleyebilmektir.
 
-<h4 align="left">Visitor tasarım deseninin dört ana bileşeni vardır:</h4>
+<h4 align="left">Visitor tasarım deseninin dört ana bileşeni vardır</h4>
 
 - **Visitor Interface:** Nesne yapısındaki her tür element için bir ziyaret operasyonu tanımlar. Flutter'da, bunlar farklı türdeki widgetlar olabilir.
 - **Concrete Visitor:** Ziyaretçi arayüzünü uygular ve elementler üzerinde gerçekleştirilecek operasyonu tanımlar.
 - **Element Interface:** Bir ziyaretçiyi argüman olarak alan bir accept metodu sağlar.
 - **Concrete Element:** Element arayüzünü uygulayan gerçek nesnelerdir. Flutter'da, widgetlar bu rolü oynar.
 
-<h5 align="left">Visitor tasarım deseninin avantajları:</h5>
+<h5 align="left">Visitor tasarım deseninin avantajları</h5>
 
 - Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
 - Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
 - Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
 
-<h5 align="left"> Visitor tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Visitor tasarım deseninin dezavantajları</h5>
 
 - Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
 - Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.
@@ -3250,19 +3254,19 @@ class _VisitorViewState extends State<VisitorView> {
 <h2 align="left"><a id="momento">Momento (Behaverioal Patterns)</h2>
   Memento Tasarım Deseni, bir nesnenin iç durumunu yakalamak ve dışa vurmak için kullanılan davranışsal bir tasarım desenidir, böylece nesne daha sonra bu duruma geri dönebilir. Flutter çatısında, widget'ların durumlarıyla uğraşırken özellikle yararlıdır.
 
-<h4 align="left">Momento tasarım deseninin üç ana bileşeni vardır:</h4>
+<h4 align="left">Momento tasarım deseninin üç ana bileşeni vardır</h4>
 
 - **Originator:** Durumunu kaydetmek ve geri yüklemek istediğiniz ana nesnedir. Flutter'da bu bir widget veya model sınıfı olabilir. Mevcut iç durumunun bir anlık görüntüsünü içeren bir memento oluşturur.
 - **Memento:** Kaynağın durumunun bir anlık görüntüsü olarak hareket eden değer nesnesidir. Değişmez olmalı ve yalnızca kaynak tarafından erişilebilir olmalıdır.
 - **Caretaker:** Memento'nun güvenliğinden sorumlu olan nesnedir, ancak memento'nun içeriğini işlemez veya incelemez. Flutter'da bu, bir yönetici veya kontrolör sınıfı olabilir.
 
-<h5 align="left">Momento tasarım deseninin avantajları:</h5>
+<h5 align="left">Momento tasarım deseninin avantajları</h5>
 
 - Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
 - Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
 - Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
 
-<h5 align="left"> Momento tasarım deseninin dezavantajları:</h5>
+<h5 align="left"> Momento tasarım deseninin dezavantajları</h5>
 
 - Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
 - Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.

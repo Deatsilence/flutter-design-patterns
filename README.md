@@ -1,11 +1,9 @@
-[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/Deatsilence/flutter-design-patterns/main/README.md)
-
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/main/README.en.md)
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.md)
 
 <h1 align="center"><a id="head">Design Patterns with Flutter</h1>
 
-- <h2 align="left">Kısaca Design Patterns nedir ?</h2>
-  Tasarım desenleri, yazılım geliştirmede yaygın olarak kullanılan önemli araçlardır. Bu desenler, nesnelerin oluşturulmasını, bir araya getirilmesini ve iletişim kurmasını kontrol ederek kod kalitesini, tutarlılığını ve yeniden kullanılabilirliğini artırabilir
+- <h2 align="left">What are Design Patterns briefly?</h2>
+  Design patterns are important tools widely used in software development. These patterns can improve code quality, consistency and reusability by controlling the creation, assembly and communication of objects.
 
 - Creational Patterns
 
@@ -40,29 +38,29 @@
   - [Memento](#momento)
 
 - <h2 align="left"><a id="factory-method">Factory Method (Creational Patterns)</h2>
-  Factory design pattern(Fabrika tasarım deseni) bir nesnenin nasıl oluşturulacağını soyutlaştırmaya yardımcı olan bir yaratımsal tasarım modelidir. Bu, kodunuzun daha esnek ve genişletilebilir olmasını sağlar.
+  A factory design pattern is a generative design pattern that helps to abstract how an object is created. This makes your code more flexible and extensible.
 
-Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
+The basic idea of the factory design pattern is to delegate object creation to a factory class. This factory class determines which object is created.
 
-<h4 align="left">Fabrika tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The factory design pattern has two main components</h4>
 
-- **Ürün:** Oluşturulacak nesnedir.
-- **Fabrika:** Ürün nesnesini oluşturan sınıftır.
+- **Ürün:** The object to be created.
+- **Fabrika:** The class that creates the product object.
 
-<h5 align="left">Fabrika tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of factory design pattern:</h5>
 
-- Kodunuzu daha esnek ve genişletilebilir hale getirir.
-- Nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve anlaşılır olmasını sağlar.
-- Yazılım geliştirme sürecini daha verimli hale getirir.
+- Makes your code more flexible and extensible.
+- It makes your code more readable and understandable by abstracting the object creation process.
+- It makes the software development process more efficient.
 
-<h5 align="left"> Fabrika tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the factory design pattern:</h5>
 
-- Karmaşık uygulamalarda kullanımı zor olabilir.
-- Daha fazla kod yazmanıza neden olabilir.
+- It may be difficult to use in complex applications.
+- It may cause you to write more code.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği platforma özgü buton üretmek istiyoruz. Bunun için ilk önce **abstract** bir sınıf oluşturmaya başlıyoruz. İçinde **Widget** döndüren build ismine sahip bir **abstract** method yazıyoruz. Bu method için en temel parametre olarak **onPressed** ve **child** istiyorum. Bu senaryonuza göre değişebilir. Mevcut platformu öğrenmek için `import 'dart:io' show Platform;` ile Platform sınıfını kullanıyorum. Altarnatif olarak `Theme.of(context).platform.` kullanılabilir. Mevcut platforma göre ilgili platforma özel butonu döndüren bir abstract bir factory sınıfımız var.
+So how can we apply this in a real application, package, etc. Let's look at it. As per our scenario, we want to produce a platform specific button. For this, we first start creating an **abstract** class. In it, we write an **abstract** method with the name build that returns **Widget**. I want **onPressed** and **child** as the most basic parameters for this method. This may change according to your scenario. I use the Platform class with `import 'dart:io' show Platform;` to learn the current platform. Alternatively, `theme.of(context).platform.` can be used. According to the current platform, we have an abstract factory class that returns the button specific to that platform.
 
 ```dart
 abstract class PlatformButton {
@@ -80,7 +78,7 @@ abstract class PlatformButton {
 }
 ```
 
-IOS ve Android olmak üzere 2 platforma özel buton sınıflarımızı oluşturup **PlatformButton** sınıfımızı implemente ederek Widget içinde ilgili butonlarımızı döndürdük.
+We created our button classes specific to 2 platforms, IOS and Android, and implemented our **PlatformButton** class and returned our related buttons in the widget.
 
 ```dart
 final class IOSButton implements PlatformButton {
@@ -100,7 +98,7 @@ final class AndroidButton implements PlatformButton {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'dart:developer';
@@ -130,34 +128,34 @@ class FactoryView extends StatelessWidget {
 }
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Back to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="abstract-factory">Abstract Factory (Creational Patterns)</h2>
 
-Soyut fabrika tasarım deseni, birden çok aileden nesne oluşturmak için bir fabrika sınıfı kullanır. Bu desen, nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve esnek olmasını sağlar.
+The abstract factory design pattern uses a factory class to create objects from multiple families. This pattern abstracts the object creation process, making your code more readable and flexible.
 
-<h4 align="left">Soyut fabrika tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The abstract factory design pattern has two main components</h4>
 
-- **Soyut fabrika:** Birden çok aileden nesne oluşturmak için kullanılan bir sınıftır.
-- **Somut fabrika:** Soyut fabrikayı somutlaştıran ve belirli bir aileden nesneler oluşturmak için kullanılan bir sınıftır.
+- Abstract factory:\*\* A class used to create objects from multiple families.
+- Concrete factory:\*\* A class that concretises the abstract factory and is used to create objects from a specific family.
 
-<h5 align="left">Soyut fabrika tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the abstract factory design pattern</h5>
 
-- Kodunuzu daha esnek ve genişletilebilir hale getirir.
-- Nesne oluşturma işlemini soyutlaştırarak kodunuzun daha okunaklı ve anlaşılır olmasını sağlar.
-- Yazılım geliştirme sürecini daha verimli hale getirir.
+- Makes your code more flexible and extensible.
+- It makes your code more readable and understandable by abstracting the object creation process.
+- It makes the software development process more efficient.
 
-<h5 align="left"> Soyut fabrika tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the abstract factory design pattern</h5>
 
-- Karmaşık uygulamalarda kullanımı zor olabilir.
-- Daha fazla kod yazmanıza neden olabilir.
+- It may be difficult to use in complex applications.
+- It may cause you to write more code.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. İlk bakışta **Factory Method** ile karıştırılması doğal olsa da aralarında ufak bir farklılık var. Bu fark **Factory Method** aynı aile içerisinde bulunması gereken nesneleri soyutlaştırarak üretirken. Örneğin _IOS Button, Android Button, Linux Button, vb._ gibi buton ailesisini kapsayabilir. **Abstract Factory** ise farklı ailelerin nesnelerini soyutlaştırarak üretir. Örneğin _Button, Indicator, vb._ gibi farklı ailele sınıflarını kendi bünyesinde üretebilir. **Factory Method** için yaptığımız platforma özgü butona ek olarak platforma özgü indicator ekledikten sonra bu iki farklı aileye ait componentleri **Abstract Factory** ile üretelim. Bunun için 2 farklı teknik göstereceğim. 1. Teknikte **Singleton + Abstract Factory** design patterns beraber kullanılmaktadır. 2. Teknikte bir class içinde static methodlar kullanılmaktadır.
+So how can we implement this in a real application, package, etc. Let's look at it. Although it is natural to confuse it with **Factory Method** at first glance, there is a slight difference between them. This difference is that **Factory Method** produces objects that should be in the same family by abstracting them. For example, _IOS Button, Android Button, Linux Button, etc._ can cover the button family. **Abstract Factory** generates objects of different families by abstracting them. For example, it can produce different family classes such as _Button, Indicator, etc._ within itself. After adding a platform-specific indicator in addition to the platform-specific button we made for **Factory Method**, let's generate the components of these two different families with **Abstract Factory**. I will show 2 different techniques for this. In the 1st technique, **Singleton + Abstract Factory** design patterns are used together. In the 2nd technique, static methods are used in a class.
 
-**1. Teknik (Singleton + Abstract Factory):**
-Öncelikle **abstract** bir sınıf olarak **AbstractFactory** sınıfımızı oluşturuyoruz. İçinde **buildButton() ve buildIndicator()** ismine sahip 2 tane \*\*abstract method\*\* oluşturuyoruz.
+**1st Technique (Singleton + Abstract Factory):**
+Firstly, we create our **AbstractFactory** class as an **abstract** class. In it we create 2 **abstract methods** named **buildButton() and buildIndicator()**.
 
 ```dart
 abstract class AbstractFactory {
@@ -166,8 +164,8 @@ abstract class AbstractFactory {
 }
 ```
 
-Sonrasında **AbstractFactoryImpl2** adında **Singleton** sınıf oluşturup **AbstractFactory** sınıfını implemente ediyoruz.
-**AbstractFactoryImpl2** içerisinde ailelere özel Widget döndüren methodlarımızı override ediyoruz.
+Then we create a **Singleton** class named **AbstractFactoryImpl2** and implement the **AbstractFactory** class.
+In **AbstractFactoryImpl2**, we override our methods that return widgets specific to families.
 
 ```dart
 final class AbstractFactoryImpl2 implements AbstractFactory {
@@ -192,7 +190,7 @@ final class AbstractFactoryImpl2 implements AbstractFactory {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'dart:developer';
@@ -224,7 +222,7 @@ class AbstractFactoryView extends StatelessWidget {
 
 ```
 
-**2. Teknik (Abstract Factory):**
+**2. Technique (Abstract Factory):**
 
 ```dart
 final class AbstractFactoryImpl {
@@ -239,7 +237,7 @@ final class AbstractFactoryImpl {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'dart:developer';
@@ -270,32 +268,32 @@ class AbstractFactoryView extends StatelessWidget {
 }
 ```
 
-Hangi yöntemin kullanılacağı projenin gereksinimlerine ve diğer parametrelere bağlıdır.
+Which method to use depends on the requirements of the project and other parameters.
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="singleton">Singleton (Creational Patterns)</h2>
-  Singleton tasarım deseni, bir sınıftan yalnızca bir nesnenin oluşturulmasını sağlar. Bu desen, tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanılır.
+  The Singleton design pattern allows only one object to be created from a class. This pattern is used when a single object is needed.
 
-<h4 align="left">Singleton tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Singleton design pattern has two main components</h4>
 
-- **Singleton sınıfı:** Yalnızca bir nesnenin oluşturulmasını sağlayan sınıftır..
-- **Singleton nesnesi:** Singleton sınıfından oluşturulan tek nesnedir.
+- **Singleton class:** This class allows only one object to be created.
+- **Singleton object:** The only object created from the Singleton class.
 
-<h5 align="left">Singleton tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of Singleton design pattern</h5>
 
--Tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanışlıdır.
--Kodunuzu daha okunaklı ve anlaşılır hale getirir.
--Yazılım geliştirme sürecini daha verimli hale getirir.
+-Useful in situations where a single object is needed.
+-Makes your code more readable and understandable.
+-It makes the software development process more efficient.
 
-<h5 align="left"> Fabrika tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the factory design pattern</h5>
 
-- Karmaşık uygulamalarda kullanımı zor olabilir.
-- Daha fazla kod yazmanıza neden olabilir.
+- It may be difficult to use in complex applications.
+- It may cause you to write more code.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Genelde uygulamanın network katmanı için kullanmak faydalı bir davranıştır. Aşağıda girilen konumlara göre benzer konumları getiren bir network servis katmanı vardır.
+So how can we apply this in a real application, package, etc. It is usually useful to use it for the network layer of the application. There is a network service layer that brings similar locations according to the locations entered below.
 
 ```dart
 import 'dart:io';
@@ -344,7 +342,7 @@ class PredictionsNetworkManager {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'package:design_patterns/patterns/singleton/model/place_model.dart';
@@ -401,29 +399,29 @@ class _SingletonViewState extends State<SingletonView> {
 
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="prototype">Prototype (Creational Patterns)</h2>
-  Prototype tasarım kalıbı, nesnelerin kopyalarını oluşturmak için bir prototip nesneyi kullanan bir tasarım kalıbıdır. Bu, nesneleri doğrudan oluşturmaktan daha verimli olabilir, özellikle de nesnelerin oluşturulması karmaşık veya zaman alıcıysa.
+  A prototype design pattern is a design pattern that uses a prototype object to create copies of objects. This can be more efficient than creating objects directly, especially if the creation of objects is complex or time-consuming.
 
-<h4 align="left">Prototype tasarım deseninin üç ana bileşeni vardır</h4>
-- **Prototip:** Kopyalanacak nesne.
-- **Kopyalayıcı:** Prototip nesneyi kopyalayan sınıf.
-- **Kullanıcılar:** Kopyalanmış nesneleri kullanan sınıflar.
+<h4 align="left">The Prototype design pattern has three main components</h4>
+- **Prototype:** The object to be copied.
+- **Copier:** The class that copies the prototype object.
+- **Users:** Classes that use the copied objects.
 
-<h5 align="left">Prototype tasarım deseninin avantajları</h5>
-- Nesnelerin oluşturulmasını daha verimli hale getirir.
-- Nesnelerin aynı özelliklerine sahip bir dizi kopya oluşturmayı kolaylaştırır.
-- Nesnelerin belirli bir durumdan bağımsız olarak oluşturulmasını sağlar.
+<h5 align="left">Advantages of the Prototype design pattern</h5>
+- Makes the creation of objects more efficient.
+- Facilitates the creation of a number of copies with the same properties of objects.
+- It allows objects to be created independently of a given state.
 
-<h5 align="left"> Prototype tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Prototype design pattern</h5>
 
-- Prototip nesnenin değiştirilmesi, tüm kopyalanmış nesneleri de değiştirebilir.
-- Prototip nesnenin özelliği değiştirildiğinde, kopyalanmış nesnelerin özelliklerini de değiştirmek gerekir.
+- Changing the prototype object can also change all copied objects.
+- When the property of the prototype object is changed, it is also necessary to change the properties of the copied objects.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Diyelim ki Person adında bir modelimiz olsun ve sıfırdan bir Person oluşturmadan eğer oluşturulan bir Person varsa direkt olarak ondan kopyası alınabilmek isteniyor.
+Let's say we have a model called Person and we want to be able to copy directly from it if there is a Person created without creating a Person from scratch.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -459,11 +457,10 @@ final class Person {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'dart:developer';
-
 import 'package:design_patterns/patterns/prototype/prototype.dart';
 import 'package:flutter/material.dart';
 
@@ -473,7 +470,7 @@ class PrototypeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const person1 = Person(name: "mert", lastName: "dogan", age: 23, email: "m@gmail");
-    const person2 = Person(name: "mete", lastName: "dogan", age: 35, email: "m@gmail");
+    const person2 = Person(name: "mete", lastName: "dogan", age: 35, email: "me@gmail");
     final person3 = person1.clone();
     final person4 = person2.clone();
 
@@ -500,36 +497,36 @@ Output:
 [log] mete dogan  35  m@gmail
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="adapter">Adapter (Structural Patterns)</h2>
-  Adapter tasarım deseni, birbiriyle uyumlu olmayan arayüzlere sahip nesnelerin birlikte çalışabilmelerini sağlayan yapısal bir tasarım desenidir. Bu desen, mevcut bir sınıfı veya arayüz sınıfını, eldeki farklı bir arayüz sınıfına uygun hale getirerek tekrar kullanmak amacıyla uygulanır.
+  The Adapter design pattern is a structural design pattern that allows objects with incompatible interfaces to work together. This pattern is applied to reuse an existing class or interface class by adapting it to a different interface class.
 
-Adapter deseni, iki farklı sınıfın veya arayüzün arayüzlerini birbirine benzeterek, bu sınıfların veya arayüzlerin birlikte kullanılmasını sağlar. Bu sayede, mevcut bir sınıfı veya arayüz sınıfını, değiştirmek veya yeniden yazmak zorunda kalmadan, yeni bir sistemde veya projede kullanmak mümkün olur.
+The Adapter pattern makes the interfaces of two different classes or interfaces similar to each other, allowing these classes or interfaces to be used together. In this way, it is possible to use an existing class or interface class in a new system or project without having to change or rewrite it.
 
-<h4 align="left">Adapter tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The adapter design pattern has two main components</h4>
 
-- **Adapte edilen sınıf veya arayüz:** Adaptör deseninin amacı, bu sınıf veya arayüzü, farklı bir arayüze sahip olacak şekilde uyarlamaktır.
-- **Adaptör sınıfı:** Adaptör sınıfı, adapte edilen sınıf veya arayüzü, farklı bir arayüze uygun hale getiren sınıftır.
-- **Müşteri sınıfı:** Adaptör sınıfının arayüzünü kullanan sınıftır.
+- Adapted class or interface:\*\* The purpose of the adapter pattern is to adapt this class or interface to have a different interface.
+- **Adaptor class:** The adapter class is the class that adapts the adapted class or interface to have a different interface.
+- **Customer class:** A class that uses the interface of the adapter class.
 
-<h5 align="left">Adapter tasarım deseninin avantajları</h5>
+<h5 align="left">Adapter design pattern advantages</h5>
 
-- Mevcut bir sınıfı veya arayüzü değiştirmeden yeni bir sistemde veya projede kullanmayı sağlar.
-- Farklı teknolojileri veya platformları bir araya getirmeyi kolaylaştırır.
-- Bir sınıfın veya arayüzün işlevselliğini genişletmeyi sağlar.
+- It allows you to use an existing class or interface in a new system or project without changing it.
+- It makes it easier to bring together different technologies or platforms.
+- It allows to extend the functionality of a class or interface.
 
-<h5 align="left"> Adapter tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Adapter design pattern</h5>
 
-- Adaptör sınıfı, adapte edilen sınıf veya arayüzün tüm işlevselliğini desteklemek zorundadır.
-- Adaptör sınıfı, adapte edilen sınıf veya arayüzün koduna bağımlı olabilir.
+- The adapter class must support the full functionality of the adapted class or interface.
+- The adapter class may be dependent on the code of the adapted class or interface.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği iki farklı API miz olsun.
-isimleri **PostAPI1** ve **PostAPI2** olsun. **PostAPI1** Youtube videolarının başlığını (_title_) ve tanımını (_description_) getirsin. **PostAPI2** ise Mediumda bulunan postların başlığını (_header_) ve tanımını (_bio_) getirsin. Gördüldüğü üzere temelde iki API bir adet başlık ve tanım dönmesine rağmen iki API'dan dönen **Key** leri farklıdır. _title - header_, _description - bio_ şeklindedir. Amacımız bu iki apiden dönen verileri sanki tek bir apiden dönüyormuşcasına birbirine benzetmektir.
+So how can we implement this in a real application, package, etc. Let's look at it. Let's have two different APIs for our scenario.
+Let their names be **PostAPI1** and **PostAPI2**. **PostAPI1** fetches the title (_title_) and description (_description_) of Youtube videos. **PostAPI2** will get the title (_header_) and description (_bio_) of the posts on Medium. As you can see, although basically two APIs return one title and description, the **Keys** returned from the two APIs are different. _title - header_, _description - bio_. Our goal is to make the data returned from these two APIs similar to each other as if they were returned from a single API.
 
-Öncelikle ilgili verinin geleceği bir model oluşturmamız gerekiyor.
+First of all, we need to create a model where the relevant data will come from.
 
 ```dart
 @immutable
@@ -544,7 +541,7 @@ final class Post {
 }
 ```
 
-Sonrasında API larımızı tanımlıyoruz.
+Then we define our APIs.
 
 ```dart
 class PostAPI1 {
@@ -582,7 +579,7 @@ class PostAPI2 {
 }
 ```
 
-Bir adet **abstract** bir API sınıfı yaparak içine getPosts() soyut methodunu koyuyoruz. Bunu birazdan her API a ait **Adapter** sınıflarında kulanacağız.
+We make an **abstract** API class and put the getPosts() abstract method in it. We will use this in the **Adapter** classes of each API in a moment.
 
 ```dart
 abstract class IPostAPI {
@@ -590,7 +587,7 @@ abstract class IPostAPI {
 }
 ```
 
-Her API a ait **Adapter** sınıfı oluşturuyoruz.
+We create an **Adapter** class for each API.
 
 ```dart
 class PostAPI1Adapter implements IPostAPI {
@@ -630,9 +627,9 @@ class PostAPI2Adapter implements IPostAPI {
 }
 ```
 
-Gerekli **Adapter** işlemlerini yaptıktan sonra UI tarafında kullanılacak olan **PostAPI** isimli bir sınıf oluşturuyoruz. Bu sınıfa **IPostAPI** implemente ediliyor. Senaryomuz gereği her API için **Adapter** sınıflarından birer nesne üretiliyor. getPost() override methodu ile bu API lardan dönen verilerimizi kullanıma hazır hale getirmiş oluyoruz.
+After doing the necessary **Adapter** operations, we create a class named **PostAPI** to be used on the UI side. **IPostAPI** is implemented in this class. As per our scenario, an object is generated from **Adapter** classes for each API. With the getPost() override method, we make our data returned from these APIs ready for use.
 
-Peki bunu UI tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'package:design_patterns/patterns/adapter/adapter.dart';
@@ -671,47 +668,47 @@ class AdapterView extends StatelessWidget {
 
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="builder">Builder (Creational Patterns)</h2>
-  Builder deseni, karmaşık bir nesnenin inşasını iki sınıfa ayıran bir yapısal tasarım modelidir.
+  The Builder pattern is a structural design pattern that divides the construction of a complex object into two classes.
 
-<h4 align="left">Builder tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Builder design pattern has two main components</h4>
 
-- **Builder sınıfı:** Bu sınıf, nesnenin inşasını gerçekleştirir.
-- **Nesne sınıfı:** Bu sınıf, inşa edilen nesnenin temsilini sağlar.
+- **Builder class:** This class performs the construction of the object.
+- **Object class:** This class provides a representation of the constructed object.
 
-Builder sınıfı, nesnenin inşası için bir dizi yöntem sağlar. Bu yöntemler, nesnenin özelliklerini ayarlamak için kullanılır. Nesne inşa edildiğinde, Builder sınıfı build() yöntemini çağırır. Bu yöntem, nesnenin inşasını tamamlar ve nesneyi döndürür.
+The Builder class provides a set of methods for the construction of the object. These methods are used to set the properties of the object. When the object is built, the Builder class calls the build() method. This method completes the construction of the object and returns the object.
 
-<h5 align="left">Builder tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Builder design pattern</h5>
 
-- Karmaşık nesneleri adım adım oluşturmayı kolaylaştırır.
-- Aynı nesnenin farklı temsillerinin, inşa sürecini değiştirmeden oluşturulmasına olanak tanır.
-- Karmaşık nesnelerin inşa sürecini test etmeyi kolaylaştırır.
-- Okunabilirlik ve Bakım Kolaylığı: Builder tasarım deseni, nesne oluşturma işlemini daha okunaklı ve bakımı daha kolay hale getirir. Her bir adım açıkça tanımlanır ve değiştirilmesi gerektiğinde sadece ilgili Builder sınıfı değiştirilir.
+- It makes it easy to build complex objects step by step.
+- It allows different representations of the same object to be built without changing the build process.
+- Makes it easy to test the building process of complex objects.
+- Readability and Maintainability: The Builder design pattern makes the object building process more readable and easier to maintain. Each step is clearly defined and only the corresponding Builder class is changed when it needs to be changed.
 
-<h5 align="left">Builder tasarım deseninin dezavantajları</h5>
+<h5 align="left">Disadvantages of the Builder design pattern:</h5>
 
-- Basit nesneler için Builder kullanmak gereksiz bir karmaşıklık yaratabilir. Bu tasarım deseni, yalnızca karmaşık nesneleri oluşturmak gerektiğinde mantıklıdır.
+- Using Builder for simple objects can create unnecessary complexity. This design pattern only makes sense when it is necessary to build complex objects.
 
-- **Performans:** Builder deseninin performansı, nesnelerin inşasında kullanılan yöntemlerin sayısına bağlı olarak etkilenebilir. Çok sayıda yöntem kullanılıyorsa, bu performansı olumsuz yönde etkileyebilir.
+- Performance: The performance of the Builder pattern can be affected depending on the number of methods used in the construction of objects. If a large number of methods are used, this can negatively affect performance.
 
-<h5 align="left">Builder deseni, aşağıdaki durumlarda kullanılabilir:</h5>
+<h5 align="left">The builder pattern can be used in the following situations:</h5>
 
-- Nesnenin farklı temsillerinin oluşturulması gerekiyorsa.
-- Nesnenin inşa sürecinin test edilmesi gerekiyorsa.
+- If different representations of the object need to be created.
+- If the construction process of the object needs to be tested.
 
-<h5 align="left">Builder desenini kullanmak için aşağıdaki adımları takip edebilirsiniz:</h5>
+<h5 align="left">To use the Builder pattern, you can follow these steps:</h5>
 
-- Builder sınıfını oluşturun. Bu sınıf, nesnenin inşası için gerekli tüm yöntemleri içermelidir.
-- Nesne sınıfını oluşturun. Bu sınıf, inşa edilen nesnenin temsilini sağlamalıdır.
-- Builder sınıfını kullanarak nesneyi inşa edin.
+- Create the Builder class. This class should contain all the methods necessary for the construction of the object.
+- Create the Object class. This class must provide a representation of the object being built.
+- Build the object using the Builder class.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Bir senaryo gereği çektiğimiz fotoğrafı bir butona 3 defa bastıktan sonra silmek istiyoruz ve fotoğrafın silinme tarihini doldurmak istiyoruz. Bunu yapmadan önce adım adım nesnemizi doldurmak istiyoruz. 3 defa butona bastığımızda fotoğrafın silme tarihinin dolduğunu göreceğiz. Bu işlemi builder tasarım desenini kullanarak yapmamız bize daha fazla **esneklik**, **okunabilirlik** kazandırmış oldu.
+So how can we implement this in a real application, package, etc. Let's look at it. We want to delete the photo we took as a scenario after pressing a button 3 times and we want to fill in the date of deletion of the photo. Before doing this, we want to fill our object step by step. When we press the button 3 times, we will see that the deletion date of the photo has expired. Doing this process using the builder design pattern has given us more **flexibility**, **readability**.
 
-Senaryomuz gereği \_InformationsOfPhoto widget sınıfına ilgili fotoğrafı ileteceğimiz için sealed bir class oluşturuyorum. Normal şartlarda bir adet yaratılacak sınıf ve bir adet builder sınıfı yapmanız yeterli olacaktır.
+I am creating a sealed class because we will pass the relevant photo to the **InformationsOfPhoto** widget class as per our scenario. Under normal conditions, it will be enough to create one class to be created and one builder class.
 
 ```dart
 sealed class Photo {
@@ -722,7 +719,7 @@ sealed class Photo {
 }
 ```
 
-Ardından NotPhotoPhotoBuilder isimli bir sınıf oluşturuyoruz. Bu sınıf builder methodundan oluşturacağımız bir sınıftır. Üyelerimizi almak için Photo sınıfını implement ediyoruz.
+Then we create a class named NotPhotoPhotoBuilder. This class is a class that we will create from the builder method. We implement the Photo class to get our members.
 
 ```dart
 final class PhotoBuilder implements Photo {
@@ -743,7 +740,7 @@ final class PhotoBuilder implements Photo {
   });
 ```
 
-Sonrasında bir adet PhotoBuilder sınıfı oluşturuyoruz ve her üye için setter methodları oluşturuyoruz. Son olarak bir adet build methodu oluşturuyoruz. Bu bize nesnemizi geri döndürecek.
+Then we create a PhotoBuilder class and create setter methods for each member. Finally, we create a build method. This will return us our object.
 
 ```dart
 final class PhotoBuilder implements Photo {
@@ -792,40 +789,38 @@ final class PhotoBuilder implements Photo {
 }
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="bridge">Bridge (Structural Patterns)</h2>
-  Bridge design pattern, birbirinden bağımsız iki hiyerarşik yapıyı (abstraction ve implementation)birleştirmek ve birbirinden ayrı olarak değiştirilebilmelerini sağlamak amacıyla kullanılan birtasarım desenidir. Bu desen, bir nesnenin soyutlamasını (abstraction) ve bu soyutlama üzerindeçalışan işlevselliği (implementation) ayırarak daha esnek bir yapı oluşturmayı hedefler.
+  Bridge design pattern is a design pattern used to combine two independent hierarchical structures (abstraction and implementation) and to allow them to be modified separately. This pattern aims to create a more flexible structure by separating the abstraction of an object and the functionality (implementation) that operates on that abstraction.
 
-Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika sınıfına devretmektir. Bu fabrika sınıfı, hangi nesnenin oluşturulacağını belirler.
+<h4 align="left">Bridge design pattern has 4 main components</h4>
 
-<h4 align="left">Bridge tasarım deseninin 4 ana bileşeni vardır</h4>
+**Abstraction:** This is the layer where the client interacts with an interface and where functionality is not fully realised.
 
-**Abstraction (Soyutlama):** Bu, istemcinin bir arayüzle etkileşim kurduğu ve işlevselliğin tam olarak gerçekleşmediği katmandır.
+**Refined Abstraction:** These are subclasses of Abstraction and address a specific situation.
 
-**Refined Abstraction (İyileştirilmiş Soyutlama):** Abstraction'ın alt sınıflarıdır ve spesifik bir durumu ele alır.
+**Implementation:** This is the layer that actually implements the abstraction.
 
-**Implementation (Uygulama):** Bu, soyutlamayı gerçekten uygulayan katmandır.
+**Concrete Implementation:** These are subclasses of Implementation and actually implement a specific case.
 
-**Concrete Implementation (Somut Uygulama):** Implementation'ın alt sınıflarıdır ve spesifik bir durumu gerçekten uygular.
+<h5 align="left">Advantages of the Bridge design pattern</h5>
 
-<h5 align="left">Bridge tasarım deseninin avantajları</h5>
+- Flexibility and Extensibility: The abstraction and implementation can be changed independently of each other, which facilitates changes to the system.
 
-- Esneklik ve Genişletilebilirlik: Soyutlama ve uygulama, birbirinden bağımsız olarak değiştirilebilir, bu da sistemdeki değişiklikleri kolaylaştırır.
+- Encapsulation: Application details can be hidden from the abstraction. The client interacts only with the abstraction.
 
-- Gizlilik (Encapsulation): Uygulama detayları soyutlamadan gizlenebilir. İstemci, yalnızca soyutlamayla etkileşimde bulunur.
+- Change Management: Changes on one side do not affect the other. For example, only the abstraction can change and the application can remain unchanged, or vice versa.
 
-- Değişiklik Yönetimi: Bir tarafın değişmesi, diğerini etkilemez. Örneğin, sadece soyutlama değişebilir ve uygulama değişmeden kalabilir ya da tam tersi.
+<h5 id="bridge" align="left"> Disadvantages of the Bridge design pattern</h5>
 
-<h5 id="bridge" align="left"> Bridge tasarım deseninin dezavantajları</h5>
+- Complexity: The implementation of the pattern can sometimes lead to complexity, especially if the size of the project is small or the requirements are simple, this complexity may be unnecessary.
 
-- Komplekslik: Desenin uygulanması bazen karmaşıklığa yol açabilir, özellikle projenin boyutu küçükse veya gereksinimler basitse, bu komplekslik gereksiz olabilir.
+**Sample Scenario**
 
-**Örnek Senaryo**
+So how can we implement this in a real application, package, etc. Let's look at it. Due to our scenario, we want to use our own video processing technology instead of the video processing technology of applications such as Youtube, Netflix, Amazon Prime, etc. in our project. While doing this, we need to consider the potential for applications with different video processing technologies to be included in our project in the future. At this point, **Birdge Design Pattern** comes into play. Our aim is to ensure that the old code structure can be renewed and continue to function whenever it is renewed.
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği projemizde Youtube, Netflix, Amazon Prime, vb. gibi uygulamaların kendi video işleme teknolojisi yerine kendi video işleme teknolojisini kullanmak istiyoruz. Bunu yaparken projemize farklı video işleme teknolojisine sahip uygulamaların ileride projemize dahil olabilme potansiyelini de göz önüne almamız gerekiyor. Bu noktada **Birdge Design Pattern** devreye giriyor. Amacımız yenilenebilen ve her yenilendiğinde eski kod yapısının işleyişini devam ettirebilmesini sağlamaktır.
-
-Senaryomuz gereği kendi **Video Processor** teknolojiz için bir **abstract** sınıf yazıyoruz. İçinde **process(String videoFile)** isimli bir method imzası barındırıyoruz.
+As per our scenario, we are writing an **abstract** class for our own **Video Processor** technology. In it we have a method signature named **process(String videoFile)**.
 
 ```dart
 abstract class VideoProcessor {
@@ -833,7 +828,7 @@ abstract class VideoProcessor {
 }
 ```
 
-ardından **Video** için bir interface tanımlıyoruz. İçinde **Video Processor** teknolojimizi zorunlu olarak implemente edilmesini sağlıyoruz. Ardından video için **play(String videoFile)** isimli içi boş bir method tanımlıyoruz.
+Then we define an interface for **Video**. In it, we ensure that our **Video Processor** technology is implemented compulsorily. Then we define an empty method named **play(String videoFile)** for the video.
 
 ```dart
 interface class Video {
@@ -845,7 +840,7 @@ interface class Video {
 }
 ```
 
-buraya kadar implemente edilecek yapıları kurgulamış olduk. Şimdi Netflix ve Youtube için senaryomuzu işletmeye başlayalım. Hem Netflix Hem de Youtube için ayrı ayrı sınıflar oluşturup **Video** interface'inden kalıtım alıyoruz.
+Now let's start running our scenario for Netflix and Youtube. We create separate classes for both Netflix and Youtube and inherit from the **Video** interface.
 
 ```dart
 class NetflixVideo implements Video {
@@ -877,7 +872,7 @@ class YoutubeVideo implements Video {
 }
 ```
 
-Şimdi sıra **Video Processor** teknolojimizi ilgili video/videolar için implemente etmekte. Bunun için HD VE UHD(4K) video kalitesi desteği verdiğimizi düşünelim. Her Video kalitesi için **Video Processor** **abstract** sınıfımızdan **kalıtım** alıyoruz.
+Now it is time to implement our **Video Processor** technology for the related video/videos. For this, let's assume that we support HD and UHD (4K) video quality. For each video quality, we get **instantiation** from our **Video Processor** **abstract** class.
 
 ```dart
 class HDProcessor implements VideoProcessor {
@@ -895,9 +890,9 @@ class UHD4KProcessor implements VideoProcessor {
 }
 ```
 
-Senaryomuz gereği projemizde şimdilik 2 farklı şirket, 2 farklı video kalitesi için kendi **Video Processor** teknolojimizi kullanıyoruz.
+Due to our scenario, we are using our own **Video Processor** technology for 2 different companies and 2 different video quality.
 
-Sonrasında Amazon Prime da uygulamamızda yer edindi ve bunu QUHD 8K video kalitesi ile beraber yapmak istediğimizi varsayalım.
+Afterwards, Amazon Prime also took place in our application and let's assume that we want to do this with QUHD 8K video quality.
 
 ```dart
 class AmazonPrimeVideo implements Video {
@@ -923,7 +918,7 @@ class QUHD8KProcessor implements VideoProcessor {
 
 ```
 
-Peki bunu UI Tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI side?
 
 ```dart
 import 'package:design_patterns/patterns/bridge/bridge.dart';
@@ -1000,33 +995,33 @@ class _BridgeViewState extends State<BridgeView> {
 
 <img src="https://user-images.githubusercontent.com/78795973/282323920-b934655b-f8c4-4fe7-b12b-5b0034b67ba5.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323923-7b57245f-f14f-40e3-9758-a4db458fce52.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/282323927-2cbcd660-b69f-42a1-ae8a-8b223fb60eda.png" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="composite">Composite (Structural Patterns)</h2>
-  Kompozit tasarım deseni, tek tek nesneleri ve nesne bileşimlerini aynı şekilde ele almanızı sağlayan güçlü bir yapısal desendir. Hem parçaları (tek tek nesneler) hem de bütünleri (bileşik nesneler) aynı şekilde ele alabileceğiniz nesne hiyerarşileri oluşturmanıza yardımcı olur.
+  The Composite design pattern is a powerful structural pattern that allows you to treat individual objects and composites of objects in the same way. It helps you create object hierarchies that treat both parts (individual objects) and wholes (composite objects) in the same way.
 
-<h4 align="left">Composite tasarım deseninin üç ana bileşeni vardır</h4>
+<h4 align="left">There are three main components of the composite design pattern</h4>
 
-- **Abstract Interface:** Bu modelin temelidir. Hiyerarşideki hem bireysel hem de bileşik tüm nesnelerin uyması gereken ortak davranışı tanımlar.
-- **Concrete Classes:** Bunlar, belirli nesne türlerini temsil eden soyut arayüzün uygulamalarıdır. Her sınıf arayüz yöntemleri için kendi davranışını tanımlar.
-- **Client Code:** Bu, hiyerarşideki nesnelerle etkileşime giren koddur. İstemciler yalnızca soyut arabirimi görür ve hem tek tek nesnelere hem de kompozitlere aynı şekilde davranmalarına izin verir
+- **Abstract Interface:** This is the foundation of the model. It defines the common behaviour that all objects in the hierarchy, both individual and composite, must follow.
+- **Concrete Classes:** These are implementations of the abstract interface representing specific types of objects. Each class defines its own behaviour for the interface methods.
+- **Client Code:** This is the code that interacts with objects in the hierarchy. Clients only see the abstract interface, allowing them to treat both individual objects and composites in the same way
 
-<h5 align="left">Composite tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of composite design pattern</h5>
 
-- İstemcilerin farklı nesne türlerini farklı şekilde işlemeleri gerekmez.
-- Daha esnek ve yeniden kullanılabilir kod Ortak arayüze uyan yeni öğe türlerini kolayca ekleyebilirsiniz.
-- Daha kolay bakım bir öğe türündeki değişiklikler mutlaka diğerlerini etkilemez.
-- Geliştirilmiş kod okunabilirliği: Kod, verilerinizin gerçek dünya yapısını yansıtır.
+- Clients do not need to handle different object types differently.
+- More flexible and reusable code You can easily add new item types that fit the common interface.
+- Easier maintenance Changes to one item type do not necessarily affect others.
+- Improved code readability: The code reflects the real-world structure of your data.
 
-<h5 align="left"> Composite tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Composite design pattern</h5>
 
-- Büyük bir hiyerarşik tarama yapmayalım, performans etkileyici olabilir.
+- Let's not make a big hierarchical scan, performance can be impressive.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Örneğin aynı gruba ait olduğunu hissettiğiniz belli kategoriler var. Mesela bir e-ticaret uygulamasında belli kategoriler olur. Bu kategorilerin altında ilgili kategoriyle ilgili alt kategori veya başlıklar bulunur. Bu yapıları daha kolay ve esnek bir şekilde inşa etmek için devreye **Composite Design Pattern** giriyor. İster ilgili nesneleri tek tek ele alın, ister kategorileri çoklu olarak ele alıp hiyerarşiyi insa edebiliriz. Amacımız bu esnekliği sağlamak olacak.
+For example, there are certain categories that you feel belong to the same group. For example, there are certain categories in an e-commerce application. Under these categories, there are subcategories or headings related to the relevant category. To build these structures more easily and flexibly, **Composite Design Pattern** comes into play. We can either handle related objects individually, or we can handle categories as multiple and build the hierarchy. Our goal will be to provide this flexibility.
 
-Şimdi senaryomuz gereği ilk inşa edeceğimiz şey ortak yapıyı sağlayacak olan **Abstract Class** olacaktır.
+Now the first thing we will build according to our scenario will be **Abstract Class** which will provide the common structure.
 
 ```dart
 
@@ -1046,7 +1041,7 @@ abstract class CartItem<T extends dynamic> {
 
 ```
 
-Sonrasında herhangi bir ürün için **Product** isimli bir class yaratıyoruz. Bu class oluşturmuş olduğumuz **CartItem** isimli **Abstract** sınıftan kalıtım alarak tek bir ürün için yapıyı inşa etmeye başlıyoruz. İçinde ilgili ürünle ilgili bilgiler tutacağından gerekli değişkenleri yazıyoruz. Unutmayın senaryomuz bir E-ticaret uygulaması olacak. **buildItemWidget()** methodu generic şekilde döndüğünden ürün için bir **Card** yazmayı tercih ediyoruz.
+Then we create a class named **Product** for any product. We start building the structure for a single product by inheriting from the **Abstract** class named **CartItem** that we have created this class. Since it will hold information about the product, we write the necessary variables. Remember, our scenario will be an E-commerce application. Since the **buildItemWidget()** method returns generic, we prefer to write a **Card** for the product.
 
 ```dart
 /// Represents a single product that can be added to a shopping cart.
@@ -1097,8 +1092,8 @@ final class Product implements CartItem<dynamic> {
 }
 ```
 
-Sıra toplu olarak bir ürün ağacı inşa etmeye geldi. Senaryomuzda **Araba** ve **Masaüstü Bilgisayar** kategorilerini ele alacağız. Bu kategoriler kendi içinde bir çok parçaya(teker, anakart, vb.) ayrılabileceğinden
-ilgili yapıları ortak bir şekilde yönetmek için **Category** isimli **CartItem** **Abstract** sınıfından kalıtım alan bir sınıf oluşturuyoruz. **buildItemWidget()** methodu **ExpansionPanel** dönerek **final List<CartItem<dynamic>> children** listesinde bulunan diğer benzer ürünleri tek ortak kategori başlığı adı altında topluyoruz.
+Now it is time to build a product tree collectively. In our scenario, we will consider the **Car** and **Desktop Computer** categories. Since these categories can be divided into many parts (wheels, motherboard, etc.)
+We create a class named **Category** that inherits from **CartItem** **Abstract** class to manage related structures in a common way. The **buildItemWidget()** method returns the **ExpansionPanel** and we collect other similar products in the **final List<CartItem<dynamic>> children** list under a single common category heading.
 
 ```dart
 final class Category implements CartItem<dynamic> {
@@ -1130,7 +1125,7 @@ final class Category implements CartItem<dynamic> {
 }
 ```
 
-UI tarafında nasıl bir kullanım senaryosu olabilir hadi beraber bakalım. Öncelikle ilgili kategori ve tekli ürünlerimizi ayarlamak için bir liste oluşturuyoruz. Daha önce söylediğim gibi kategorilerimiz **Desktop Computer** ve **Car** şeklinde olacak. Alt ürünlerinde ilgili ürünler olacak.
+Let's see what kind of usage scenario can be on the UI side. First of all, we create a list to set the relevant category and single products. As I said before, our categories will be **Desktop Computer** and **Car**. There will be related products in the sub-products.
 
 ```dart
 final List<Category> categories = [
@@ -1171,7 +1166,7 @@ final List<Category> categories = [
   ];
 ```
 
-Kategorileri ve tekli ürünü **ExpansionPanelList** kullanarak görüntülüyoruz.
+We display categories and single product using **ExpansionPanelList**.
 
 ```dart
 Widget build(BuildContext context) {
@@ -1207,36 +1202,36 @@ Widget build(BuildContext context) {
 
 <img src="https://user-images.githubusercontent.com/78795973/287830530-ea687dcd-3c1a-4541-b034-6e5a34dcf0ac.png" width="250"> <img src="https://user-images.githubusercontent.com/78795973/287832109-fa70e1ec-4af4-445a-925f-e1d6eba93576.png" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="decorator">Decorator (Structural Patterns)</h2>
-  Decorator tasarım deseni, bir nesneye dinamik olarak yeni özellikler eklemek için kullanılan bir tasarım desenidir. Bu, temel nesnenin işlevselliğini değiştirmeden veya genişletmeden yapılır. Decorator tasarım deseni, doğru bir şekilde kullanıldığında esneklik ve sürdürülebilirlik sağlar. Ancak, her tasarım deseni gibi, uygulama gereksinimlerinize uygun olup olmadığını değerlendirmek önemlidir.
+  The Decorator design pattern is a design pattern used to dynamically add new properties to an object. This is done without changing or extending the functionality of the base object. The Decorator design pattern provides flexibility and maintainability when used correctly. However, like any design pattern, it is important to evaluate whether it suits your application requirements.
 
-<h4 align="left">Decorator tasarım deseninin 3 ana bileşeni vardır</h4>
+<h4 align="left">The Decorator design pattern has 3 main components</h4>
 
-- **Abstract Component Interface(OPTIONAL):** Bu interface tamamen opsiyonel olarak kullanılabilir. Dekore edilecek component için **abstract** bir davranış sergiletebilirsiniz..
-- **Concrete Component:** Dekore edilecek componentin saf halidir. İsteğe göre **abstract component interface** implemente edilebilir.
-- **Abstract Decorator Class:** Dekore edilecek component için dekor sınıflarına bir **abstract** katman sağlar. Kullanılacak dekor sınıfları bu sınıftan kalıtım alırlar.
-- **Decorator Class:** Dekore edilecek componenti dekore eder. Dekore edilecek component için birden fazla **dekoratör** sınıfı yapılabilir.
+- **Abstract Component Interface(OPTIONAL):** This interface is completely optional. You can create an **abstract** behaviour for the component to be decorated.
+- **Concrete Component:** This is the pure form of the component to be decorated. Optionally **abstract component interface** can be implemented.
+- **Abstract Decorator Class:** Provides an **abstract** layer to decorator classes for the component to be decorated. The decor classes to be used inherit from this class.
+- **Decorator Class:** Decorates the component to be decorated. More than one **decorator** class can be made for the component to be decorated.
 
-<h5 align="left">Decorator tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Decorator design pattern</h5>
 
-- Esneklik (Flexibility): Decorator deseni, nesnelere dinamik olarak davranış eklemenin esnek bir yolunu sağlar. Yeni sorumluluklar eklemek veya var olanları kaldırmak, sınıfları değiştirmeden yapılabilir.
-- Açık Kapalı Prensibi (Open-Closed Principle): Decorator deseni, sınıfların açık olmasını (yeni davranışları eklemeye izin vermesi) ve kapalı olmasını (mevcut kodu değiştirmemesi) sağlar. Bu, kodunuzun daha sürdürülebilir olmasına yardımcı olur.
-- Birleşik Nesneler (Composite Objects): Decorator deseni, bir nesnenin üzerine başka nesneleri birleştirebilmenizi sağlar. Bu, bir nesneyi farklı kombinasyonlarda birleştirerek karmaşık yapılar oluşturmanıza olanak tanır.
+- Flexibility: The Decorator pattern provides a flexible way of dynamically adding behaviour to objects. Adding new responsibilities or removing existing ones can be done without changing classes.
+- Open-Closed Principle: The Decorator pattern ensures that classes are open (allowing adding new behaviours) and closed (not modifying existing code). This helps your code to be more maintainable.
+- Composite Objects: The Decorator pattern allows you to combine other objects on top of an object. This allows you to create complex structures by combining an object in different combinations.
 
-<h5 align="left"> Decorator tasarım deseninin dezavantajları</h5>
+<h5 align="left">Disadvantages of the Decorator design pattern</h5>
 
-- Kod Karmaşası (Code Complexity): Decorator deseni kullanıldığında, bir nesnenin üzerine ek sorumluluklar eklemek için bir dizi sınıf oluşturulur. Bu durum zamanla kod karmaşıklığına yol açabilir.
-- Fazla Sayıda Küçük Nesne (Lots of Small Objects): Decorator deseni, her dekoratör sınıfı için bir sınıf yaratılmasını gerektirir. Bu durum, çok sayıda küçük nesnenin oluşmasına ve proje boyutunda artışa neden olabilir.
-- Mantıksal Sıralama (Ordering of Wrappers): Decorator deseninde dekoratörlerin sırasının önemi vardır. Bazı durumlarda dekoratörlerin sırasının yanlış belirlenmesi, beklenmeyen sonuçlara yol açabilir.
-- Birleşik Nesnelerin Karmaşıklığı (Complexity of Composite Objects): Birleşik nesnelerin karmaşıklığı, birden çok dekoratör eklenerek artabilir. Bu durum, anlaması ve bakımı zor bir yapıya yol açabilir.
+- Code Complexity: When the Decorator pattern is used, a number of classes are created to add additional responsibilities to an object. This can lead to code complexity over time.
+- Lots of Small Objects: The Decorator pattern requires a class to be created for each decorator class. This can lead to a large number of small objects and an increase in project size.
+- Logical Ordering of Wrappers: The order of the decorators is important in the Decorator pattern. In some cases, incorrect determination of the order of the decorators may lead to unexpected results.
+- Complexity of Composite Objects: The complexity of composite objects can increase by adding multiple decorators. This can lead to a structure that is difficult to understand and maintain.
 
 **Örnek Senaryo**
 
-Örnek senaryomuzda yine bir E-ticaret uygulamasını ele alalım. Bu E-ticaret uygulamasında bir ürünün birden fazla davranışı(UI bakımından görünüşü veya mantıksal olarak) olabilir. Örneğin bir ürünün stoğu bitebilir, satışta olabilir veya o ürünün yeni bir ürün olduğu belirtilebilir. İşte bu durumlarda aynı nesne için farklı dekorlar üreterek kodumuzu iyileştirirken, feature bir düşünce katacağız. Bunun için **Decorator Design Pattern**'i kullanacağız.
+Let's consider an E-commerce application in our example scenario. In this E-commerce application, a product may have more than one behaviour (appearance in terms of UI or logically). For example, a product may be out of stock, on sale, or it may be indicated that it is a new product. In these cases, we will add a feature thought while improving our code by producing different decors for the same object. We will use **Decorator Design Pattern** for this.
 
-İlk olarak bir ProductCard isimli **Abstract Component Interface** yapıyorum.
+Firstly, I am making an **Abstract Component Interface** named ProductCard.
 
 ```dart
 /// Abstract component class
@@ -1249,7 +1244,7 @@ abstract class ProductCard extends StatelessWidget {
 }
 ```
 
-Sonrasında **ProductCard**'ı kalıtım alan **Concrete Component** sınıfını tasarlıyorum. Bu sınıf Ürünümüzün saf hali olacaktır. Ürünümüzün bir resmi, ismi ve fiyatı olacak.
+Then I design the **Concrete Component** class that inherits **ProductCard**. This class will be the pure form of our Product. Our product will have a picture, name and price.
 
 ```dart
 /// Concrete component class
@@ -1281,7 +1276,7 @@ base class SimpleProductCard extends ProductCard {
 }
 ```
 
-Sonrasında en önemli aşama olan dekoratör sınıfları tarafından kalıtım alınacak **Abstract Decorator** sınıfını yapıyoruz. Bu sınıf 1 adet **ProductCard** alıyor ve aldığı componentin **build()** methodunu çağırıyor. Bu aşama kritik, çünkü birden fazla dekoratörün uygulanması sırasında her dekoratörün diğer dekoratörlerden bağımsız çalışmasını sağlıyoruz.
+Then we make the **Abstract Decorator** class, which will be inherited by the decorator classes, which is the most important stage. This class takes 1 **ProductCard** and calls the **build()** method of the received component. This step is critical, because during the implementation of multiple decorators, we ensure that each decorator works independently from other decorators.
 
 ```dart
 /// Decorator abstract class
@@ -1299,7 +1294,7 @@ abstract class ProductCardDecorator extends ProductCard {
 }
 ```
 
-Sıra **Decorator** sınıflarımızı yazmaya geldi. Senaryomuz gereği bir ürünün stokta yok, yeni ürün veya satışta olması bekleniyor. Her olasılık için 1 adet **Decorator** tasarlıyoruz. İlk olarak **OnSaleDecorator(Satışta)** Dekoratörünü tasarlıyoruz. Bu dekoratör ilgili ürünün sol üst köşesine basit bir **On Sale** yazısı ekliyoruz.
+It's time to write our **Decorator** classes. According to our scenario, a product is expected to be out of stock, a new product or on sale. We design 1 **Decorator** for each possibility. First, we design the **OnSaleDecorator** Decorator. We add a simple **On Sale** text to the upper left corner of this decorator product.
 
 ```dart
 /// Concrete decorator class for on sale products
@@ -1329,7 +1324,7 @@ final class OnSaleDecorator extends ProductCardDecorator {
 }
 ```
 
-Aynı benzerlikte işlemleri **OutOfStockProductDecorator** Dekoratörü içinde uyguluyoruz. Bu dekoratördeki amacımız ürünün resminin hafif bir opacity ye sahip olmasıdır. Bu sayede kullanıcı ürünün stokta olmadığını anlayacaktır.
+We apply the same similar operations in the **OutOfStockProductDecorator** Decorator. Our goal in this decorator is for the image of the product to have a slight opacity. In this way, the user will understand that the product is out of stock.
 
 ```dart
 /// Concrete decorator class for featured products
@@ -1348,7 +1343,7 @@ final class OutOfStockProductDecorator extends ProductCardDecorator {
 }
 ```
 
-Son olarak ilgili ürün yeni bir ürünse, ürünün sağ üst köşesinde bir ikon çıkartıyoruz.
+Finally, if the relevant product is a new product, we create an icon in the upper right corner of the product.
 
 ```dart
 /// Concrete decorator class for new products
@@ -1377,7 +1372,7 @@ final class NewProductDecorator extends ProductCardDecorator {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Örnek olarak birden fazla dekoratörü de mantık çerçevesinde kullanabiliriz.
+So how can we use this on the UI side? For example, we can use more than one decorator within reason.
 
 ```dart
 class DecoratorView extends StatefulWidget {
@@ -1431,34 +1426,34 @@ final class _DecoratorViewState extends State<DecoratorView> {
 
 <img src="https://user-images.githubusercontent.com/78795973/290292483-048dd72f-eb9c-49d9-bf5c-aa2f473e64b3.png" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="fecade">Fecade (Structural Patterns)</h2>
-  Facade tasarım kalıbı, karmaşık sistemleri basit bir arayüzle yönetmek için kullanılan biryapısal tasarım kalıbıdır. Bu kalıp, sistemlerin kullanımını kolaylaştırmak ve karmaşıklığınıgizlemek amacıyla kullanılır. Facadetasarım kalıbı, özellikle büyük yazılım sistemlerinde, altsistemlerin doğrudan erişimini sınırlayarak ve bir dizi alt sistem işlevini tek bir, yüksekseviyeli arayüzle birleştirerek kodun anlaşılabilirliğini ve kullanımınıkolaylaştırır.
+  The Facade design pattern is a structural design pattern used to manage complex systems with a simple interface. This pattern is used to facilitate the use of systems and hide their complexity. The Facade design pattern facilitates the understandability and use of code, especially in large software systems, by limiting direct access to subsystems and combining a set of subsystem functions into a single, high-level interface.
 
-Facade, karmaşık alt sistemlerin basitleştirilmiş bir arayüzle dış dünyaya sunulmasını sağlar. Kullanıcılar, alt sistemlerin karmaşık yapıları ve işleyişleri hakkında derinlemesine bilgi sahibi olmadan, bu sistemleri kullanabilirler.
+Facade enables complex subsystems to be exposed to the outside world through a simplified interface. Users can use these systems without having in-depth knowledge about the complex structures and functioning of the subsystems.
 
-<h4 align="left">Fecade tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Fecade design pattern has two main components</h4>
 
-- **Fecade:** Dış dünyaya sunulan basitleştirilmiş arayüzü sağlar. Alt sistemlerin işlevlerini birleştirir ve kullanıcıya sunar.
-- **Alt Sistemler:** Facade arayüzü tarafından kapsanan karmaşık işlevselliği barındıran sınıflar. Bunlar doğrudan kullanıcı tarafından çağrılmaz, ancak Facade sınıfı tarafından yönetilir.
+- **Fecade:** Provides the simplified interface presented to the outside world. It combines the functions of subsystems and presents them to the user.
+- **Subsystems:** Classes that contain the complex functionality covered by the Facade interface. These are not called directly by the user, but are managed by the Facade class.
 
-<h5 align="left">Fecade tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Fecade design pattern</h5>
 
-- Karmaşık sistemlerin daha basit bir arayüzle kullanılmasını sağlar.
-- Alt sistemlerle doğrudan etkileşimi azaltır, böylece kodun bakımı ve güncellenmesi kolaylaşır.
-- Alt sistemlerin ayrı ayrı test edilmesini kolaylaştırır.
+- Enables the use of complex systems with a simpler interface.
+- Reduces direct interaction with subsystems, making code easier to maintain and update.
+- Facilitates testing of subsystems individually.
 
-<h5 align="left"> Fecade tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Fecade design pattern</h5>
 
-- Ekstra bir soyutlama katmanı, bazen performans kaybına yol açabilir.
-- Çok basitleştirilmiş bir arayüz, bazı durumlarda alt sistemlerin tüm özelliklerine erişimi kısıtlayabilir.
+- An extra layer of abstraction can sometimes lead to performance loss.
+- A very simplified interface can in some cases restrict access to all features of subsystems.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği teknik alt yapımızda birden fazla alt sistemizin (Network katmanımızın) olduğunu varsayalım. Bunlar Hava durumu için **WeatherService**, haberler için **NewsService**, Kullanıcı için **UserProfileService** olsun. Bu katmanları tek bir katmanda toplayarak kullanabiliriz. Bu katmanımızın ismi **ApiFacadeService** olsun. **ApiFacadeService** katmanını kullanarak diğer alt sistemlere erişerek işlemlerimizde kullanacağız. Gerçek veriden kaçınarak ana mantığı kod üzerinde oturtalım.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. As per our scenario, let's assume that we have more than one subsystem (Network layer) in our technical infrastructure. Let these be **WeatherService** for weather, **NewsService** for news, and **UserProfileService** for User. We can use these layers by collecting them in a single layer. Let's call this layer **ApiFacadeService**. We will use the **ApiFacadeService** layer to access other subsystems and use it in our operations. Let's place the main logic on the code, avoiding real data.
 
-**WeatherService** `Future<Weather> getWeather()` method imzasına sahip bir methoda sahiptir ve bize **Weather** modelini döner.
+**WeatherService** has a method with the method signature `Future<Weather> getWeather()` and returns us the **Weather** model.
 
 ```dart
 import 'package:design_patterns/patterns/fecade/model/weather.dart';
@@ -1471,7 +1466,7 @@ final class WeatherService {
 
 ```
 
-**NewsService** `Future<List<News>> getLatestNews()` method imzasına sahip bir methoda sahiptir ve bize **News** modelinin listesini döner döner.
+**News Service** has a method with the method signature `Future<List<News>> get Latest News()` and returns us a list of the **News** model.
 
 ```dart
 import 'package:design_patterns/patterns/fecade/model/news.dart';
@@ -1488,7 +1483,7 @@ final class NewsService {
 }
 ```
 
-**UserProfileService** `final class UserProfileService` method imzasına sahip bir methoda sahiptir ve bize **UserProfile** modelini döner.
+**UserProfileService** has a method with the method signature `final class UserProfileService` and returns us the **UserProfile** model.
 
 ```dart
 import 'package:design_patterns/patterns/fecade/model/user_profile.dart';
@@ -1501,7 +1496,7 @@ final class UserProfileService {
 
 ```
 
-Sıra **ApiFacadeService** katmanını oluşturmaya geldi. Bu katmanda kullanmak istediğimiz alt katmanları kullanıyoruz. Bu sayede alt katmanlara erişimi sınırlayarak kullanabiliyoruz.
+Now it's time to create the **ApiFacadeService** layer. We use the sublayers we want to use in this layer. In this way, we can use it by limiting access to the lower layers.
 
 ```dart
 final class ApiFacadeService {
@@ -1515,7 +1510,7 @@ final class ApiFacadeService {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Örnek olması açısından **FutureBuilder** vb. yapılarda kullanabilirsiniz.
+So how can we use this on the UI side? For example, **FutureBuilder** etc. You can use it in buildings.
 
 ```dart
 final class FecadeView extends StatefulWidget {
@@ -1552,33 +1547,33 @@ class _FecadeViewState extends State<FecadeView> {
 }
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="flyweight">Flyweight (Structural Patterns)</h2>
-  Flyweight tasarım kalıbı, bellek kullanımını optimize etmek amacıyla kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, nesneler arasında paylaşılabilir durumları (intrinsic state) ve paylaşılamayan durumları (extrinsic state) ayırarak, tekrar eden durumları azaltmayı ve böylece bellek kullanımını verimli bir şekilde azaltmayı hedefler. Özellikle birçok benzer nesnenin oluşturulduğu durumlarda önem kazanır. Flutter'da Flyweight tasarım kalıbını kullanmanın bir örneği, özellikle widget ağaçlarında tekrar eden widget'ları optimize etmek olabilir. Flutter uygulamalarında, bazı widget'lar özellikle liste veya ızgara görünümlerinde tekrar tekrar kullanılır. Bu durumda, Flyweight kalıbını uygulayarak, bellek kullanımını optimize edebilir ve uygulamanın performansını artırabiliriz.
+  The Flyweight design pattern is a structural design pattern used to optimize memory usage. This pattern aims to reduce repetitive states by separating intrinsic states and non-shareable states (extrinsic states) between objects, thus efficiently reducing memory usage. It becomes especially important in cases where many similar objects are created. An example of using the Flyweight design pattern in Flutter would be optimizing repeating widgets, especially in widget trees. In Flutter applications, some widgets are used repeatedly, especially in list or grid views. In this case, by applying the Flyweight pattern, we can optimize memory usage and improve the performance of the application.
 
-<h4 align="left">Flyweight tasarım deseninin 4 ana bileşeni vardır</h4>
+<h4 align="left">The Flyweight design pattern has 4 main components</h4>
 
-- **Flyweight Interface:** Paylaşılan nesnelerin ortak bir arayüzünü tanımlar.
-- **Concrete Flyweight:** Flyweight interface'ini uygulayan ve iç durumu (intrinsic state) saklayan sınıf.
-- **Flyweight Factory:** Flyweight nesnelerini yaratır ve yönetir. Aynı nesne önceden yaratılmışsa, yeniden kullanılmasını sağlar.
-- **Client:** Flyweight nesnelerini kullanır. Dış durumu (extrinsic state) sağlar ve onu Flyweight ile birleştirir.
+- **Flyweight Interface:** Defines a common interface of shared objects.
+- **Concrete Flyweight:** Class that implements the Flyweight interface and stores the intrinsic state.
+- **Flyweight Factory:** Creates and manages Flyweight objects. If the same object has been created before, it allows it to be reused.
+- **Client:** Uses Flyweight objects. It provides the extrinsic state and combines it with Flyweight.
 
-<h5 align="left">Flyweight tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Flyweight design pattern</h5>
 
-- Benzer nesnelerin tekrar tekrar yaratılmasını engelleyerek bellek kullanımını azaltır.
-- Daha az nesne yaratıldığı için performans artar.
+- Reduces memory usage by preventing similar objects from being created over and over again.
+- Performance increases because fewer objects are created.
 
-<h5 align="left"> Flyweight tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Flyweight design pattern</h5>
 
-- Tasarım karmaşıklaşabilir.
-- İç ve dış durumların yönetimi zorlaşabilir.
+- Design can get complicated.
+- Management of internal and external situations may become difficult.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği bir sosyal medya uygulaması yapmak istiyoruz. Bu uygulamada gönderileri gösteren bir liste düşünelim. Her gönderide yorum, beğeni ve paylaşım gibi işlemler için aynı ikonlar, tekrar tekrar oluşturmak yerine **Flyweight** tasarım kalıbı ile optimize edeceğiz.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. According to our scenario, we want to make a social media application. Let's imagine a list showing posts in this application. Instead of creating the same icons over and over again for actions such as comments, likes and shares on each post, we will optimize them with the **Flyweight** design pattern.
 
-İlk olarak **Flyweight Interface** katmanını yapmakla başlıyoruz. İçinde **Widget** dönen **Widget createWidget(Color color, double size)** method imzasına sahip bir method yerleştiriyoruz.
+First, we start by making the **Flyweight Interface** layer. We place a method with the method signature **Widget createWidget(Color color, double size)**, which returns **Widget**.
 
 ```dart
 abstract class Flyweight {
@@ -1586,7 +1581,7 @@ abstract class Flyweight {
 }
 ```
 
-Sonrasında sıra, **Concrete Flyweight** katmanına geliyor. Bu katmanda **iç durum(intrinsic state)** i saklayacağız. Bizim durumumuzda bu bir icon olacak. Aynı zamanda **Flyweight** katmanını **implement** ederek **createWidget** methodunu **@override** ediyoruz.
+Then it's time for the **Concrete Flyweight** layer. We will store the **intrinsic state** in this layer. In our case, this will be an icon. At the same time, we **@override** the **createWidget** method by **implementing** the **Flyweight** layer.
 
 ```dart
 final class IconFlyweight implements Flyweight {
@@ -1601,7 +1596,7 @@ final class IconFlyweight implements Flyweight {
 }
 ```
 
-Sıra **Flyweight Factory** katmanında **Flyweight** nesnelerini yaratmaya geldi. Burada eğer daha önce yaratılmış bir nesne varsa **\_icons** map içinden çekiliyor. Eğer ilk defa gelen bir nesneyse map'e ekleniyor.
+It's time to create **Flyweight** objects in the **Flyweight Factory** layer. Here, if there is a previously created object, **icons** are pulled from the map. If it is an object that comes for the first time, it is added to the map.
 
 ```dart
 final class IconFactory {
@@ -1616,7 +1611,7 @@ final class IconFactory {
 }
 ```
 
-Peki bunu UI (**Client**) tarafında nasıl kullanabiliriz ?
+So how can we use this on the UI (**Client**) side?
 
 ```dart
 final class FlyWeightView extends StatelessWidget {
@@ -1672,42 +1667,42 @@ final class FlyWeightView extends StatelessWidget {
 
 ```
 
-10 tane listtileın her biri 4 farklı icon içermekte. Normal koşullarda 4x10 dan 40 tane icon nesnesi üretilecekti fakat **Flyweight** sayesinde bu sayı farklı icon sayısı kadar yani 4 e düştü.
+Each of the 10 listtiles contains 4 different icons. Under normal conditions, 40 icon objects of 4x10 would be produced, but thanks to **Flyweight**, this number decreased to 4, that is, the number of different icons.
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/72f1007d-a5fc-4f1d-b3f9-215dc7bcf365" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/b5a1d964-e308-4445-8a8e-6f2965cb140a" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="proxy">Proxy (Structural Patterns)</h2>
-  Proxy tasarım kalıbı, bir nesneye erişimi kontrol etmek veya bu erişimi başka bir nesne üzerinden yapmak için kullanılan yapısal bir tasarım kalıbıdır. Bu kalıp, bir nesnenin işlevselliğini genişletmek veya değiştirmek için kullanılırken, orijinal nesnenin yapısını değiştirmeden çalışır. Proxy, gerçek nesneye bir tür arayüz ya da temsilci olarak hizmet eder.
+  A proxy design pattern is a structural design pattern used to control access to an object or to make this access through another object. While this pattern is used to extend or modify the functionality of an object, it operates without changing the structure of the original object. The proxy serves as a kind of interface or representative to the real object.
 
-<h4 align="left">Proxy tasarım deseninin üç ana bileşeni vardır</h4>
+<h4 align="left">The proxy design pattern has three main components</h4>
 
-- **Subject Interface:** Gerçek nesne ve proxy'nin uygulaması gereken arayüz.
-- **Real Subject:** İstemcinin erişmek istediği asıl nesne.
-- **Proxy:** Gerçek nesneye erişimi kontrol eden ya da onun yerine geçen nesne.
+- **Subject Interface:** The actual object and the interface that the proxy should implement.
+- **Real Subject:** The actual object that the client wants to access.
+- **Proxy:** An object that controls access to or replaces the real object.
 
-<h5 align="left">Proxy tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of proxy design pattern</h5>
 
-- Proxy, gerçek nesnelere erişimi kontrol etmenize olanak tanır. Örneğin, güvenlik kontrolleri veya erişim izinleri ekleyebilirsiniz.
-- Pahalı kaynakların yüklenmesini erteleyerek uygulamanın performansını artırabilir. Özellikle büyük nesneler veya ağ üzerinden gelen veriler için faydalıdır.
-- Özellikle uzak sunuculardan veri çekme işlemlerinde, gereksiz ağ trafiğini azaltarak performansı artırabilir. Örneğin, verileri önbelleğe alarak (caching) aynı verinin tekrar tekrar yüklenmesini önleyebilir.
-- Proxy, gerçek nesne üzerinde yapılan işlemleri loglayabilir ve ekstra güvenlik katmanları ekleyebilir.
-- Kullanıcılar veya diğer nesneler, proxy'nin varlığından habersiz olarak gerçek nesnelerle etkileşimde bulunabilir.
+- Proxy allows you to control access to real objects. For example, you can add security controls or access permissions.
+- Can improve the performance of the application by delaying the loading of expensive resources. It is especially useful for large objects or data coming over the network.
+- It can increase performance by reducing unnecessary network traffic, especially when retrieving data from remote servers. For example, by caching data, it can prevent the same data from being loaded repeatedly.
+- The proxy can log operations performed on the real object and add extra layers of security.
+- Users or other objects can interact with real objects without being aware of the existence of the proxy.
 
-<h5 align="left"> Proxy tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of proxy design pattern</h5>
 
-- Proxy kalıbının uygulanması, sistemin genel karmaşıklığını artırabilir. Basit durumlar için, bu ekstra karmaşıklık gereksiz olabilir.
-- Proxy sınıfı, bazı durumlarda ekstra işlem yükü oluşturabilir. Özellikle, her istekte proxy üzerinden geçmek, işlem süresini artırabilir.
-- Proxy'nin doğru şekilde yönetilmesi gereklidir, özellikle caching veya güvenlik gibi özellikler eklenmişse. Yanlış yönetilen bir proxy, veri tutarsızlığına veya güvenlik açıklarına yol açabilir.
-- Proxy kalıbını doğru bir şekilde uygulamak, bazı durumlarda tasarımın anlaşılmasını ve genişletilmesini zorlaştırabilir.
-- Proxy'nin eklediği katmanlar, bazı durumlarda test süreçlerini daha karmaşık hale getirebilir.
+- Implementation of proxy pattern can increase the overall complexity of the system. For simple cases, this extra complexity may be unnecessary.
+- Proxy class may create extra processing load in some cases. In particular, going through a proxy on every request can increase processing time.
+- Proper management of the proxy is necessary, especially if features such as caching or security have been added. A mismanaged proxy can lead to data inconsistency or security vulnerabilities.
+- Implementing the proxy pattern correctly can make the design difficult to understand and extend in some cases.
+- The layers added by the proxy can make testing processes more complex in some cases.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Flutter'da bir gerçek hayat senaryosu olarak, uzak bir API'ye erişim sağlamak için bir proxy kullanılabilir. Örneğin, bir uygulama, uzak bir sunucudan veri çekerken, bu istekleri yönetmek ve gerekirse cache mekanizması eklemek için bir proxy kullanabilir. Bu senaryoda bir **Weather** API kullandığımızı varsayalım.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. As a real-life scenario in Flutter, a proxy can be used to access a remote API. For example, when an application is pulling data from a remote server, it can use a proxy to manage these requests and add a caching mechanism if necessary. Let's assume we are using a **Weather** API in this scenario.
 
-Öncelikle **Subject Interface** olarak **WeatherSerice** isimli bir **interface** oluşturuyoruz. Bu interface API'den verileri çekmek için **getWeatherData** isimli bir method'a sahip. Bu katmanı orijinal nesneye ve proxy katmanına implemente edeceğiz.
+First of all, we create an **interface** named **WeatherSerice** as **Subject Interface**. This interface has a method called **getWeatherData** to retrieve data from the API. We will implement this layer to the original object and the proxy layer.
 
 ```dart
 abstract class WeatherService {
@@ -1715,7 +1710,7 @@ abstract class WeatherService {
 }
 ```
 
-akabinde **WeatherApiService** isminde bir **Real Subject** katmanını yazarken **Subject Interface** i implemente ediyoruz.
+Then, we implement the **Subject Interface** while writing a **Real Subject** layer named **WeatherApiService**.
 
 ```dart
 final class WeatherApiService implements WeatherService {
@@ -1724,7 +1719,7 @@ final class WeatherApiService implements WeatherService {
 }
 ```
 
-Sıra **Proxy Design Pattern**'in kilit noktası olan **Proxy** katmanına geldi. Proxy katmanı API isteklerini yakalar ve gerekirse cache mekanizması ekler veya istekleri loglar.
+Now it's time for the **Proxy** layer, which is the key point of the **Proxy Design Pattern**. The proxy layer captures API requests and, if necessary, adds a cache mechanism or logs the requests.
 
 ```dart
 final class WeatherServiceProxy implements WeatherService {
@@ -1745,7 +1740,7 @@ final class WeatherServiceProxy implements WeatherService {
 
 ```
 
-Peki bunu nasıl kullanabiliriz ? Bu örnekte, WeatherServiceProxy sınıfı, API'den veri çekme işlemini kontrol eder ve veriyi cache'ler. İlk istekte gerçek API'ye erişir ve veriyi alır, sonraki isteklerde ise cache'lenmiş veriyi kullanır. Bu yaklaşım, özellikle sık sık aynı veriye ihtiyaç duyulan durumlarda performansı artırabilir ve ağ trafiğini azaltabilir. Proxy tasarım kalıbı, bu tür senaryolarda verimli bir çözüm sunar. Bizim durumumuzda 5 defa çekilen verinin ilk kez çekildikten sonra cache e atanarak geriye kalan 4 isteğin cevabını cache den hızlıca elde edeceğiz. Bu sayede gereksiz yere ağ trafiğine yüklenmeyeceğiz.
+So how can we use this? In this example, the WeatherServiceProxy class controls the data retrieval from the API and caches the data. In the first request, it accesses the real API and retrieves the data, and in subsequent requests it uses the cached data. This approach can improve performance and reduce network traffic, especially in situations where the same data is needed frequently. The proxy design pattern provides an efficient solution in such scenarios. In our case, we will assign the data pulled 5 times to the cache after it is pulled for the first time, and we will quickly obtain the answers to the remaining 4 requests from the cache. In this way, we will not be loaded with unnecessary network traffic.
 
 ```dart
 
@@ -1790,44 +1785,43 @@ final class ProxyView extends StatelessWidget {
 }
 ```
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8db12fb1-b5ba-44b7-be36-8040afe72990" width="250">
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/27fed6e3-eb3a-4161-a893-cee09d291f27" width="250">
 
 - <h2 align="left"><a id="chainofresponsibility">Chain of Responsibility (Behavioral Patterns)</h2>
-  Flutter'da Sorumluluk Zinciri tasarım desenini daha detaylı bir şekilde ele alalım. Bu desen, özellikle büyük ve modüler Flutter uygulamalarında, farklı widget'lar veya ekranlar arasında gelen istekleri veya komutları yönetmek için kullanışlıdır.
+    Let's discuss the Chain of Responsibility design pattern in Flutter in more detail. This pattern is useful for managing incoming requests or commands across different widgets or screens, especially in large and modular Flutter applications.
+  <h4 align="left">The Chain of Responsibility design pattern has three main components</h4>
 
-<h4 align="left">Chain of Responsibility tasarım deseninin üç ana bileşeni vardır</h4>
+- **Handler:** An interface that defines how to process the request and pass the request to the next handler in the chain.
+- **Concrete Handlers:** Classes that implement the Handler interface. Each processor decides whether to process the request or pass it to the next processor in the chain.
+- **Client:** The person or system that initiates the request and sends it to the first handler of the chain.
 
-- **Handler:** İsteği nasıl işleyeceğini ve isteği zincirdeki bir sonraki işleyiciye nasıl geçireceğini tanımlayan bir arayüz.
-- **Concrete Handlers:** Handler arayüzünü uygulayan sınıflar. Her işleyici, isteği işleyip işlemeyeceğine veya onu zincirdeki bir sonraki işleyiciye geçireceğine karar verir.
-- **Client:** İsteği başlatan ve zincirin ilk işleyicisine gönderen kişi veya sistem.
+<h5 align="left">Working Mechanism</h5>
 
-<h5 align="left">Çalışma Mekanizması</h5>
+- The client sends the request to the first handler in the chain.
+- Each processor checks the request and decides whether to process it or not.
+- If a handler can process the request, it performs the action and the process ends.
+- If the handler cannot process the request, it forwards it to the next handler in the chain.
+- This process continues until a handler processes the request or the chain ends.
 
-- Müşteri, isteği zincirdeki ilk işleyiciye gönderir.
-- Her işleyici, isteği kontrol eder ve onu işleyip işlemeyeceğine karar verir.
-- Eğer bir işleyici isteği işleyebilirse, işlemi yapar ve süreç sona erer.
-- Eğer işleyici isteği işleyemezse, onu zincirdeki bir sonraki işleyiciye iletir.
-- Bu süreç, bir işleyicinin isteği işleyene kadar veya zincir sona erene kadar devam eder.
+<h5 align="left">Advantages of the Chain of Responsibility design pattern</h5>
 
-<h5 align="left">Chain of Responsibility tasarım deseninin avantajları</h5>
+- Sender and receiver become independent, encouraging loose coupling in the system.
+- Easy to add new handlers or change the order of existing ones.
+- Each handler has a single responsibility, making the code easier to maintain.
 
-- Gönderen ve alıcı bağımsız hale gelir, sistemde gevşek bağlantıyı teşvik eder.
-- Yeni işleyiciler eklemek veya mevcut olanların sırasını değiştirmek kolaydır.
-- Her işleyicinin tek bir sorumluluğu vardır, bu da kodun bakımını kolaylaştırır.
+<h5 align="left"> Disadvantages of proxy design pattern</h5>
 
-<h5 align="left"> Proxy tasarım deseninin dezavantajları</h5>
+- The request may pass through multiple processors, which may impact performance.
+- Can be difficult to debug because the request passes through various handlers.
 
-- İstek, birden fazla işleyiciden geçebilir, bu da performansı etkileyebilir.
-- İstek çeşitli işleyicilerden geçtiği için hata ayıklaması zor olabilir.
+**Sample Scenario**
 
-**Örnek Senaryo**
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. Consider a Flutter application that processes different types of user input (gestures, button clicks, text input). The application can use the Chain of Responsibility model to process these inputs.
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Farklı türde kullanıcı girdilerini (jestler, buton tıklamaları, metin girişleri) işleyen bir Flutter uygulamasını düşünün. Uygulama, bu girdileri işlemek için Sorumluluk Zinciri modelini kullanabilir.
-
-Sorumluluk Zinciri deseninin temelini oluşturan **Handler (İşleyici)** arayüzü, her bir **Concrete Handlers** sınıfın uygulaması gereken temel metotları tanımlar. Flutter'da bu, genellikle bir abstract class şeklinde yapılır. Bizim durumumuzda **InteractionHandler** bizim **Handler** **abstarct** sınıfımız olacak. Bu soyut sınıf **Concrete Handlers**'ler tarafından kalıtım alınacak. **setNextHandler** zincirler arasında bağlantı kurmaya yarayan bir method olacak. Bu sayede uyumsuz bir durum oluştuğunda bir sonraki zincir çalışacak.
+The **Handler** interface, which forms the basis of the Chain of Responsibility pattern, defines the basic methods that each **Concrete Handlers** class must implement. In Flutter, this is usually done in the form of an abstract class. In our case, **InteractionHandler** will be our **Handler** **abstarct** class. This abstract class will be inherited by **Concrete Handlers**'s. **setNextHandler** will be a method to establish connections between chains. In this way, when an incompatible situation occurs, the next chain will run.
 
 ```dart
 /// [CommandHandler] is the abstract class for all the handlers.
@@ -1842,7 +1836,7 @@ abstract class InteractionHandler {
 }
 ```
 
-akabinde **Concrete Handlers** sınıflarımızı tanımlıyoruz. Bizim durumumuzda örnek olması açısından **ButtonInteractionHandler** ve **FormInteractionHandler** olmak üzere 2 farklı **Concrete Handlers** sınıfımızı yazıyoruz. Bu sınıflardan **ButtonInteractionHandler** kullanılrsa senaryo gereği ekranda bir **AlertBox** çıkartmak istiyoruz. Eğer **FormInteractionHandler** sınıfı kullanılırsa submit yaparak _Form submitted_ logunu yazdırmak istiyoruz. **interactionType** Bulunamazsa **handleUnrecognizedInteraction** methodu çalışarak ilgili bilgilendirmeyi yapıyoruz.
+Then we define our **Concrete Handlers** classes. In our case, we are writing 2 different **Concrete Handlers** classes, **ButtonInteractionHandler** and **FormInteractionHandler**, as an example. If **ButtonInteractionHandler** from these classes is used, we want to display an **AlertBox** on the screen as per the scenario. If the **FormInteractionHandler** class is used, we want to print the _Form submitted_ log by submitting. If **interactionType** is not found, we provide relevant information by running the **handleUnrecognizedInteraction** method.
 
 ```dart
 /// [ButtonInteractionHandler] is a concrete handler.
@@ -1883,7 +1877,7 @@ final class FormInteractionHandler extends InteractionHandler {
 }
 ```
 
-Peki bunu UI tarafında nasıl bir senaryoda kullanabiliriz ? **Click Me**, **Submit Form** ve **Unknown** olmak üzere 3 adet butonumuzun olduğunu varsayalım. Öncelikle bir adet **ButtonInteractionHandler** oluşturuyoruz ve **interactionType** ını **buttonClick** yapıyoruz. Bu butonun amacı eğer **buttonClick** mevcutsa bir **AlertDialog** göstermektir. Eğer mevcut handlerda **interactionType** teknik olarak desteklenmiyorsa bir sonraki handler işlenecektir. **interactionType** hiç bir şekilde desteklenmiyorsa bunu kullanıcıya **handleUnrecognizedInteraction** ile bildiriyoruz.
+So, in what scenario can we use this on the UI side? Let's assume we have 3 buttons: **Click Me**, **Submit Form** and **Unknown**. First of all, we create a **ButtonInteractionHandler** and set its **interactionType** to **buttonClick**. The purpose of this button is to display an **AlertDialog** if **buttonClick** exists. If **interactionType** is not technically supported in the current handler, the next handler will be processed. If **interactionType** is not supported at all, we notify the user with **handleUnrecognizedInteraction**.
 
 ```dart
 /// [ChainOfResponsibilityView] is the view that shows the Chain of Responsibility Pattern.
@@ -1928,38 +1922,37 @@ class _ChainOfResponsibilityViewState extends State<ChainOfResponsibilityView> {
 }
 ```
 
-Butonların yukarıdan aşağıya göre tıklanılması
+Clicking buttons from top to bottom
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/a7c5ad17-3eca-4382-84cb-3350ca789a70" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/9549a990-f535-47ba-a93c-9acd0cf8983e" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/78626739-f4df-4929-8c2c-3c47bb45643c" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="iterator">Iterator(Creational Patterns)</h2>
-  Iterator deseni, davranışsal bir tasarım desenidir ve bir koleksiyonun (liste veya ağaç gibi) elemanlarına, altında yatan yapısını açığa çıkarmadan sıralı bir şekilde erişim sağlar. Bu desen, yineleme mantığını koleksiyondan ayırarak, koleksiyonu dolaşmak için standart bir yol sunar.
+  The Iterator pattern is a behavioral design pattern that allows sequential access to the elements of a collection (such as a list or tree) without revealing its underlying structure. This pattern separates the iteration logic from the collection, providing a standard way to traverse the collection.
 
-<h4 align="left">Iterator tasarım deseninin 4 ana bileşeni vardır</h4>
+<h4 align="left">Iterator design pattern has 4 main components</h4>
 
-- **Iterator:** next(), hasNext() gibi yineleme için gerekli standart operasyonları tanımlar.
-- **Concrete Iterator:** Iterator arayüzünü uygular ve koleksiyondaki mevcut pozisyonun takibini yapar.
-- **Aggregate:** Bir Iterator nesnesi oluşturmak için bir arayüz tanımlar.
-- **Concrete Aggregate:** Aggregate arayüzünü uygular ve ilgili Somut Iterator'ın bir örneğini döndürür.
+- **Iterator:** Defines standard operations required for iteration such as next(), hasNext().
+- **Concrete Iterator:** Implements the Iterator interface and keeps track of the current position in the collection.
+- **Aggregate:** Defines an interface for creating an Iterator object.
+- **Concrete Aggregate:** Implements the Aggregate interface and returns an instance of the corresponding Concrete Iterator.
 
-<h5 align="left">Iterator tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of Iterator design pattern</h5>
 
-- Tek Sorumluluk İlkesi: Bir koleksiyon üzerinde yineleme yapma sorumluluğunu koleksiyondan ayırır.
-- Esneklik: Farklı yineleme stratejilerini desteklemek için farklı türlerde iterator'lar uygulanabilir.
-- Bağımsızlık: Müşteri kodu, koleksiyonla iterator arayüzü üzerinden etkileşimde bulunur ve koleksiyonun formuna bağımlılığı azalır.
+- Single Responsibility Principle: Separates the responsibility of iterating over a collection from the collection itself.
+- Flexibility: Different types of iterators can be implemented to support different iteration strategies.
+- Independence: Client code interacts with the collection through the iterator interface, reducing its dependence on the form of the collection.
 
-<h5 align="left"> Iterator tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of Iterator design pattern</h5>
 
-- Özellikle basit döngüler kullanılarak yinelenebilecek basit koleksiyonlar için kodu karmaşıklaştırabilir.
-- Etkin bir şekilde uygulanmazsa, performans üzerinde ek yük oluşturabilir.
+- Can complicate code, especially for simple collections that can be iterated using simple loops.
+- If not implemented effectively, it can create additional burden on performance.
+  **Sample Scenario**
 
-**Örnek Senaryo**
+For example, consider a photo gallery app that displays images in a carousel. Images can be stored in a list and an iterator can be used to display each image. In this case, we will use **Iterator Design Pattern** to show the images to the user using **moveNext()**.
 
-Örneğin, bir fotoğraf galerisi uygulamasını düşünün, bu uygulama resimleri bir k carousel'de gösteriyor. Resimler bir listede saklanabilir ve her bir resmi göstermek için bir iterator kullanılabilir. Biz bu durumda **Iterator Design Pattern** kullanarak resimleri **moveNext()** kullanarak kullanıcıya göstereceğiz.
-
-Öncelikle galeride göstereceğimiz fotoğraf modelini oluşturuyoruz ve her fotoğrafın bir url si olduğunu varsayalım.
+First of all, we create the photo model that we will show in the gallery and assume that each photo has a URL.
 
 ```dart
 /// [Photo] is a simple model class that holds the url of a photo.
@@ -1970,8 +1963,8 @@ final class Photo {
 }
 ```
 
-Sonrasında **PhotoCollection** isimli, **Aggregate** bileşenini yazıyoruz.
-**PhotoCollection**, koleksiyonun kendisini, **getIterator**() **Iterator** bileşenini, Iterator oluşturma yeteneğini temsil eder.
+Next, we write the **Aggregate** component named **PhotoCollection**.
+**PhotoCollection** represents the collection itself, **getIterator**() represents the **Iterator** member, the ability to create Iterator.
 
 ```dart
 /// [PhotoCollection] is the Concrete Aggregate.
@@ -1989,7 +1982,7 @@ final class PhotoCollection {
 }
 ```
 
-Akabinde **Concrete Iterator** bileşenimize **Iterator<Photo>** sınıfını implemente ederek somut bir uygulama elde etmiş oluyoruz. Bunun sonucunda koleksiyon üzerinde gezinmek için gerekli mantığı içererek fotoğrafları görüntülememizi sağlıyoruz.
+Then, we obtain a concrete application by implementing the **Iterator<Photo>** class to our **Concrete Iterator** component. As a result, we enable us to display photos by containing the logic necessary to navigate through the collection.
 
 ```dart
 /// [PhotoIterator] is Concrete Iterator
@@ -2014,7 +2007,7 @@ final class PhotoIterator implements Iterator<Photo> {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Öncelikle **IteratorView** isimli bir view sayfası oluşturuyoruz. İçinde GridView.builder kullanarak resimlerimizi iterate ederek görüntülüyoruz.
+So how can we use this on the UI side? First of all, we create a view page named **IteratorView**. We display our images by iterating using GridView.builder.
 
 ```dart
 /// [IteratorView] is Iterator View.
@@ -2051,7 +2044,7 @@ final class IteratorView extends StatelessWidget {
 
 ```
 
-**IteratorView** _PhotoCollection_ parametresi aldığı için öncesinde resimlere ait url leri ekliyoruz.
+Since **IteratorView** takes the _PhotoCollection_ parameter, we add the urls of the images first.
 
 ```dart
 PhotoCollection()
@@ -2071,34 +2064,34 @@ PhotoCollection()
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/2d48efc0-9950-491b-a060-5fd7f192e384" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="interpreter">Interpreter (Behavioral Patterns)</h2>
-  Interpreter tasarım deseni, bir dil için dilbilgisi tanımlamamızı ve bu dildeki ifadeleri işleyen bir yorumlayıcı sağlamamızı sağlayan bir davranışsal tasarım desenidir.
+  The Interpreter design pattern is a behavioral design pattern that allows us to define a grammar for a language and provide an interpreter that processes expressions in that language.
 
-<h4 align="left">Interpreter tasarım deseninin 4 ana bileşeni vardır</h4>
+<h4 align="left">The Interpreter design pattern has 4 main components</h4>
 
-- **Expression Interface:** Bu arayüz, belirli bir bağlamı yorumlama yöntemini bildirir. Interpreter deseninin çekirdeğidir.
-- **Concrete Expression Classes:** Bu sınıflar İfade arayüzünü uygular ve dildeki özel kuralları yorumlar.
-- **Context Class(optional):** Bu sınıf, yorumlayıcının geneline ait bilgileri içerir.
-- **Client:** İstemci, dilin dilbilgisini tanımlayan belirli bir cümleyi temsil eden sözdizimi ağacını oluşturur. Ağaç, Somut İfade sınıflarının örneklerinden oluşur.
+- **Expression Interface:** This interface declares a method of interpreting a particular context. It is the core of the interpreter pattern.
+- **Concrete Expression Classes:** These classes implement the Expression interface and interpret specific rules in the language.
+- **Context Class(optional):** This class contains general information about the interpreter.
+- **Client:** The client creates the syntax tree representing a particular sentence that defines the grammar of the language. The tree consists of instances of Concrete Expression classes.
 
-<h5 align="left">Interpreter tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Interpreter design pattern</h5>
 
-- Dilbilgisi kuralları ve yorumlayıcı, ihtiyaç duyulduğunda kolayca değiştirilebilir ve yeni ifadeler eklenebilir.
-- Kodun modüler ve tekrar kullanılabilir olmasını sağlar.
-- Karmaşık ifadelerin işlenmesi için optimize edilebilir.
+- Grammar rules and interpreters can be easily changed and new expressions added as needed.
+- It ensures that the code is modular and reusable.
+- Can be optimized for processing complex expressions.
 
-<h5 align="left"> Interpreter tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Interpreter design pattern</h5>
 
-- Karmaşık diller için yorumlayıcı geliştirmek zor olabilir.
-- Basit ifadeler için yorumlayıcı, doğrudan koddan daha yavaş olabilir.
+- Developing interpreters for complex languages can be difficult.
+- For simple expressions the interpreter may be slower than direct code.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Normal koşullarda **Interpreter Design Pattern** _programlama dillerinde_, _SQL sorgularında_, _Matematiksel ifadelerde_, _Oyun motorlarında_ daha çok kullanılır fakat bizim şu anki odağımız **Flutter** olduğu için **Flutter Framework** ü üzerinde **Interpreter Design Pattern** i kullanmaya çalışacağız. Senaryomuz gereği kullanıcıların metin tabanlı bir dil kullanarak özelleştirilebilir widget yapılarını tanımlamasına olanak tanıyan bir mobil uygulama düşünelim. Kullanıcılar, belirli widget türlerini, özelliklerini ve düzenlerini belirten basit bir dili kullanarak arayüzlerini dinamik olarak oluşturabilirler. Örneğin, kullanıcı `"Text: Deatsilence"` gibi bir ifade yazarak bir yazı göstermek isteyebilir veya `"Image: https://picsum.photos/200"` yazarak bir resim göstermek isteyebilir.
+Under normal circumstances, **Interpreter Design Pattern** is used more in _programming languages_, _SQL queries_, _Mathematical expressions_, _Game engines_, but since our current focus is **Flutter**, **Interpreter Design Pattern** is based on **Flutter Framework**. We will try to use it. For our scenario, let's consider a mobile application that allows users to define customizable widget structures using a text-based language. Users can dynamically build their interfaces using a simple language that specifies specific widget types, features, and layouts. For example, a user may want to show text by typing something like `"Text: Deatsilence"` or they might want to show an image by typing `"Image: https://picsum.photos/200"`.
 
-İlk olarak **WidgetExpression** isminde bir **Expression Interface** tanımlıyoruz. **WidgetExpression** içinde Widget döndüren _interpret()_ isimli bir method imzası yazıyoruz. Bu interface **Concrete Expression** sınıfları tarafından implemente edilecek.
+First, we define an **Expression Interface** named **WidgetExpression**. We write a method signature called _interpret()_ in **WidgetExpression** that returns a Widget. This interface will be implemented by **Concrete Expression** classes.
 
 ```dart
 /// [WidgetExpression] is the interface for the expression
@@ -2107,7 +2100,7 @@ abstract class WidgetExpression {
 }
 ```
 
-Sonrasında **ConcreteExpressionText** ve **ConcreteExpressionImage** isimli iki adet **Concrete Expression Class** oluşturuyoruz ve **WidgetExpression** isimli soyut sınıfı implemente ediyoruz. **Concrete Expression** sınıflarının içerisinde _interpret_ methodunu _override_ ediyoruz ve kullanıcıdan gelen text scriptine göre **Text veya Image** döndürüyoruz. Bunu başka Widgetlar için de yapabiliriz ama senaryomuz gereği bu ikisi özelinde devam ediyoruz.
+Afterwards, we create two **Concrete Expression Class** named **ConcreteExpressionText** and **ConcreteExpressionImage** and implement the abstract class named **WidgetExpression**. We _override_ the _interpret_ method in the **Concrete Expression** classes and return **Text or Image** according to the text script received from the user. We can do this for other Widgets as well, but according to our scenario, we continue with these two specifically.
 
 ```dart
 /// [ConcreteExpressionText] is the concrete expression for the text
@@ -2134,7 +2127,7 @@ final class ConcreteExpressionImage implements WidgetExpression {
 }
 ```
 
-akabinde kullanıcıdan gelen scriptleri yorumlamak için **WidgetParser** sınıfının içine **parseScript()** isimli bir method ekliyoruz.
+Then, we add a method called **parseScript()** into the **WidgetParser** class to interpret the scripts coming from the user.
 
 ```dart
 final class WidgetParser {
@@ -2171,7 +2164,7 @@ final class WidgetParser {
 }
 ```
 
-Son olarak bunları UI tarafında nasıl kullanabiliriz ? Ona bakalım. Örneğin bir **TextField** üzerinden kullanııcdan bazı scriptler alarak yorumlayalım. Yorumlama sonucunda kullanıcıya image veya text gösterelim.
+Finally, how can we use them on the UI side? Let's look at it. For example, let's interpret some scripts from the user via a **TextField**. Let's show the image or text to the user as a result of the interpretation.
 
 ```dart
 
@@ -2231,44 +2224,43 @@ class _InterpreterViewState extends State<InterpreterView> {
 
 ```
 
-- Kullanıcı text göstermek için **Text:** keywordunun ardından herhangi bir yazı gelince ilgili yazıyı ekranda gösterecektir.
+- When the user sees any text following the **Text:** keyword to display text, the relevant text will be displayed on the screen.
 
-- Kullanıcı bir image göstermek için **Image:** keywordunun ardından bir url vermek zorundadır. Url de bulunan resmi ekranda gösterecektir
+- To display an image, the user must provide a url followed by the **Image:** keyword. It will display the image found in the URL on the screen.
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1323d690-0800-4599-b4a0-520d6827c655" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/5cf8b3ba-e99f-43e9-8ece-596b4daf9459" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="observer">Observer(Behavioral Patterns)</h2>
-  Observer tasarım deseni, Flutter uygulamalarınızda durum değişikliklerini yönetmek için güçlü bir araçtır. Bir nesnenin (Konu) durumunda bir değişiklik olduğunda, bağlı birden fazla nesneyi (Gözlemciler) bilgilendiren iletişim sistemi kurarak reaktif ve verimli bir sistem oluşturur.
+  The Observer design pattern is a powerful tool for managing state changes in your Flutter applications. It creates a reactive and efficient system by establishing a communication system that notifies multiple connected objects (Observers) when there is a change in the state of an object (Subject).
 
-<h4 align="left">Observer tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Observer design pattern has two main components</h4>
 
-- **Subject:** Bu bileşen, gözlemcilerin abone olduğu ve durum değişiklikleri hakkında onları bilgilendiren nesnedir. Konu, içerdiği verilerdeki herhangi bir değişikliği takip eden ve bu değişiklikleri gözlemcilere bildiren bir arayüz sağlar.
-- **Observer:** Gözlemci, konunun durumundaki değişiklikleri takip eden ve buna tepki veren nesnelerdir. Bu nesneler, genellikle bir arayüzü (Observer Interface) uygular ve bu arayüz, konunun durumu değiştiğinde çağrılan metodları içerir.
-- **Client:** Bu bileşen, Observer tasarım kalıbını kullanarak uygulama mantığını yönetir. Müşteri, genellikle konu nesnelerini oluşturur, gözlemcileri bu konulara abone eder ve konunun durumunu günceller.
+- **Subject:** This component is the object to which observers subscribe and informs them about state changes. The topic provides an interface that keeps track of any changes to the data it contains and notifies observers of these changes.
+- **Observer:** Observers are objects that monitor and react to changes in the subject's state. These objects usually implement an interface (Observer Interface), and this interface contains methods that are called when the state of the object changes.
+- **Client:** This component handles application logic using the Observer design pattern. The client typically creates topic objects, subscribes observers to those topics, and updates the status of the topic.
 
-<h5 align="left">Observer tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Observer design pattern</h5>
 
-- Observer kalıbı, konu ve gözlemciler arasında zayıf bir bağlantı sağlar. Bu, birinin değiştirilmesinin diğerini doğrudan etkilememesi anlamına gelir, böylece uygulamanın bakımı ve genişletilmesi kolaylaşır.
-- Aynı gözlemci, farklı konuları takip edebilir ve bir konu birden fazla gözlemciye sahip olabilir. Bu esneklik, kodun yeniden kullanılabilirliğini artırır.
-- Gözlemciler, çalışma zamanında konulara abone olabilir ve abonelikten çıkabilirler. Bu, dinamik ve değişken uygulama gereksinimlerini destekler.
-- Observer kalıbı, uygulamanın farklı bölümlerini soyutlayarak modülerlik sağlar. Bu, kodun okunabilirliğini ve yönetilebilirliğini artırır.
+- The Observer pattern provides a weak connection between the subject and the observers. This means changing one does not directly affect the other, making maintenance and expansion of the application easier.
+- The same observer can follow different topics and a topic can have more than one observer. This flexibility increases code reusability.
+- Observers can subscribe and unsubscribe from topics at runtime. This supports dynamic and changing application requirements.
+- The Observer pattern provides modularity by abstracting different parts of the application. This increases the readability and manageability of the code.
 
-<h5 align="left"> Observer tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Observer design pattern</h5>
 
-- Eğer gözlemciler ve konular arasındaki bağlantılar düzgün bir şekilde yönetilmezse, hafıza sızıntılarına yol açabilir. Özellikle, gözlemcilerin kaydını silmeyi unutmak bu soruna sebep olabilir.
-- Çok sayıda gözlemci varsa veya bildirimler çok sık yapılıyorsa, performans sorunları ortaya çıkabilir. Her bildirim, tüm gözlemcilerin tepki vermesini gerektireceğinden, işlem yükü artabilir.
-- Eğer bir konu kısa süre içinde çok sayıda güncelleme yaparsa, gözlemcilerin bu güncellemelere sürekli tepki vermesi gerekir. Bu durum, beklenmedik davranışlara yol açabilir.
+- If connections between observers and subjects are not managed properly, it can lead to memory leaks. In particular, forgetting to unregister observers can cause this problem.
+- If there are many observers or notifications are made too frequently, performance issues may occur. Processing load may increase as each notification requires all observers to react.
+- If a topic makes many updates in a short period of time, observers need to constantly react to these updates. This can lead to unexpected behavior.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği sepette 2 farklı yemek türünden varsayılan olarak daha önce 1 tane **Food1**, 1 tane **Food2** olduğunu varsayalım ve bu yemeklerin sepetteki sayısını arttırıp azalttığımı hayal edelim. Duruma göre **Total Price** artabilir veya azalabilir olacaktır.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. For our scenario, let's assume that there are 2 different food types in the basket, 1 **Food1** and 1 **Food2** by default, and let's imagine that I increase or decrease the number of these dishes in the basket. **Total Price** may increase or decrease depending on the situation.
 
-İlk önce **Subject** bileşenimizi yani Flutter tarafında **Mobx** paketiyle birlikte **Observer** in dinleyeceği **State** bileşenlerini ve methodlarını tanımlıyoruz. Her yemek için adet arttırma ve azaltma methodlarını yazıyoruz. UI tarafında **Observer** in dinleyeceği değişkenleri **@observable** annotation ile dinleyeceğimiz değişkenleri, **@action** ile **@observable** ile etiketlenmiş değişkenleri değiştirerek UI tarafında **Observer** ile çevrili kısımların yeniden çizilmesini sağlıyoruz.
+First, we define our **Subject** component, that is, the **State** components and methods that **Observer** will listen to, along with the **Mobx** package on the Flutter side. We write down the methods for increasing and decreasing the amount for each meal. On the UI side, changing the variables that **Observer** will listen to with **@observable** annotation, variables labeled with **@action** and **@observable**, and redrawing the parts surrounded by **Observer** on the UI side. We provide.
 
 ```dart
-
 @immutable
 final class Item {
   final String id;
@@ -2362,7 +2354,7 @@ abstract class ShoppingItemsStoreBase with Store {
 
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Daha önce bahsettiğim gibi sepetteki yemeklerin sayısını arttırıp, azaltmaya yarayan ve buna bağlı olarak toplam tutarın güncellenmesini sağlıyoruz. Eğer **@observable** ile etiketlenmiş değişkenler **@action** ile güncellenirse UI tarafında **Observable** ile sarışmış widget ağacını yeniden çizer.
+So how can we use this on the UI side? As I mentioned before, we increase or decrease the number of dishes in the basket and update the total amount accordingly. If variables tagged with **@observable** are updated with **@action**, it redraws the widget tree wrapped in **Observable** on the UI side.
 
 ```dart
 final class ObserverView extends StatefulWidget {
@@ -2455,35 +2447,35 @@ final class _Food extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/8a57831f-5c57-4c7d-a253-0c0d2558a1e7" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/ce28b883-156c-4369-a45b-fe946b390af4" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/1b82506b-b915-4427-968f-3b9ea43f67c7" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="command">Command (Behavioral Patterns)</h2>
-  Komut tasarım deseni (Command pattern), yazılım mühendisliğinde, özellikle nesne tabanlı programlamada sıklıkla kullanılan bir desendir. Bu desen, bir isteği veya eylemi bir nesne olarak kapsüllemeyi sağlar. Bu yaklaşımın temel amacı, işlemleri gerçekleştiren kod ile bu işlemleri çağıran kod arasında bir soyutlama katmanı oluşturmaktır.
+  Command pattern is a pattern frequently used in software engineering, especially object-oriented programming. This pattern allows encapsulating a request or action as an object. The main purpose of this approach is to create an abstraction layer between the code that performs operations and the code that calls these operations.
 
-<h4 align="left">Command tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Command design pattern has two main components</h4>
 
-- **Command Interface:** Tüm komutların uygulayacağı bir arayüz oluşturun. Genellikle tek bir execute() metodu içerir.
-- **Concrete Command:** Komut arayüzünü uygulayan ve spesifik bir işlemi gerçekleştiren sınıflar oluşturun.
-- **Invoker:** Komutları tetikler. Örneğin, bir buton bu rolü üstlenebilir.
-- **Receiver:** Komutun gerçekte işi yaptığı nesne. Örneğin, bir uygulama içindeki belirli bir işlemi gerçekleştiren bir sınıf.
-- **Client:** Komut nesnesini oluşturur ve çağırıcıya atar.
+- **Command Interface:** Create an interface that all commands will implement. It usually contains a single execute() method.
+- **Concrete Command:** Create classes that implement the command interface and perform a specific operation.
+- **Invoker:** Triggers commands. For example, a button can take on this role.
+- **Receiver:** The object on which the command actually does the work. For example, a class that performs a specific operation within an application.
+- **Client:** Creates the command object and assigns it to the caller.
 
-<h5 align="left">Command tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Command design pattern</h5>
 
-- Komutlar, farklı bağlamlarda yeniden kullanılabilir.
-- UI ve iş mantığı arasında net bir ayrım sağlar.
-- Yeni komutlar kolaylıkla eklenebilir.
-- Unit testlerin yazılmasını kolaylaştırır, çünkü her komut, bağımsız olarak test edilebilen ayrı bir işlevsellik barındırır.
+- Commands can be reused in different contexts.
+- Provides a clear separation between UI and business logic.
+- New commands can be added easily.
+- It makes writing unit tests easier because each command contains separate functionality that can be tested independently.
 
-<h5 align="left"> Command tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Command design pattern</h5>
 
-- Basit işlemler için fazla karmaşık olabilir.
-- Her yeni komut için ekstra sınıflar gerekebilir, bu da kod tabanını şişirebilir.
+- It may be too complex for simple operations.
+- Extra classes may be required for each new command, which can bloat the code base.
 
-**Örnek Senaryo**
-Bir Flutter uygulamasında basit bir metin düzenleyici oluşturalım. Kullanıcı metni düzenlerken, her düzenleme işlemi bir komut olarak kaydedilecek ve bu sayede geri alma ve yeniden yapma işlevleri sağlanacak.
+**Sample Scenario**
+Let's create a simple text editor in a Flutter application. As the user edits text, each editing action will be recorded as a command, providing undo and redo functions.
 
-İlk olarak **TextCommand** isimli **Command Interface** bileşenini yazarak başlıyoruz.
+First, we start by writing the **Command Interface** component named **TextCommand**.
 
 ```dart
 /// [TextCommand] is the abstract class for the Command Pattern.
@@ -2493,7 +2485,7 @@ abstract class TextCommand {
 }
 ```
 
-sonrasında **UpdateTextCommand** isimli **Concrate Command** bileşeniniz yazıyoruz. Bu bileşene **TextCommand** **Abstract** sınıfı implemente ediliyor. Bu sınıf yeni ve eski text durumlarını takip etmeye yarayacak.
+Then we write your **Concrate Command** component named **UpdateTextCommand**. **TextCommand** **Abstract** class is implemented in this component. This class will be used to keep track of new and old text statuses.
 
 ```dart
 /// [UpdateTextCommand] is the concrete class for the Command Pattern.
@@ -2516,7 +2508,7 @@ final class UpdateTextCommand implements TextCommand {
 }
 ```
 
-Sıra **TextEditorController** isimli **Invoker** bileşenini yazmaya geldi. **Invoker** işlem geçmişini yönetmeye yarayacak. Bunun için **undo()**, **redo()** gibi methodları kullanacak.
+It's time to write the **Invoker** component named **TextEditorController**. **Invoker** will be used to manage transaction history. For this, it will use methods such as **undo()**, **redo()**.
 
 ```dart
 /// [TextEditorController] is the Invoker class for the Command Pattern.
@@ -2549,7 +2541,7 @@ final class TextEditorController {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Bunun için bir **TextField** oluşturarak. **Undo**, **Redo** butonlarıyla bu işlemleri gerçekleştireceğiz.
+So how can we use this on the UI side? By creating a **TextField** for this. We will perform these operations with the **Undo**, **Redo** buttons.
 
 ```dart
 
@@ -2595,43 +2587,43 @@ final class CommandView extends StatelessWidget {
 
 ```
 
-İlk görselde girilen metin, ikinci görselde **Undo** butonuna birkez basıldıktan sonraki durum, üçüncü görselde **Redo** butonuna birkez basıldıktan sonraki durumlar yer almaktadır.
+The first image shows the entered text, the second image shows the situation after pressing the **Undo** button once, and the third image shows the situation after pressing the **Redo** button once.
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/d6eabff6-2d9c-446b-bd1c-2a9e5723c795" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/f65a1529-5e6a-4496-bee2-0fd0538f643f" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="mediator">Mediator (Behaverioal Patterns)</h2>
-  Mediator Design Pattern, yazılımda nesneler arasındaki iletişimi ve etkileşimi düzenleyen bir davranışsal tasarım desenidir. Temel amacı, nesneler arasındaki sıkı bağımlılıkları azaltmak ve daha modüler bir kod yapısı oluşturmaktır.
+  Mediator Design Pattern is a behavioral design pattern that regulates communication and interaction between objects in software. Its main purpose is to reduce tight dependencies between objects and create a more modular code structure.
 
-  Mediator Design Pattern, Flutter'da bileşenler arasındaki iletişimi kolaylaştırmak için kullanılır. Bu model, bileşenlerin birbirleriyle doğrudan iletişim kurmak yerine bir aracı (mediator) üzerinden iletişim kurmalarını sağlar. Bu yaklaşım, kodun bakımını ve genişletilmesini kolaylaştırır çünkü bileşenler arasındaki bağlantıyı azaltır.
+  Mediator Design Pattern is used to facilitate communication between components in Flutter. This model allows components to communicate through a mediator rather than communicating directly with each other. This approach makes the code easier to maintain and extend because it reduces coupling between components.
 
-<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Mediator design pattern has two main components</h4>
 
-- **Mediator Interface::** Tüm aracıların uyması gereken bir arayüz oluşturun. Bu arayüz, bileşenlerin haberleşebileceği ortak bir metod seti sağlar.
-- **Concrete Mediator:** Mediator arayüzünü uygulayan ve bileşenler arasındaki iletişimi koordine eden sınıf.
-- **Colleagues:** Birbirleriyle iletişim kurmak için mediator'u kullanan bileşenler.
+- **Mediator Interface::** Create an interface that all mediators must comply with. This interface provides a common set of methods by which components can communicate.
+- **Concrete Mediator:** Class that implements the Mediator interface and coordinates communication between components.
+- **Colleagues:** Components that use mediator to communicate with each other.
 
-<h5 align="left">Mediator tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Mediator design pattern</h5>
 
-- Azaltılmış Karmaşıklık: Mediator, birçok küçük bileşen arasındaki karmaşık iletişimi yönetir. Bu, sistemdeki genel karmaşıklığı azaltır.
-- Gevşek Bağlama (Loose Coupling): Bileşenler doğrudan birbirleriyle değil, mediator aracılığıyla iletişim kurar. Bu, bileşenlerin daha bağımsız olmasını sağlar ve kodun bakımını kolaylaştırır.
-- Merkezi Kontrol Noktası: Tüm iletişim merkezi bir noktadan geçtiği için, uygulamanın davranışını ve iletişimi kolayca izleyebilir ve değiştirebilirsiniz.
-- Yeniden Kullanılabilirlik: Mediator ve bireysel bileşenler, uygun şekilde tasarlandığında, farklı senaryolarda yeniden kullanılabilir.
-- Kolay Genişletilebilirlik: Yeni bileşenler eklemek genellikle sadece mediatorun güncellenmesini gerektirir, bu da sistem genişletmeyi kolaylaştırır.
+- Reduced Complexity: Mediator handles complex communication between many small components. This reduces the overall complexity in the system.
+- Loose Coupling: Components communicate not directly with each other, but through the mediator. This allows components to be more independent and makes the code easier to maintain.
+- Central Control Point: Since all communication goes through a central point, you can easily monitor and change the application's behavior and communication.
+- Reusability: Mediator and individual components can be reused in different scenarios when properly designed.
+- Easy Extensibility: Adding new components usually only requires updating the mediator, making system expansion easier.
 
-<h5 align="left"> Mediator tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Mediator design pattern</h5>
 
-- Mediatorun Aşırı Yüklenmesi: Tüm iletişim merkezi bir noktadan geçtiği için, mediator çok fazla sorumluluk üstlenebilir ve karmaşık hale gelebilir.
-- Performans Sorunları: Mediator üzerinden yapılan tüm iletişim, büyük sistemlerde performans sorunlarına yol açabilir.
-- Bağımlılık Sorunları: Bileşenlerin mediatora olan bağımlılığı, mediatorun değişmesi durumunda bileşenlerin de güncellenmesini gerektirebilir.
-- Küçük veya basit uygulamalar için mediator tasarım modeli gereksiz yere karmaşıklık ekleyebilir.
+- Mediator Overload: Since all communication goes through a central point, the mediator can take on too much responsibility and become complicated.
+- Performance Issues: All communication through Mediator can cause performance issues on large systems.
+- Dependency Issues: The dependency of components on the mediator may require the components to be updated if the mediator changes.
+- For small or simple applications, the mediator design pattern can add unnecessary complexity.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği bir anket uygulaması yapalım. Bu uygulamada, çeşitli soru widgetları ve bir sonuç gösterme widgetı bulunacak. Soru widgetları, kullanıcının cevaplarını toplar ve bu bilgileri sonuç widgetına mediator üzerinden iletir.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. Let's conduct a survey as per our scenario. This app will feature various question widgets and a results display widget. Question widgets collect the user's answers and transmit this information to the result widget via mediator.
 
-Öncelikle **SurveyMediator** isimli **Mediator Interface** bileşenimizi yazarak başlayalım. **submitAnswer(String question, String answer)** method imzası tanımlıyoruz. Bu **abstract** sınıf bizim anket ve sonuç gösterme widget'ları arasında iletişim kurmamıza yarayacak.
+First, let's start by writing our **Mediator Interface** component named **SurveyMediator**. We define method signature **submitAnswer(String question, String answer)**. This **abstract** class will help us communicate between the survey and results display widgets.
 
 ```dart
 /// [SurveyMediator] is the mediator interface
@@ -2640,7 +2632,7 @@ abstract class SurveyMediator {
 }
 ```
 
-Sonrasında **SurveyManager** isimli **Concrete Mediator** bileşenimizi oluşturuyoruz. Bu bileşen **SurveyMediator** bileşenini implemente ederek bileşenler arasındaki iletişimi kordine eder. Bizim durumumuzda **SurveyManager** içerisinde **submitAnswer(String question, String answer)** methodunu _@override_ ederek her soru için bir cevapları _responses_ map'ine atıyoruz.
+Afterwards, we create our **Concrete Mediator** component named **SurveyManager**. This component implements the **SurveyMediator** component and coordinates the communication between components. In our case, we assign answers for each question to the _responses_ map by _@override_ the **submitAnswer(String question, String answer)** method in **SurveyManager**.
 
 ```dart
 /// [SurveyManager] is the concrete mediator
@@ -2655,7 +2647,7 @@ final class SurveyManager extends ChangeNotifier implements SurveyMediator {
 }
 ```
 
-Sıra **QuestionWidget** isimli **Colleagues** bileşenimizi oluşturmaya geldi. Bu sınıf önceden de bahsedildiği gibi birbirleriyle iletişim kurmak için mediator'u kullanan bir bileşendir. Her **QuestionWidget** bileşeni bir adet soru ve bir adet cevabı kapsar.
+It's time to create our **Colleagues** component named **QuestionWidget**. As mentioned before, this class is a component that uses mediator to communicate with each other. Each **QuestionWidget** component contains one question and one answer.
 
 ```dart
 /// [QuestionWidget] is a widget that is a colleague in the mediator pattern.
@@ -2684,7 +2676,7 @@ final class QuestionWidget extends StatelessWidget {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz ? Örneğin 2 adet sorumuz olsun. Her soru için **QuestionWidget**'ını kullanacağız. Her butona basışımızda güncel cevabı ve soruyu console üzerinde yazdıralım.
+So how can we use this on the UI side? For example, let's say we have 2 questions. We will use **QuestionWidget** for each question. Let's print the current answer and question on the console every time we press the button.
 
 ```dart
 /// [MediatorView] is a widget that is a view in the mediator pattern.
@@ -2714,34 +2706,34 @@ final class MediatorView extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/35d6419d-c084-4490-b290-3e3184bc3cd0" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/216b8558-2b8a-4f5d-a9c0-23f1bb0d7949" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="state">State (Behaverioal Patterns)</h2>
-  State design pattern, Flutter'da widget'ların durumlarını yönetmek için kullanılan bir yapısal tasarım kalıbıdır. Bu kalıp, widget'ların durumlarının değiştiği durumlarda, bu değişiklikleri verimli ve anlaşılır bir şekilde yönetmeyi sağlar. Şimdi bu kalıbı adım adım inceleyelim ve Flutter framework içinde gerçek bir senaryo ile bu kalıbın avantajlarını ve dezavantajlarını ele alalım.
+  State design pattern is a structural design pattern used to manage the states of widgets in Flutter. This pattern allows to manage these changes efficiently and clearly when the states of widgets change. Now let's examine this pattern step by step and discuss the advantages and disadvantages of this pattern with a real scenario in the Flutter framework.
 
-<h4 align="left">Mediator tasarım deseninin iki ana bileşeni vardır</h4>
+<h4 align="left">The Mediator design pattern has two main components</h4>
 
-- **Stateful ve Stateless Widgets:** Flutter'da iki temel widget türü vardır: Stateless ve Stateful. Stateless widget'lar sabit (değişmeyen) verileri gösterirken, Stateful widget'lar değişken verileri gösterir ve güncelleyebilir.
-- **Make a Stateful Widget:** Bir Stateful widget, genellikle iki sınıftan oluşur: Birincisi, StatefulWidget sınıfından türetilen bir widget sınıfı; ikincisi ise, State sınıfından türetilen bir durum sınıfıdır.
-- **State Object:** sınıfı, widget'ın durumunu tutar. Bu sınıf içinde, widget'ın verileri ve bu veriler üzerinde yapılan değişiklikleri yöneten metodlar bulunur.
-- **build Method:** sınıfı, widget'ın durumunu tutar. Bu sınıf içinde, widget'ın verileri ve bu veriler üzerinde yapılan değişiklikleri yöneten metodlar bulunur.
-- **setState Method:** Durum değiştiğinde, setState metodu kullanılır. Bu metod, durum değişikliklerini Flutter framework'üne bildirir ve build metodunun yeniden çalışmasını sağlar.
+- **Stateful and Stateless Widgets:** There are two basic types of widgets in Flutter: Stateless and Stateful. Stateless widgets show fixed (unchanging) data, while Stateful widgets show variable data and can update it.
+- **Make a Stateful Widget:** A Stateful widget usually consists of two classes: First, a widget class derived from the StatefulWidget class; The second is a state class derived from the State class.
+- **State Object:** class holds the state of the widget. This class contains methods that manage the widget's data and changes made to this data.
+- **build Method:** class maintains the state of the widget. This class contains methods that manage the widget's data and changes made to this data.
+- **setState Method:** When the state changes, the setState method is used. This method notifies the Flutter framework of state changes and causes the build method to run again.
 
-<h5 align="left">Mediator tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Mediator design pattern</h5>
 
-- Esneklik ve Yeniden Kullanım: Stateful widget'lar, durumlarına göre dinamik olarak değişebilir, bu da onları yeniden kullanılabilir ve esnek yapar.
-- Anlaşılır Kod Yapısı: Durum ve arayüz ayrımı, kodun daha anlaşılır ve yönetilebilir olmasını sağlar.
+- Flexibility and Reuse: Stateful widgets can change dynamically based on their state, making them reusable and flexible.
+- Clear Code Structure: Separation of state and interface makes the code more understandable and manageable.
 
-<h5 align="left"> Mediator tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Mediator design pattern</h5>
 
-- Performans: Her setState çağrısı, widget'ın yeniden inşa edilmesine neden olur, bu da gereksiz render işlemlerine yol açabilir.
-- Karmaşıklık: Küçük ve basit uygulamalarda, Stateful widget kullanmak gereksiz karmaşıklığa yol açabilir.
+- Performance: Each setState call causes the widget to be rebuilt, which can lead to unnecessary render operations.
+- Complexity: In small and simple applications, using Stateful widgets can lead to unnecessary complexity.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki bir alışveriş uygulaması yapıyorsunuz ve kullanıcının sepetindeki ürün sayısını gösteren bir widget'ınız var. Kullanıcı her yeni bir ürün eklediğinde, bu sayının güncellenmesi gerekiyor. Burada StatefulWidget kullanarak, sepet sayısını dinamik bir şekilde güncelleyebilirsiniz.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. In our scenario, let's say you are building a shopping application and you have a widget that shows the number of items in the user's cart. Every time the user adds a new product, this number needs to be updated. Here you can dynamically update the number of carts using StatefulWidget.
 
-İlk önce **CardWidget** isimli bir **StateFul Widget** oluşturuyoruz. Akabinde **State** sınıfından kalıtım almış **\_CartWidgetState** isimli bir private sınıf oluşturuyoruz. **StateFul** widget'a ait _createState_ methodunu _@override_ ederek **\_CartWidgetState** sınıfını bir state olarak oluşturmasını istiyoruz. Akabinde _setState_ methodunu kullanarak mevcut _itemCount_ değişkenini arttırıp azaltabiliyoruz. Bu sayede bütün **CartWidget**'ını baştan aşağı güncellemiş oluyoruz fakat bu büyük ve dallanmış widget ağaçlarında büyük bir performans sorununa yol açacaktır. Bu yüzden güncel **State** yöntemlerine bakmanızı tavsiye ediyorum. _setState_ methodunu küçük widgetlarda kullanmanızda herhangi bir sakınca yoktur.
+First, we create a **StateFul Widget** named **CardWidget**. Next, we create a private class named **\_CartWidgetState**, which inherits from the **State** class. We want it to create the **\_CartWidgetState** class as a state by _@override_ the _createState_ method of the **StateFul** widget. Then, we can increase or decrease the current _itemCount_ variable by using the _setState_ method. In this way, we completely update the entire **CartWidget**, but this will cause a big performance problem in large and branched widget trees. That's why I recommend you look at the current **State** methods. There is no harm in using the _setState_ method on small widgets.
 
 ```dart
 /// [CartWidget] is a widget that is a colleague in the mediator pattern.
@@ -2793,7 +2785,7 @@ class _CartWidgetState extends State<CartWidget> {
 }
 ```
 
-UI tarafında kullanmak için **StateView**'da **CartWidget**'ı döndürüyorum.
+I'm returning **CartWidget** in **StateView** to use on the UI side.
 
 ```dart
 
@@ -2810,34 +2802,34 @@ final class StateView extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/baa72dfb-7f19-4bed-9770-9c8aee033c4d" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/b52b7781-82bc-4e78-9ade-75d94bb2b8d9" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 - <h2 align="left"><a id="strategy">Strategy (Behaverioal Patterns)</h2>
-  Strateji tasarım modeli, nesnelerin davranışını çalışma zamanında değiştirmelerine olanak tanıyan bir yazılım tasarım modelidir. Flutter'da, bu model genellikle farklı widget davranışlarını yönetmek için kullanılır. Aşağıda, Strateji modelinin Flutter'da nasıl uygulanacağına dair adım adım bir açıklama ve gerçek hayat senaryosu bulunmaktadır.
+  A strategy design pattern is a software design pattern that allows objects to change their behavior at runtime. In Flutter, this pattern is often used to manage different widget behaviors. Below is a step-by-step explanation and real-life scenario on how to implement the Strategy pattern in Flutter.
 
-<h4 align="left">Strategy tasarım deseninin üç ana bileşeni vardır</h4>
+<h4 align="left">The Strategy design pattern has three main components</h4>
 
-- **Context:** Kullanılacak stratejiye bağlı olan ve onu içeren sınıftır. Uygulamanın geri kalanı ile strateji arasındaki arabirim görevi görür. Uygulama sırasında hangi stratejinin kullanılacağını saklar ve yönetir.
-- **Strategy Interface:** Tüm stratejilerin uygulaması gereken bir arayüzdür veya soyut sınıftır. Bu arayüz, her bir strateji sınıfının uygulayacağı metotları tanımlar.
-- **Concrete Strategies:** Strategy arayüzünü veya soyut sınıfını uygulayan sınıflardır. Bu sınıflar, arayüzde tanımlanan metodları gerçekleştirir ve Context tarafından kullanılan spesifik algoritmaları içerirler.
+- **Context:** It is the class that depends on and contains the strategy to be used. It acts as the interface between the rest of the application and the strategy. It stores and manages which strategy will be used during execution.
+- **Strategy Interface:** It is an interface or abstract class that all strategies must implement. This interface defines the methods that each strategy class will implement.
+- **Concrete Strategies:** These are classes that implement the Strategy interface or abstract class. These classes implement methods defined in the interface and contain specific algorithms used by Context.
 
-<h5 align="left">Strategy tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Strategy design pattern</h5>
 
-- Esneklik ve Değişime Uyumluluk: Strateji modeli, farklı algoritmaları veya davranışları kolayca değiştirmenize olanak tanır. Bu, uygulamanın çalışma zamanındaki davranışını dinamik olarak ayarlamanızı sağlar.
-- Yeniden Kullanım ve Organizasyon: Benzer davranışları birbirinden bağımsız olarak tanımlayabilir ve farklı bağlamlarda yeniden kullanabilirsiniz. Bu, kodun temiz ve organize kalmasına yardımcı olur.
-- Açık/Kapalı İlkesi: Yeni stratejiler eklemek, mevcut sınıfları değiştirmenizi gerektirmez. Bu, mevcut kod üzerinde yapılan değişikliklerin riskini azaltır.
-- SOLID Prensiplerine Uygunluk: Strateji modeli, SOLID prensiplerinden biri olan Single Responsibility Principle’a (Tek Sorumluluk Prensibi) uygun şekilde, bir sınıfın yalnızca bir sebepten dolayı değişmesi gerektiğini vurgular.
+- Flexibility and Adaptability to Change: The strategy model allows you to easily change different algorithms or behaviors. This allows you to dynamically adjust the application's behavior at runtime.
+- Reuse and Organization: You can define similar behaviors independently and reuse them in different contexts. This helps keep the code clean and organized.
+- Open/Closed Principle: Adding new strategies does not require you to change existing classes. This reduces the risk of changes made to existing code.
+- Compliance with SOLID Principles: The strategy model emphasizes that a class should only change for one reason, in accordance with the Single Responsibility Principle, one of the SOLID principles.
 
-<h5 align="left"> Strategy tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Strategy design pattern</h5>
 
-- Komplekslik: Strateji modeli, basit problemler için aşırı karmaşık bir çözüm sunabilir. Küçük uygulamalar için bu modelin getirdiği ekstra sınıf ve arayüzler gereksiz olabilir.
-- Nesne Sayısının Artması: Her strateji için ayrı bir sınıfın oluşturulması, uygulamanın hafıza kullanımını artırabilir ve performans üzerinde olumsuz etkiler yaratabilir.
-- Bağlam ve Stratejiler Arasındaki Bağlantıyı Anlamak: Strateji ve bağlam arasındaki etkileşimi anlamak, özellikle büyük ve karmaşık sistemlerde zor olabilir.
-- Uygulama Zorluğu: Doğru stratejiyi seçmek ve uygulamak, özellikle birden fazla strateji ve karmaşık bir bağlam olduğunda zorlayıcı olabilir.
+- Complexity: The strategy model can provide an overly complex solution for simple problems. For small applications, the extra classes and interfaces introduced by this model may be unnecessary.
+- Increasing the Number of Objects: Creating a separate class for each strategy may increase the memory usage of the application and have negative effects on performance.
+- Understanding the Connection Between Context and Strategies: Understanding the interaction between strategy and context can be difficult, especially in large and complex systems.
+- Difficulty of Implementation: Choosing and implementing the right strategy can be challenging, especially when there are multiple strategies and a complex context.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki farklı animasyon stilleri uygulayan widget'lar oluşturacağız. Örneğin, bir uygulamada farklı sayfalar arasında geçiş yaparken kullanılabilecek çeşitli sayfa geçiş animasyonları sunabiliriz. Örneğin **FadeTransitionStrategy** ve **SlideTransitionStrategy** isimli iki farklı animasyon türlerini dinamik olarak kullanmak istediğimizi varsayalım. İlk olarak **PageTransitionStrategy** isimli **Strategy Interface** bileşenimizi oluşturuyoruz.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. According to our scenario, let's say we will create widgets that implement different animation styles. For example, we may offer a variety of page transition animations that can be used when switching between different pages in an application. For example, let's say we want to dynamically use two different animation types named **FadeTransitionStrategy** and **SlideTransitionStrategy**. First, we create our **Strategy Interface** component named **PageTransitionStrategy**.
 
 ```dart
 /// [PageTransitionStrategy] is the strategy interface
@@ -2851,7 +2843,7 @@ abstract class PageTransitionStrategy {
 }
 ```
 
-Sonrasında sıra **FadeTransitionStrategy** ve **SlideTransitionStrategy** isimli **Concrete Strategies** bileşenlerini oluşturmaya geldi. Bu bileşenlere **PageTransitionStrategy** bileşeni _implement_ ediliyor. Her animasyona özel ayarlamalar yapıldıktan sonra **Concrete Stratagies** bileşenlerimiz hazır oluyor.
+Afterwards, it was time to create the **Concrete Strategies** components named **FadeTransitionStrategy** and **SlideTransitionStrategy**. **PageTransitionStrategy** component is being implemented into these components. After making special adjustments for each animation, our **Concrete Stratagies** components are ready.
 
 ```dart
 /// [FadeTransitionStrategy] is a concrete strategy
@@ -2886,7 +2878,7 @@ final class SlideTransitionStrategy implements PageTransitionStrategy {
 }
 ```
 
-akabinde sıra **CustomPageRoute** isimli **Context** bileşenini yazmaya geldi. Daha önceden de bahsedildiği gibi bu bileşen geçiş stratejisini içeren ve kullanacak bir sayfa yönlendirme sınıfı oluşturur.
+Then it was time to write the **Context** component named **CustomPageRoute**. As mentioned before, this component creates a page redirect class that will contain and use the migration strategy.
 
 ```dart
 /// [CustomPageRoute] is the context
@@ -2916,7 +2908,7 @@ final class CustomPageRoute extends PageRouteBuilder {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz hemen görelim. _HomeView_ ve _DetailView_ isimli iki ekranımızın olduğunu düşünelim. birbirleri arasında _navigate_ işlemleri olacak. Bu geçişleri kullandığımız **Strategy Design Pattern**'e uygun olarak farklı animasyonlar kullanacak bir şekilde gerçekleştirelim.
+So, let's see how we can use this on the UI side. Let's assume we have two screens named _HomeView_ and _DetailView_. There will be _navigate_ transactions between each other. Let's perform these transitions using different animations in accordance with the **Strategy Design Pattern** we use.
 
 ```dart
 /// [HomeView] is the main view for the strategy pattern
@@ -2981,32 +2973,32 @@ final class StrategyView extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/605f8e14-a62e-4951-8180-66ecbd18e662" width="250"> <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/02bf12c8-adcf-4f30-a419-858bcf39a3a3" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
  <h2 align="left"><a id="template-method">Template Method (Behaverioal Patterns)</h2>
-  Flutter'da, Şablon Metodu deseni, bir temel widget'ta ortak bir algoritma veya iş akışını tanımlamak için kullanılabilir, bu da alt sınıfların bu algoritmanın belirli kısımlarını uygulamasına veya değiştirmesine olanak tanır.
+  In Flutter, the Template Method pattern can be used to define a common algorithm or workflow in a base widget, allowing subclasses to implement or modify specific parts of that algorithm.
 
-<h4 align="left">Template Method tasarım deseninin üç ana bileşeni vardır</h4>
+<h4 align="left">The Template Method design pattern has three main components</h4>
 
-- **Abstract Class:** Bu sınıf, şablon metodu ve alt sınıflar tarafından uygulanması gereken soyut metotları tanımlar. Şablon metodu, soyut metotları çağırır ve adımların sırasını belirler.
-- **Concrete Class:** Bu sınıflar, soyut sınıfı genişletir ve soyut metotların özel uygulamalarını sağlar.
-- **Template Method:** Şablon metodu çağrılır ve algoritmayı, somut sınıflar tarafından sağlanan uygulamaları kullanarak yürütür.
+- **Abstract Class:** This class defines abstract methods that must be implemented by the template method and subclasses. The template method calls abstract methods and determines the order of steps.
+- **Concrete Class:** These classes extend the abstract class and provide specific implementations of abstract methods.
+- **Template Method:** The template method is called and executes the algorithm using implementations provided by concrete classes.
 
-<h5 align="left">Template Method tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Template Method design pattern</h5>
 
-- Yeniden Kullanılabilirlik: Ortak kodun tek bir yerde (soyut sınıf) bulunmasını teşvik eder.
-- Esneklik: Alt sınıflar, yapısını değiştirmeden algoritmanın bölümlerini değiştirebilir.
+- Reusability: Encourages having common code in one place (abstract class).
+- Flexibility: Subclasses can change parts of the algorithm without changing its structure.
 
-<h5 align="left"> Template Method tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Template Method design pattern</h5>
 
-- Karmaşıklık: Ek soyutlama katmanları getirebilir, bu da kodu karmaşıklaştırabilir.
-- Sınırlı Esneklik: Sadece önceden tanımlanmış adımlar, alt sınıflar tarafından değiştirilebilir.
+- Complexity: Can introduce additional layers of abstraction, which can complicate the code.
+- Limited Flexibility: Only predefined steps can be modified by subclasses.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki Flutter uygulamanız için bir yapıya (örneğin; dolgu, şekil) ama farklı içerik ve davranışlara sahip özel button oluşturduğunuzu düşünün. Bunun üzerine konuşalım.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. For our scenario, let's say you create a custom button for your Flutter application with a structure (e.g. filler, shape) but different content and behavior. Let's talk about this.
 
-Öncelikle **CustomButton** isimli **Abstract Class** bileşenimizi yazıyoruz. Bu bileşen **Concrate Class**'lar tarafından uygulanacak.
+First of all, we write our **Abstract Class** component named **CustomButton**. This component will be implemented by **Concrate Class**s.
 
 ```dart
 /// [CustomButton] is the abstract class for the template method pattern
@@ -3041,7 +3033,7 @@ abstract class CustomButton extends StatelessWidget {
 }
 ```
 
-akabinde **CustomButton** isimli **Abstract Class** bileşenini _implement_ eden **Concrete Class** bileşenlerini yazmaya geldi. _Icon_ ve _Text_ için iki farklı button tasarlıyoruz.
+Then he came to write the **Concrete Class** components that implement the **Abstract Class** component named **CustomButton**. We design two different buttons for _Icon_ and _Text_.
 
 ```dart
 /// [IconCustomButton] is a concrete class
@@ -3069,7 +3061,7 @@ final class TextCustomButton extends CustomButton {
 }
 ```
 
-sonra UI tarafında bu butonları kullanmaya başlıyoruz. Bu sayede **Templete Design Pattern**'i kullanarak butonlarımızı tasarlamış olduk.
+Then we start using these buttons on the UI side. In this way, we designed our buttons using the **Templete Design Pattern**.
 
 ```dart
 /// [TempleteMethodView] is the main view for the template method pattern
@@ -3097,34 +3089,34 @@ final class TempleteMethodView extends StatelessWidget {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/08e1ff70-310e-4c5a-bee7-48471f775967" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
  <h2 align="left"><a id="visitor">Visitor (Behaverioal Patterns)</h2>
-  Bu model, ziyaretçiler ve elementler olmak üzere iki tür nesneyi içerir. Elementler bir yapı parçasıdır (Flutter'da widget ağacındaki widgetlar gibi), ve ziyaretçiler bu elementler üzerinde operasyonlar gerçekleştiren nesnelerdir. Ana fikir, mevcut nesne yapılarına yapıları değiştirmeden yeni operasyonlar ekleyebilmektir.
+  This model contains two types of objects: visitors and elements. Elements are a piece of structure (like widgets in a widget tree in Flutter), and visitors are objects that perform operations on these elements. The main idea is to add new operations to existing object structures without changing the structures.
 
-<h4 align="left">Visitor tasarım deseninin dört ana bileşeni vardır</h4>
+<h4 align="left">The Visitor design pattern has four main components</h4>
 
-- **Visitor Interface:** Nesne yapısındaki her tür element için bir ziyaret operasyonu tanımlar. Flutter'da, bunlar farklı türdeki widgetlar olabilir.
-- **Concrete Visitor:** Ziyaretçi arayüzünü uygular ve elementler üzerinde gerçekleştirilecek operasyonu tanımlar.
-- **Element Interface:** Bir ziyaretçiyi argüman olarak alan bir accept metodu sağlar.
-- **Concrete Element:** Element arayüzünü uygulayan gerçek nesnelerdir. Flutter'da, widgetlar bu rolü oynar.
+- **Visitor Interface:** Defines a visit operation for each type of element in the object structure. In Flutter, these can be different types of widgets.
+- **Concrete Visitor:** Implements the visitor interface and defines the operation to be performed on the elements.
+- **Element Interface:** Provides an accept method that takes a visitor as an argument.
+- **Concrete Element:** These are real objects that implement the element interface. In Flutter, widgets play this role.
 
-<h5 align="left">Visitor tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Visitor design pattern</h5>
 
-- Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
-- Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
-- Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
+- Extensibility: You can add new operations without changing widget classes.
+- Separation of Responsibilities: Operations on widgets are separated from the logic of the widget itself.
+- Single Responsibility Principle: Each class has clear responsibilities – widgets for UI, visitors for specific operations.
 
-<h5 align="left"> Visitor tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Visitor design pattern</h5>
 
-- Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
-- Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.
+- Complexity: The model may overcomplicate the design for simple scenarios.
+- Tangible Connection: Leads to a high degree of connection as visitors need to know the details of the elements.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki farklı widget türlerinde gezinirken belirli özellikleri güncelleyen veya onları farklı şekillerde manipüle eden bir ziyaretçi sınıfını ele alacağız. Örneğin, bir dizi text'in padding veya margin değerlerini dinamik olarak değiştirmek isteyebiliriz.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. In our scenario, let's say we will consider a class of visitors who update certain properties or manipulate them in different ways as they navigate different types of widgets. For example, we may want to dynamically change the padding or margin values of a series of texts.
 
-Öncelikle **WidgetVisitor** isimli **Visitor Interface** bileşenimizi yazıyoruz. Bu bileşen _visitText(VisitableText text)_ method imzasına sahip bir method barındırıyor. Bu method ziyaret edilen elementler üzerinde hangi işlerin yapılacağına karar verir. Bizim durumumuzda **VisitableText** isimli bir **Concrete Element** bileşenini parametrik olark alıyoruz.
+First of all, we write our **Visitor Interface** component named **WidgetVisitor**. This component contains a method with the method signature _visitText(VisitableText text)_. This method decides what work to do on the visited elements. In our case, we parametrically import a **Concrete Element** component named **VisitableText**.
 
 ```dart
 /// [WidgetVisitor] is the interface for the visitor pattern. Visitor Interface
@@ -3133,8 +3125,8 @@ abstract class WidgetVisitor {
 }
 ```
 
-Sonrasında **VisitableWidget** isimli **Element Interface** bileşenimizi yazıyoruz. Bu bileşen _accept(WidgetVisitor visitor)_ method imzasına sahiptir ve **Visitor Interface** tipinde bir parametre alır.
-_accept_ methodunda, ziyaretçinin (_WidgetVisitor_) _accept_ methodu çağırması sağlanır. Bu yaklaşım, ziyaretçinin **VisitableText** üzerinde tanımlanmış özel işlemi uygulamasına olanak tanır.
+Afterwards, we write our **Element Interface** component named **VisitableWidget**. This component has the _accept(WidgetVisitor visitor)_ method signature and takes a parameter of type **Visitor Interface**.
+In the _accept_ method, the visitor (_WidgetVisitor_) is enabled to call the _accept_ method. This approach allows the visitor to apply the custom action defined on **VisitableText**.
 
 ```dart
 /// [VisitableWidget] is the interface for the elements in the object structure. Element Interface
@@ -3144,7 +3136,7 @@ abstract class VisitableWidget {
 
 ```
 
-akabinde sıra **PaddingAdjuster** isimli **Concrete Visitor** bileşenimizi yazmaya geldi. Bu bileşen içerisinde elementlere uygulanacak adımları barındırır. Bizim durumumuzda bu bir padding ayarlama olduğundan dolayı padding odaklı bir içeriğimiz bulunmaktatır. İlgili bileşene paddingi uygulamak için _visitText_ methodunu _@override_ ediyoruz.
+Then it was time to write our **Concrete Visitor** component named **PaddingAdjuster**. This component contains the steps to be applied to the elements. In our case, since this is a padding adjustment, we have padding-focused content. We _@override_ the _visitText_ method to apply padding to the relevant component.
 
 ```dart
 /// [PaddingAdjuster] is a concrete visitor that implements the [WidgetVisitor] interface.
@@ -3163,7 +3155,7 @@ final class PaddingAdjuster implements WidgetVisitor {
 }
 ```
 
-**VisitableText** isimli **Concrete Element** bileşenimizi yazıyoruz. Bu bileşen **Element Interface** bileşeninden implement alır ve Flutterda gerçek widgetlar'a tekabul eder. Bizim durumumuzda bu bir **Text** komponentidir.
+We are writing our **Concrete Element** component named **VisitableText**. This component implements the **Element Interface** component and corresponds to real widgets in Flutter. In our case this is a **Text** component.
 
 ```dart
 /// [VisitableText] is a concrete element that implements the [CustomWidget] interface.
@@ -3184,7 +3176,7 @@ final class VisitableText extends StatelessWidget implements VisitableWidget {
 }
 ```
 
-Peki bunu UI tarafında nasıl kullanabiliriz gelin bakalım. Senaryomuz gereği ilgili **Text** widget'ının padding değerini arttırıp-azaltma olaylarını gerçekleyelim.
+So, let's see how we can use this on the UI side. As per our scenario, let's increase and decrease the padding value of the relevant **Text** widget.
 
 ```dart
 /// [VisitorView] is a view that visitor design pattern is implemented.
@@ -3249,33 +3241,33 @@ class _VisitorViewState extends State<VisitorView> {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/175de900-bd3b-45f2-af8f-12b080a00bc7" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)
 
 <h2 align="left"><a id="momento">Momento (Behaverioal Patterns)</h2>
-  Memento Tasarım Deseni, bir nesnenin iç durumunu yakalamak ve dışa vurmak için kullanılan davranışsal bir tasarım desenidir, böylece nesne daha sonra bu duruma geri dönebilir. Flutter çatısında, widget'ların durumlarıyla uğraşırken özellikle yararlıdır.
+  The Memento Design Pattern is a behavioral design pattern used to capture and externalize the internal state of an object so that the object can return to that state later. In the Flutter framework, it is especially useful when dealing with the states of widgets.
 
-<h4 align="left">Momento tasarım deseninin üç ana bileşeni vardır</h4>
+<h4 align="left">The Momento design pattern has three main components</h4>
 
-- **Originator:** Durumunu kaydetmek ve geri yüklemek istediğiniz ana nesnedir. Flutter'da bu bir widget veya model sınıfı olabilir. Mevcut iç durumunun bir anlık görüntüsünü içeren bir memento oluşturur.
-- **Memento:** Kaynağın durumunun bir anlık görüntüsü olarak hareket eden değer nesnesidir. Değişmez olmalı ve yalnızca kaynak tarafından erişilebilir olmalıdır.
-- **Caretaker:** Memento'nun güvenliğinden sorumlu olan nesnedir, ancak memento'nun içeriğini işlemez veya incelemez. Flutter'da bu, bir yönetici veya kontrolör sınıfı olabilir.
+- **Originator:** The parent object whose state you want to save and restore. In Flutter, this could be a widget or model class. Creates a memento containing a snapshot of your current internal state.
+- **Memento:** A value object that acts as a snapshot of the resource's state. It must be immutable and only accessible by the source.
+- **Caretaker:** It is the object responsible for the security of the memento, but it does not process or examine the content of the memento. In Flutter, this can be a manager or controller class.
 
-<h5 align="left">Momento tasarım deseninin avantajları</h5>
+<h5 align="left">Advantages of the Momento design pattern</h5>
 
-- Genişletilebilirlik: Widget sınıflarını değiştirmeden yeni operasyonlar ekleyebilirsiniz.
-- Sorumlulukların Ayrılması: Widgetlar üzerindeki operasyonlar, widget'ın kendi mantığından ayrılmıştır.
-- Tek Sorumluluk Prensibi: Her sınıfın açık sorumlulukları vardır – widgetlar UI için, ziyaretçiler belirli operasyonlar için.
+- Extensibility: You can add new operations without changing widget classes.
+- Separation of Responsibilities: Operations on widgets are separated from the logic of the widget itself.
+- Single Responsibility Principle: Each class has clear responsibilities – widgets for UI, visitors for specific operations.
 
-<h5 align="left"> Momento tasarım deseninin dezavantajları</h5>
+<h5 align="left"> Disadvantages of the Momento design pattern</h5>
 
-- Karmaşıklık: Model, basit senaryolar için tasarımı gereğinden fazla karmaşık hale getirebilir.
-- Somut Bağlantı: Ziyaretçilerin elementlerin detaylarını bilmeleri gerektiğinden, yüksek derecede bağlantıya yol açar.
+- Complexity: The model may overcomplicate the design for simple scenarios.
+- Tangible Connection: Leads to a high degree of connection as visitors need to know the details of the elements.
 
-**Örnek Senaryo**
+**Sample Scenario**
 
-Peki bunu gerçek bir uygulamada, pakette, vb. nasıl uygulayabiliriz ? Ona bakalım. Senaryomuz gereği diyelim ki bir alışveriş uygulaması düşünelim. Kullanıcılar, sepete ürün ekleyip çıkartabiliyorlar ve biz bu değişiklikleri geri alınabilir yapmak istiyoruz.
+How about doing this in an actual application, package, etc. How can we implement it? Let's look at it. For our scenario, let's say we consider a shopping application. Users can add or remove items from the cart, and we want to make these changes reversible.
 
-Öncelikle durumunu takip etmek istediğimiz modeli tasarlıyoruz. Bizim senaryomuzda bu bir _Product_ modeli olacak.
+First, we design the model whose status we want to monitor. In our scenario this will be a _Product_ model.
 
 ```dart
 /// [Product] class is a model class that holds the product details.
@@ -3292,7 +3284,7 @@ final class Product {
 
 ```
 
-Sonra **CartMemento** isimli **Memento** bileşenimizi yazmakla başlayalım. Bu bileşen sepetteki ürünlerin anlık olarak bir kopyasını almak için _copy()_ methodu barındırıyor. Bu method **CartCaretaker** bileşenindeki _saveState()_ methodunda kullanılarak her seferinde sepetin durumunu takip edeceğiz. Bu sayede sepetten çıkarılan/eklenen ürünleri ilgili ürün sayfasına gitmeden sepetten ekleyip/çıkartabileceğiz.
+Then let's start by writing our **Memento** component named **CartMemento**. This component contains the _copy()_ method to instantly make a copy of the products in the cart. We will use this method in the _saveState()_ method in the **CartCaretaker** component to track the state of the cart each time. In this way, we will be able to add/remove products removed/added from the cart without going to the relevant product page.
 
 ```dart
 /// [CartMemento] class is a memento class that holds the state of the [Cart].
@@ -3310,7 +3302,7 @@ final class CartMemento {
 }
 ```
 
-Akabinde **CartCaretaker** isimli **Caretaker** bileşenimizi oluşturuyoruz. Bu bileşen içerisinde _saveState(CartMemento memento)_, _undo()_ methodlarını barındırıyor. _saveState_ methodu anlık olarak state'i güncelleyip kopyasını oluştururken, _undo_ isimli method sepetteki işlemlerin geri alınmasını sağlıyor.
+Next, we create our **Caretaker** component named **CartCaretaker**. This component includes _saveState(CartMemento memento)_, _undo()_ methods. While the _saveState_ method instantly updates the state and creates a copy, the _undo_ method allows the transactions in the basket to be undone.
 
 ```dart
 /// [CartCaretaker] class is responsible for keeping the history of the [CartMemento] objects.
@@ -3338,7 +3330,7 @@ final class CartCaretaker {
 }
 ```
 
-Son olarak **Product** modelini _Widget_ üzerine taşıyarak **ShoppingCartWidget** isimli **Originator** bileşenini yazıyoruz. Takip edeceğimiz _Widget_ artık senaryomuz gereği **ShoppingCartWidget** oluyor.
+Finally, we move the **Product** model onto _Widget_ and write the **Originator** component named **ShoppingCartWidget**. The _Widget_ we will follow is now **ShoppingCartWidget** according to our scenario.
 
 ```dart
 /// [ShoppingCartWidget] Originator
@@ -3442,4 +3434,4 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
 
 <img src="https://github.com/Deatsilence/flutter-design-patterns/assets/78795973/90ba1231-9343-4498-b0fb-6096bd06fb8b" width="250">
 
-[Dökümantasyonun başına dön](#head)
+[Return to the beginning of the documentation](#head)

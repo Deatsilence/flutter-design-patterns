@@ -137,8 +137,8 @@ The abstract factory design pattern uses a factory class to create objects from 
 
 <h4 align="left">The abstract factory design pattern has two main components</h4>
 
-- Abstract factory:\*\* A class used to create objects from multiple families.
-- Concrete factory:\*\* A class that concretises the abstract factory and is used to create objects from a specific family.
+- **Abstract factory:** A class used to create objects from multiple families.
+- **Concrete factory:** A class that concretises the abstract factory and is used to create objects from a specific family.
 
 <h5 align="left">Advantages of the abstract factory design pattern</h5>
 

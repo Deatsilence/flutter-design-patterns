@@ -45,8 +45,8 @@ The basic idea of the factory design pattern is to delegate object creation to a
 
 <h4 align="left">The factory design pattern has two main components</h4>
 
-- **Ürün:** The object to be created.
-- **Fabrika:** The class that creates the product object.
+- **Product:** The object to be created.
+- **Factory:** The class that creates the product object.
 
 <h5 align="left">Advantages of factory design pattern:</h5>
 

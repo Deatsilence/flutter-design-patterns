@@ -1,6 +1,8 @@
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.md)
 [![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.tr.md)
 
+<a href="https://www.buymeacoffee.com/deatsilence" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 <h1 align="center"><a id="head">Design Patterns with Flutter</h1>
 
 - <h2 align="left">What are Design Patterns briefly?</h2>

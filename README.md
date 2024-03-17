@@ -1378,14 +1378,14 @@ final class NewProductDecorator extends ProductCardDecorator {
 So how can we use this on the UI side? For example, we can use more than one decorator within reason.
 
 ```dart
-class DecoratorView extends StatefulWidget {
+final class DecoratorView extends StatefulWidget {
   const DecoratorView({super.key});
 
   @override
   State<DecoratorView> createState() => _DecoratorViewState();
 }
 
-final class _DecoratorViewState extends State<DecoratorView> {
+class _DecoratorViewState extends State<DecoratorView> {
   @override
   Widget build(BuildContext context) {
     // simpleCard is a simple product card with an image, name, and price.

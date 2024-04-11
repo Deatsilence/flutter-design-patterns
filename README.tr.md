@@ -282,9 +282,9 @@ Hangi yöntemin kullanılacağı projenin gereksinimlerine ve diğer parametrele
 
 <h5 align="left">Singleton tasarım deseninin avantajları</h5>
 
--Tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanışlıdır.
--Kodunuzu daha okunaklı ve anlaşılır hale getirir.
--Yazılım geliştirme sürecini daha verimli hale getirir.
+- Tek bir nesnenin ihtiyaç duyulduğu durumlarda kullanışlıdır.
+- Kodunuzu daha okunaklı ve anlaşılır hale getirir.
+- Yazılım geliştirme sürecini daha verimli hale getirir.
 
 <h5 align="left"> Fabrika tasarım deseninin dezavantajları</h5>
 

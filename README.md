@@ -283,9 +283,9 @@ Which method to use depends on the requirements of the project and other paramet
 
 <h5 align="left">Advantages of Singleton design pattern</h5>
 
--Useful in situations where a single object is needed.
--Makes your code more readable and understandable.
--It makes the software development process more efficient.
+- Useful in situations where a single object is needed.
+- Makes your code more readable and understandable.
+- It makes the software development process more efficient.
 
 <h5 align="left"> Disadvantages of the factory design pattern</h5>
 

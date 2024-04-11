@@ -1,6 +1,8 @@
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.md)
 [![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/Deatsilence/flutter-design-patterns/blob/main/README.tr.md)
 
+<a href="https://www.buymeacoffee.com/deatsilence" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 <h1 align="center"><a id="head">Design Patterns with Flutter</h1>
 
 - <h2 align="left">What are Design Patterns briefly?</h2>
@@ -45,8 +47,8 @@ The basic idea of the factory design pattern is to delegate object creation to a
 
 <h4 align="left">The factory design pattern has two main components</h4>
 
-- **Ürün:** The object to be created.
-- **Fabrika:** The class that creates the product object.
+- **Product:** The object to be created.
+- **Factory:** The class that creates the product object.
 
 <h5 align="left">Advantages of factory design pattern:</h5>
 
@@ -137,8 +139,8 @@ The abstract factory design pattern uses a factory class to create objects from 
 
 <h4 align="left">The abstract factory design pattern has two main components</h4>
 
-- Abstract factory:\*\* A class used to create objects from multiple families.
-- Concrete factory:\*\* A class that concretises the abstract factory and is used to create objects from a specific family.
+- **Abstract factory:** A class used to create objects from multiple families.
+- **Concrete factory:** A class that concretises the abstract factory and is used to create objects from a specific family.
 
 <h5 align="left">Advantages of the abstract factory design pattern</h5>
 
@@ -1376,14 +1378,14 @@ final class NewProductDecorator extends ProductCardDecorator {
 So how can we use this on the UI side? For example, we can use more than one decorator within reason.
 
 ```dart
-class DecoratorView extends StatefulWidget {
+final class DecoratorView extends StatefulWidget {
   const DecoratorView({super.key});
 
   @override
   State<DecoratorView> createState() => _DecoratorViewState();
 }
 
-final class _DecoratorViewState extends State<DecoratorView> {
+class _DecoratorViewState extends State<DecoratorView> {
   @override
   Widget build(BuildContext context) {
     // simpleCard is a simple product card with an image, name, and price.

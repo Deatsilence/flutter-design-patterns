@@ -408,11 +408,13 @@ class _SingletonViewState extends State<SingletonView> {
   A prototype design pattern is a design pattern that uses a prototype object to create copies of objects. This can be more efficient than creating objects directly, especially if the creation of objects is complex or time-consuming.
 
 <h4 align="left">The Prototype design pattern has three main components</h4>
+
 - **Prototype:** The object to be copied.
 - **Copier:** The class that copies the prototype object.
 - **Users:** Classes that use the copied objects.
 
 <h5 align="left">Advantages of the Prototype design pattern</h5>
+
 - Makes the creation of objects more efficient.
 - Facilitates the creation of a number of copies with the same properties of objects.
 - It allows objects to be created independently of a given state.

@@ -723,7 +723,7 @@ sealed class Photo {
 Ardından NotPhotoPhotoBuilder isimli bir sınıf oluşturuyoruz. Bu sınıf builder methodundan oluşturacağımız bir sınıftır. Üyelerimizi almak için Photo sınıfını implement ediyoruz.
 
 ```dart
-final class PhotoBuilder implements Photo {
+final class NotPhotoPhotoBuilder implements Photo {
   @override
   String? name;
   @override
@@ -733,7 +733,7 @@ final class PhotoBuilder implements Photo {
   @override
   DateTime? deletedDate;
 
-  PhotoBuilder({
+  NotPhotoPhotoBuilder({
     this.name,
     this.size,
     this.createdDate,

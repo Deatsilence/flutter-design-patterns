@@ -799,13 +799,13 @@ Fabrika tasarım deseninin temel fikri, nesne oluşturma işlemini bir fabrika s
 
 <h4 align="left">Bridge tasarım deseninin 4 ana bileşeni vardır</h4>
 
-**Abstraction (Soyutlama):** Bu, istemcinin bir arayüzle etkileşim kurduğu ve işlevselliğin tam olarak gerçekleşmediği katmandır.
+- **Abstraction (Soyutlama):** Bu, istemcinin bir arayüzle etkileşim kurduğu ve işlevselliğin tam olarak gerçekleşmediği katmandır.
 
-**Refined Abstraction (İyileştirilmiş Soyutlama):** Abstraction'ın alt sınıflarıdır ve spesifik bir durumu ele alır.
+- **Refined Abstraction (İyileştirilmiş Soyutlama):** Abstraction'ın alt sınıflarıdır ve spesifik bir durumu ele alır.
 
-**Implementation (Uygulama):** Bu, soyutlamayı gerçekten uygulayan katmandır.
+- **Implementation (Uygulama):** Bu, soyutlamayı gerçekten uygulayan katmandır.
 
-**Concrete Implementation (Somut Uygulama):** Implementation'ın alt sınıflarıdır ve spesifik bir durumu gerçekten uygular.
+- **Concrete Implementation (Somut Uygulama):** Implementation'ın alt sınıflarıdır ve spesifik bir durumu gerçekten uygular.
 
 <h5 align="left">Bridge tasarım deseninin avantajları</h5>
 
